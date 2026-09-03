@@ -1,11 +1,11 @@
-const SHELL_CACHE = "clinicalens-shell-v6";
+const SHELL_CACHE = "clinicalens-shell-v7";
 const SHELL_ASSETS = [
   "/",
   "/index.html",
   "/manifest.webmanifest",
   "/config.js",
-  "/assets/styles.css?v=20260903-3",
-  "/assets/app.js?v=20260903-3",
+  "/assets/styles.css?v=20260903-4",
+  "/assets/app.js?v=20260903-4",
   "/assets/api.js",
   "/assets/ui.js",
   "/data/multi-organ-pattern.json",

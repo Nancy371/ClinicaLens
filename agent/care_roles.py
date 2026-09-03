@@ -215,12 +215,40 @@ def patient_explanation(assessment: Dict[str, Any], doctor_plan: Optional[Dict[s
         for item in assessment.get("dangerous_conditions", [])
     ]
     confirmed = bool(doctor_plan and doctor_plan.get("verification_status") == "doctor_confirmed")
+    medical_name = assessment.get("primary_diagnosis", {}).get("name", "当前仍需补充信息")
+    plain_summary = (
+        "肺部异常和肾脏损伤可能来自同一个全身性炎症问题。"
+        if stage >= 2 else "目前先要确认肺部是否存在需要紧急处理的问题。"
+    )
+    why_steps = ["血丝痰、活动后气短和血氧偏低提示肺部需要尽快检查。"]
+    if stage >= 2:
+        why_steps.extend([
+            "肺部影像提示异常，尿检和肾功能也提示肾脏同时受到影响。",
+            "两个器官同时异常，比两个互不相关的小问题更需要考虑共同原因。",
+        ])
+    else:
+        why_steps.append("目前还没有足够检查说明肺部异常的具体原因。")
+    if stage >= 3:
+        why_steps.append("血液中的 MPO-ANCA 结果支持免疫系统相关的小血管炎症。")
+    else:
+        why_steps.append("还需要免疫相关检查帮助判断两处异常是否由同一原因造成。")
+    why_steps.append(f"把这些信息放在一起后，目前更支持“{medical_name}”。")
     return {
         "id": f"patient-explanation-v{assessment.get('version', stage)}",
         "assessment_version_id": f"assessment-v{assessment.get('version', stage)}",
         "assessment_version": assessment.get("version", stage),
-        "headline": assessment.get("primary_diagnosis", {}).get("name", "当前仍需补充信息"),
-        "summary": "肺部出血表现和肾小球损伤同时出现，可能是同一个全身性小血管问题造成，而不是两个互不相关的小问题。",
+        "headline": medical_name,
+        "summary": plain_summary,
+        "language_levels": {
+            "level_1": plain_summary,
+            "level_2": why_steps,
+            "level_3": {
+                "medical_name": medical_name,
+                "terms": _professional_terms(stage),
+                "notice": "专业信息用于核对原始报告，不建议脱离医生解释自行判断。",
+            },
+        },
+        "reasoning_graph": patient_reasoning_graph(assessment),
         "key_evidence": support,
         "contradictions": contradictions or ["目前还没有足够反证降低其他方向"],
         "missing_information": missing or ["按医生计划进行动态复查"],
@@ -232,6 +260,75 @@ def patient_explanation(assessment: Dict[str, Any], doctor_plan: Optional[Dict[s
         "next_action": "如仍有咯血、静息气促、意识改变或指氧继续下降，立即急诊；否则按当日专科评估计划就医。",
         "boundary": "这是 AI 对已确认记录的通俗整理，不是医生确诊，也不替代急诊判断。",
         "created_at": assessment.get("created_at") or utc_now(),
+    }
+
+
+def _professional_terms(stage: int) -> List[Dict[str, str]]:
+    terms = [
+        {"term": "静息指氧", "value": "94%（空气）", "meaning": "低于报告参考范围", "source": "生命体征第5项"},
+    ]
+    if stage >= 2:
+        terms.extend([
+            {"term": "胸部 CT", "value": "双肺弥漫性磨玻璃影", "meaning": "需结合临床评估肺泡出血", "source": "胸部CT所见第2段"},
+            {"term": "血肌酐 / eGFR", "value": "220 μmol/L / 29 ml/min/1.73m²", "meaning": "当前肾功能明显下降", "source": "生化检验第14–15项"},
+            {"term": "尿沉渣", "value": "畸形红细胞可见、尿蛋白 2+", "meaning": "支持肾小球来源损伤", "source": "尿沉渣镜检结论"},
+        ])
+    if stage >= 3:
+        terms.extend([
+            {"term": "MPO-ANCA", "value": "86 RU/ml，阳性", "meaning": "结合肺肾表现支持 ANCA 相关小血管炎", "source": "免疫学第3项"},
+            {"term": "抗 GBM / 感染筛查", "value": "阴性", "meaning": "降低部分替代方向，但不能单独完全排除", "source": "免疫学第5项及微生物报告"},
+        ])
+    if stage >= 4:
+        terms.append({"term": "肾活检", "value": "少免疫沉积性坏死性新月体性肾小球肾炎", "meaning": "提供医生确诊所需的组织学依据", "source": "肾活检病理诊断"})
+    return terms
+
+
+def patient_reasoning_graph(assessment: Dict[str, Any]) -> Dict[str, Any]:
+    """Project clinical reasoning into a stable, patient-readable graph."""
+    stage = int(assessment.get("batch_stage") or assessment.get("version") or 1)
+    diagnosis = assessment.get("primary_diagnosis", {}).get("name", "当前仍需补充信息")
+    nodes: List[Dict[str, Any]] = [
+        {"id": "symptom-respiratory", "type": "symptom", "label": "血丝痰和活动后气短", "plain_text": "这些表现提示肺部需要尽快检查。", "source_ids": ["patient-consultation"]},
+        {"id": "exam-oxygen", "type": "exam_result", "label": "血氧偏低", "plain_text": "说明肺部供氧可能受到影响。", "source_ids": ["observation-spo2"]},
+        {"id": "hypothesis-infection", "type": "hypothesis", "label": "感染等其他肺部原因", "plain_text": "这是早期需要排查的方向，不能只看一个结果。", "source_ids": []},
+    ]
+    edges: List[Dict[str, str]] = [
+        {"source": "symptom-respiratory", "target": "exam-oxygen", "relation": "supports", "label": "促使检查肺部严重程度"},
+        {"source": "symptom-respiratory", "target": "hypothesis-infection", "relation": "supports", "label": "早期仍需考虑"},
+    ]
+    if stage >= 2:
+        nodes.extend([
+            {"id": "exam-lung", "type": "exam_result", "label": "肺部影像异常", "plain_text": "影像提示肺内可能存在出血。", "source_ids": ["observation-ct-ggo", "observation-ct-dah"]},
+            {"id": "exam-kidney", "type": "exam_result", "label": "尿检和肾功能异常", "plain_text": "提示损伤更可能来自肾脏过滤部位。", "source_ids": ["observation-urine-rbc", "observation-creatinine", "observation-egfr"]},
+            {"id": "pattern-lung-kidney", "type": "evidence", "label": "肺部和肾脏同时受影响", "plain_text": "两处异常可能由同一个全身性问题造成。", "source_ids": ["assessment-pattern"]},
+        ])
+        edges.extend([
+            {"source": "exam-lung", "target": "pattern-lung-kidney", "relation": "explains", "label": "构成肺部一侧的证据"},
+            {"source": "exam-kidney", "target": "pattern-lung-kidney", "relation": "explains", "label": "构成肾脏一侧的证据"},
+        ])
+    if stage >= 3:
+        nodes.extend([
+            {"id": "exam-immune", "type": "exam_result", "label": "MPO-ANCA 阳性", "plain_text": "这项血液检查支持免疫相关小血管炎。", "source_ids": ["observation-mpo-anca"]},
+            {"id": "exam-infection-negative", "type": "exam_result", "label": "部分感染检查阴性", "plain_text": "让普通细菌感染作为统一解释的可能性下降。", "source_ids": ["observation-blood-culture", "observation-sputum-pathogen"]},
+        ])
+        edges.extend([
+            {"source": "exam-immune", "target": "diagnosis-primary", "relation": "supports", "label": "支持当前方向"},
+            {"source": "exam-infection-negative", "target": "hypothesis-infection", "relation": "contradicts", "label": "降低，但不完全排除"},
+        ])
+    if stage >= 4:
+        nodes.append({"id": "exam-biopsy", "type": "exam_result", "label": "肾活检提供组织证据", "plain_text": "组织检查结果与当前判断一致。", "source_ids": ["observation-renal-pathology"]})
+        edges.append({"source": "exam-biopsy", "target": "diagnosis-primary", "relation": "supports", "label": "进一步确认"})
+    nodes.append({"id": "diagnosis-primary", "type": "diagnosis", "label": diagnosis, "plain_text": "这是当前最可能的情况，最终以医生结论为准。", "source_ids": [f"assessment-v{assessment.get('version', stage)}"]})
+    if stage >= 2:
+        edges.append({"source": "pattern-lung-kidney", "target": "diagnosis-primary", "relation": "supports", "label": "共同模式支持当前判断"})
+    if stage < 4:
+        nodes.append({"id": "evidence-unresolved", "type": "evidence", "label": "仍有信息没有确认", "plain_text": "还需要医生结合检查和病情变化继续核对。", "source_ids": ["assessment-missing-information"]})
+        edges.append({"source": "evidence-unresolved", "target": "diagnosis-primary", "relation": "requires_confirmation", "label": "确认后才能提高结论可靠性"})
+    return {
+        "schema_version": "patient-reasoning-graph.v1",
+        "nodes": nodes,
+        "edges": edges,
+        "legend": {"supports": "支持", "contradicts": "反对或降低", "explains": "帮助解释", "requires_confirmation": "仍需确认"},
     }
 
 
@@ -396,6 +493,6 @@ def public_sample_projection(journey: Dict[str, Any], audience: str) -> Dict[str
 
 __all__ = [
     "GUIDELINES", "build_patient_explanations", "clinician_journey_dto", "hydrate_journey_v3",
-    "legacy_reports_from_records", "patient_explanation", "patient_journey_dto", "public_sample_projection", "reports_for_batches",
+    "legacy_reports_from_records", "patient_explanation", "patient_reasoning_graph", "patient_journey_dto", "public_sample_projection", "reports_for_batches",
     "sample_exam_recommendations", "sample_exam_reports", "sample_treatment_recommendations",
 ]

@@ -57,14 +57,13 @@ class CareRoleDomainTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_patient_projection_omits_clinician_reasoning(self):
         payload = await self.runtime.public_sample("patient")
-        serialized = json.dumps(payload, ensure_ascii=False)
         self.assertEqual(payload["projection"], "patient")
         self.assertNotIn("assessment_versions", payload)
         self.assertNotIn("exam_recommendations", payload)
         self.assertNotIn("treatment_recommendations", payload)
         self.assertNotIn("raw_case_document", payload)
         self.assertNotIn("consultation_case_documents", payload)
-        self.assertNotIn('"evidence"', serialized)
+        self.assertNotIn("evidence", payload)
         self.assertGreater(len(payload["exam_reports"]), 0)
         self.assertGreater(len(payload["patient_explanations"]), 0)
 
@@ -108,6 +107,24 @@ class CareRoleDomainTests(unittest.IsolatedAsyncioTestCase):
         self.assertTrue(all(required.issubset(item) for item in observations))
         self.assertTrue(any(item["reference_range_display"] == "原报告未提供" for item in observations))
         self.assertTrue(all(item["patient_explanation"] for item in observations))
+
+    async def test_patient_reasoning_graph_uses_public_node_and_edge_contract(self):
+        payload = await self.runtime.public_sample("patient")
+        explanation = payload["patient_explanations"][-1]
+        graph = explanation["reasoning_graph"]
+        self.assertEqual(graph["schema_version"], "patient-reasoning-graph.v1")
+        node_ids = {item["id"] for item in graph["nodes"]}
+        node_types = {item["type"] for item in graph["nodes"]}
+        self.assertTrue({"symptom", "exam_result", "evidence", "hypothesis", "diagnosis"}.issubset(node_types))
+        self.assertTrue(all(edge["source"] in node_ids and edge["target"] in node_ids for edge in graph["edges"]))
+        self.assertIn("supports", {edge["relation"] for edge in graph["edges"]})
+        serialized = json.dumps(graph, ensure_ascii=False)
+        for internal_name in ("CandidateScore", "ClaimResolutionLedger", "AnchorSatisfied", "PrimaryEligible", "Comparator"):
+            self.assertNotIn(internal_name, serialized)
+        levels = explanation["language_levels"]
+        self.assertIn("肺部异常和肾脏损伤", levels["level_1"])
+        self.assertGreaterEqual(len(levels["level_2"]), 3)
+        self.assertGreater(len(levels["level_3"]["terms"]), 0)
 
     async def test_legacy_string_result_migrates_without_invented_range(self):
         migrated = hydrate_journey_v3({

@@ -67,12 +67,33 @@ function previewBanner() {
   return `<div class="fictional-banner"><b>完整虚构病例</b><span>${state.authenticated ? "当前医生账户尚无授权病例，下面仅展示公开样例；所有写操作已关闭。" : "未登录预览，可浏览全部功能；写操作会要求对应角色登录。"}</span></div>`;
 }
 
+function patientReasoningGraph(graph) {
+  if (!graph?.nodes?.length) return `<p class="muted-copy">当前还没有形成可展示的判断路径。</p>`;
+  const layers = [
+    [["symptom", "history"], "我的症状和情况"],
+    [["exam_result"], "关键检查结果"],
+    [["evidence"], "AI 找到的共同模式"],
+    [["hypothesis"], "仍需比较的方向"],
+    [["diagnosis"], "当前判断"],
+  ].map(([types, label]) => ({ label, nodes: graph.nodes.filter((node) => types.includes(node.type)) })).filter((layer) => layer.nodes.length);
+  const labels = Object.fromEntries(graph.nodes.map((node) => [node.id, node.label]));
+  return `<div class="patient-reasoning-graph" aria-label="从症状到当前判断的推理关系">${layers.map((layer, index) => `<div class="reasoning-layer"><small>${escapeHtml(layer.label)}</small><div>${layer.nodes.map((node) => `<article data-node-type="${escapeHtml(node.type)}"><b>${escapeHtml(node.label)}</b><p>${escapeHtml(node.plain_text)}</p></article>`).join("")}</div></div>${index < layers.length - 1 ? `<span class="reasoning-arrow" aria-hidden="true">↓</span>` : ""}`).join("")}<details class="reasoning-relations"><summary>查看信息之间的具体关系</summary><ul>${(graph.edges || []).map((edge) => `<li data-relation="${escapeHtml(edge.relation)}"><span>${escapeHtml(labels[edge.source] || edge.source)}</span><b>${escapeHtml(graph.legend?.[edge.relation] || edge.label)}</b><span>${escapeHtml(labels[edge.target] || edge.target)}</span><small>${escapeHtml(edge.label)}</small></li>`).join("")}</ul></details></div>`;
+}
+
+function professionalDetails(level) {
+  const details = level?.terms || [];
+  return `<details class="patient-professional-details"><summary>查看专业名词、原始数值和来源</summary><div class="professional-term-list">${details.map((item) => `<article><header><b>${escapeHtml(item.term)}</b><span>${escapeHtml(item.value)}</span></header><p>${escapeHtml(item.meaning)}</p><small>来源：${escapeHtml(item.source)}</small></article>`).join("") || `<p class="muted-copy">当前还没有专业检查详情。</p>`}</div><p>${escapeHtml(level?.notice || "专业信息用于和医生核对。")}</p></details>`;
+}
+
 function patientExplanation(explanation) {
   if (!explanation) return `<section class="plain-explanation"><h2>还没有 AI 通俗解读</h2><p>医院结果进入并完成辅助判断后，这里会解释发生了什么、为什么重要和下一步做什么。</p></section>`;
+  const levels = explanation.language_levels || {};
   return `<section class="plain-explanation">
-    <div class="panel-heading"><div><p class="eyebrow">PATIENT EXPLANATION · v${escapeHtml(explanation.assessment_version)}</p><h2>${escapeHtml(explanation.headline)}</h2></div><span>${escapeHtml(explanation.doctor_confirmation?.label)}</span></div>
-    <p class="explanation-lead">${escapeHtml(explanation.summary)}</p>
-    <div class="explanation-columns"><div><h3>最关键的三条依据</h3>${list(explanation.key_evidence)}</div><div><h3>哪些反证降低了其他方向</h3>${list(explanation.contradictions)}</div><div><h3>还缺什么</h3>${list(explanation.missing_information)}</div></div>
+    <div class="panel-heading"><div><p class="eyebrow">WHY THIS ASSESSMENT · v${escapeHtml(explanation.assessment_version)}</p><h2>为什么 AI 这样判断</h2></div><span>${escapeHtml(explanation.doctor_confirmation?.label)}</span></div>
+    <div class="language-level-one"><small>先看一句话</small><p>${escapeHtml(levels.level_1 || explanation.summary)}</p></div>
+    <div class="language-level-two"><h3>判断是怎样一步步形成的</h3>${patientReasoningGraph(explanation.reasoning_graph)}<ol>${(levels.level_2 || []).map((step) => `<li>${escapeHtml(step)}</li>`).join("")}</ol></div>
+    <div class="explanation-columns patient-evidence-groups"><div><h3>支持这个判断</h3>${list(explanation.key_evidence)}</div><div><h3>反对或降低其他判断</h3>${list(explanation.contradictions)}</div><div><h3>还没有确认</h3>${list(explanation.missing_information)}</div></div>
+    ${professionalDetails(levels.level_3)}
     <div class="danger-strip"><b>仍需留意的危险情况与对应检查</b>${list((explanation.dangerous_conditions || []).map((item) => `${item.name}：${item.action}；对应检查：${(item.exams || []).slice(0, 3).join("、") || "由医生评估"}`))}</div>
     <p class="next-action"><b>现在最需要做：</b>${escapeHtml(explanation.next_action)}</p><small>${escapeHtml(explanation.boundary)}</small>
   </section>`;
