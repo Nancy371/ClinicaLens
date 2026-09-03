@@ -62,6 +62,8 @@ class CareRoleDomainTests(unittest.IsolatedAsyncioTestCase):
         self.assertNotIn("assessment_versions", payload)
         self.assertNotIn("exam_recommendations", payload)
         self.assertNotIn("treatment_recommendations", payload)
+        self.assertNotIn("raw_case_document", payload)
+        self.assertNotIn("consultation_case_documents", payload)
         self.assertNotIn('"evidence"', serialized)
         self.assertGreater(len(payload["exam_reports"]), 0)
         self.assertGreater(len(payload["patient_explanations"]), 0)
@@ -72,6 +74,8 @@ class CareRoleDomainTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(link["status"], "active")
         payload = await self.runtime.get_clinician_journey(self.clinician["id"], self.journey_id)
         self.assertEqual(payload["projection"], "clinician")
+        self.assertIn("raw_case_document", payload)
+        self.assertIn("consultation_case_documents", payload)
         self.assertIn("assessment_versions", payload)
         self.assertIn("exam_recommendations", payload)
         with self.assertRaises(CareError) as context:

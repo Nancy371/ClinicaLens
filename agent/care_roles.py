@@ -367,7 +367,7 @@ def patient_journey_dto(journey: Dict[str, Any]) -> Dict[str, Any]:
     source = hydrate_journey_v3(journey)
     allowed = {
         "schema_version", "id", "title", "status", "current_stage", "created_at", "updated_at",
-        "patient_profile", "clinical_history", "raw_case_document", "consultation_case_documents", "consultation", "hospital_connection",
+        "patient_profile", "clinical_history", "consultation", "hospital_connection",
         "hospital_sync_status", "last_hospital_sync_at", "synced_batches", "exam_reports",
         "records",
         "patient_explanations", "triage", "appointment_plan", "doctor_plan", "followups", "medications",

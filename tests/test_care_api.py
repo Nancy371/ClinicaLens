@@ -289,6 +289,9 @@ class CareApiTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(clinician["projection"], "clinician")
         self.assertNotIn("assessment_versions", patient)
         self.assertNotIn("exam_recommendations", patient)
+        self.assertNotIn("raw_case_document", patient)
+        self.assertNotIn("consultation_case_documents", patient)
+        self.assertIn("raw_case_document", clinician)
         self.assertEqual(len(clinician["assessment_versions"]), 4)
         self.assertGreaterEqual(len(clinician["exam_recommendations"]), 8)
 

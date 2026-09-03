@@ -7,7 +7,7 @@ const $$ = (selector) => [...document.querySelectorAll(selector)];
 const HISTORY_FIELDS = ["conditions", "surgeries", "current_medications", "allergies", "family_history", "social_history"];
 const HISTORY_LABELS = { conditions: "疾病史", surgeries: "手术史", current_medications: "当前用药", allergies: "过敏史", family_history: "家族史", social_history: "个人与暴露史" };
 const NAV = {
-  patient: [["consultation", "问诊", "问"], ["case", "病例", "历"], ["aftercare", "治后", "护"]],
+  patient: [["consultation", "问诊", "问"], ["case", "我的情况", "况"], ["aftercare", "治后", "护"]],
   clinician: [["clinician-case", "病例", "历"], ["clinician-exams", "检查", "检"], ["diagnosis", "诊断", "诊"], ["clinician-treatment", "治疗", "治"]],
 };
 
@@ -128,9 +128,14 @@ function renderPatientCase() {
   const latest = (item.patient_explanations || []).at(-1);
   const syncFailed = item.hospital_sync_status === "failed";
   const needsFallback = syncFailed || reports.length < 7;
-  $("#case-content").innerHTML = `${previewBanner()}<div class="fictional-banner"><b>问诊生成病例原文</b><span>${escapeHtml(item.raw_case_document?.notice || "由问诊生成的 AI 整理稿。")}</span></div>${rawCaseDocument(item)}${writable() && role() === "patient" ? `<div class="case-document-actions"><button class="button button-secondary" type="button" data-action="generate-case-document">根据最新问诊重新生成</button>${item.raw_case_document?.status !== "confirmed" ? `<button class="button button-primary" type="button" data-action="confirm-case-document">确认本版问诊病历</button>` : ""}</div>` : ""}${historyPanel(item, writable() && role() === "patient")}
+  const patientMessages = (item.consultation?.messages || []).filter((message) => message.role === "user" && message.text);
+  const currentHeadline = latest?.headline || "还没有形成辅助判断";
+  const currentSummary = latest?.summary || "完成问诊、病史确认和检查同步后，这里会说明目前可能是什么情况。";
+  $("#case-content").innerHTML = `${previewBanner()}<section class="patient-overview"><div><p class="eyebrow">CURRENT SITUATION</p><h2>我现在可能是什么情况</h2><strong>${escapeHtml(currentHeadline)}</strong><p>${escapeHtml(currentSummary)}</p></div><span>${escapeHtml(latest?.doctor_confirmation?.label || "等待更多信息")}</span></section>
+    <section class="patient-information"><div class="panel-heading"><div><p class="eyebrow">WHAT I SHARED</p><h2>我告诉过 AI 什么</h2></div><span>${patientMessages.length} 条信息</span></div>${patientMessages.length ? `<ol class="patient-fact-list">${patientMessages.map((message) => `<li><time>${formatDate(message.created_at)}</time><p>${escapeHtml(message.text)}</p></li>`).join("")}</ol>` : `<p class="muted-copy">完成问诊后，你提供的信息会显示在这里。</p>`}</section>
+    ${historyPanel(item, writable() && role() === "patient")}
     <section class="exam-report-section"><div class="sync-toolbar"><div><p class="eyebrow">HOSPITAL CONNECTOR</p><h2>检查结果</h2><p>${escapeHtml(item.hospital_connection?.display_name || "尚未连接医院")} · ${item.hospital_sync_status === "completed" ? "同步完成" : syncFailed ? "同步失败" : "等待同步"} · 最后同步 ${item.last_hospital_sync_at ? formatDate(item.last_hospital_sync_at) : "—"}</p></div><div><button class="button button-secondary" type="button" data-action="sync-records">重新同步医院</button>${needsFallback ? `<button class="button button-ghost" type="button" data-action="upload-fallback">上传报告兜底</button>` : ""}</div></div>${renderExamReports(reports, { dispute: writable() && role() === "patient" })}</section>
-    ${patientExplanation(latest)}${boundaryPanel()}`;
+    ${patientExplanation(latest)}<section class="patient-next-action"><p class="eyebrow">NEXT ACTION</p><h2>我现在应该做什么</h2><p>${escapeHtml(latest?.next_action || "先完成问诊和病史确认，再根据已有信息安排下一步。")}</p></section>${boundaryPanel()}`;
 }
 
 function renderClinicianCase() {
