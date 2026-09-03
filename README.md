@@ -8,6 +8,12 @@ ClinicaLens 围绕一个持续的健康事件，帮助用户完成：
 
 它解决的问题不是“再生成一个诊断”，而是让用户知道依据来自哪里、候选方向为什么变化、有哪些反证、还缺什么，以及什么时候必须交给医生。
 
+## 离线公开 Demo
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2FNancy371%2FClinicaLens)
+
+根目录 `render.yaml` 当前只创建一个免费 Static Site，发布 `web/` 中的脱敏离线体验。它不创建 API 服务、不接收任意病例输入，也不需要模型、患者服务或数据库凭证。点击上方按钮后，在 Render 复核资源并批准部署即可。
+
 ## 医疗边界
 
 - AI 提供候选方向、证据解释、反证、紧急度、就医准备和无个体剂量的治疗路径参考。
