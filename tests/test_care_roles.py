@@ -160,6 +160,33 @@ class CareRoleDomainTests(unittest.IsolatedAsyncioTestCase):
         self.assertIsNone(internal["assessment"])
         self.assertEqual(next(item for item in internal["exam_reports"] if item["id"] == "report-immunology")["verification_status"], "disputed")
         self.assertEqual(next(item for item in internal["records"] if item["id"] == "record-anca")["verification_status"], "needs_correction")
+        correction = internal["information_corrections"][-1]
+        self.assertEqual(correction["field"], "exam_report:report-immunology")
+        self.assertEqual(correction["source"]["type"], "patient")
+        self.assertEqual(correction["affected_assessment_version"], "assessment-v4")
+        self.assertIn("退出当前证据集", correction["impact"])
+
+    async def test_history_change_records_values_source_and_affected_assessment(self):
+        sample = await self.runtime.public_sample("legacy")
+        sample["id"] = self.journey_id
+        sample["owner_id"] = self.patient["id"]
+        await self.runtime.repository.save_journey(self.patient["id"], sample)
+        history = json.loads(json.dumps(sample["clinical_history"], ensure_ascii=False))
+        history["current_medications"].append({
+            "name": "维生素片", "dose": "1 片", "frequency": "每日一次", "source": "患者补充",
+        })
+        history["reason"] = "刚刚想起还在服用保健品"
+        result = await self.runtime.update_clinical_history(self.patient["id"], self.journey_id, history)
+        self.assertEqual(result["corrections_created"], 1)
+        patient = await self.runtime.get_patient_journey(self.patient["id"], self.journey_id)
+        correction = patient["information_corrections"][-1]
+        self.assertEqual(correction["field"], "current_medications")
+        self.assertEqual(correction["field_label"], "当前用药")
+        self.assertEqual(correction["source"], {"type": "patient", "label": "患者本人"})
+        self.assertEqual(correction["affected_assessment_version"], "assessment-v4")
+        self.assertIn("保健品", correction["reason"])
+        self.assertNotEqual(correction["old_value"], correction["new_value"])
+        self.assertIsNone((await self.runtime.get_journey(self.patient["id"], self.journey_id))["assessment"])
 
     async def test_exam_decision_requires_reason_and_creates_only_sandbox_order(self):
         await self.authorize()

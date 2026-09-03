@@ -473,6 +473,7 @@ def hydrate_journey(journey: Dict[str, Any]) -> Dict[str, Any]:
         upgraded["assessment_versions"] = [old]
     upgraded.setdefault("treatment_reference", treatment_reference())
     upgraded.setdefault("doctor_plan", None)
+    upgraded.setdefault("information_corrections", [])
     upgraded.setdefault("medications", [])
     upgraded.setdefault("prescription_drafts", [])
     upgraded.setdefault("signed_prescriptions", [])
@@ -576,6 +577,32 @@ def public_sample_journey() -> Dict[str, Any]:
         for index, medication in enumerate(journey["medications"], start=1)
     ]
     journey["followups"] = [{"id": "sample-followup-1", "title": "风湿免疫科与肾内科联合复诊", "scheduled_at": "2026-09-23T09:00:00+08:00", "status": "scheduled", "source": deepcopy(doctor_source)}]
+    journey["information_corrections"] = [
+        {
+            "id": "sample-correction-patient-medication",
+            "field": "current_medications",
+            "field_label": "当前用药",
+            "old_value": "没有使用止痛药",
+            "new_value": "近一个月关节痛时偶尔服用布洛芬 200 mg",
+            "source": {"type": "patient", "label": "患者本人"},
+            "timestamp": "2026-09-02T08:06:00+08:00",
+            "reason": "补充回忆起的非处方药",
+            "affected_assessment_version": "assessment-v1",
+            "impact": "AI 已重新核对用药风险；该修改未单独决定诊断。",
+        },
+        {
+            "id": "sample-correction-doctor-assessment",
+            "field": "primary_assessment",
+            "field_label": "当前判断",
+            "old_value": "单一肺部疾病方向",
+            "new_value": "结合尿检和肾功能，修正为肺肾共同受累方向",
+            "source": {"type": "doctor", "label": "沙箱医生记录"},
+            "timestamp": "2026-09-02T16:00:00+08:00",
+            "reason": "医生结合新增检查结果复核",
+            "affected_assessment_version": "assessment-v2",
+            "impact": "医生修正已与 AI 历史版本并列保留。",
+        },
+    ]
     return journey
 
 

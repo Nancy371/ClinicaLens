@@ -455,6 +455,7 @@ def hydrate_journey_v3(journey: Dict[str, Any]) -> Dict[str, Any]:
     upgraded.setdefault("signed_prescriptions", [])
     upgraded.setdefault("treatment_provenance", [])
     upgraded.setdefault("care_team_links", [])
+    upgraded.setdefault("information_corrections", [])
     upgraded.setdefault("last_hospital_sync_at", None)
     upgraded.setdefault("hospital_sync_status", "not_started")
     return upgraded
@@ -469,6 +470,7 @@ def patient_journey_dto(journey: Dict[str, Any]) -> Dict[str, Any]:
         "records",
         "patient_explanations", "triage", "appointment_plan", "doctor_plan", "followups", "medications",
         "reminders", "timeline", "consents", "confirmed_treatment_direction", "treatment_provenance",
+        "information_corrections",
     }
     dto = {key: deepcopy(value) for key, value in source.items() if key in allowed}
     dto["projection"] = "patient"

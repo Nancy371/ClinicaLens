@@ -530,6 +530,10 @@ class CareApiTests(unittest.IsolatedAsyncioTestCase):
         self.assertNotIn("assessment", updated)
         self.assertIsNone(updated["appointment_plan"])
         self.assertEqual(updated["current_stage"], "confirm_records")
+        correction = updated["information_corrections"][-1]
+        self.assertEqual(correction["source"]["type"], "patient")
+        self.assertIn("原文症状记录有误", correction["new_value"])
+        self.assertTrue(correction["affected_assessment_version"])
         session = await (await self.client.get("/api/v1/session")).json()
         internal = await self.runtime.get_journey(session["user"]["id"], journey["id"])
         self.assertIsNone(internal["assessment"])

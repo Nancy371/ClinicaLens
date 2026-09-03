@@ -59,6 +59,14 @@ ALLOWED_UPLOAD_TYPES = {
     "image/webp",
 }
 MAX_UPLOAD_BYTES = 10 * 1024 * 1024
+HISTORY_FIELD_LABELS = {
+    "conditions": "疾病史",
+    "surgeries": "手术史",
+    "current_medications": "当前用药",
+    "allergies": "过敏史",
+    "family_history": "家族史",
+    "social_history": "个人与暴露史",
+}
 
 
 def utc_now() -> str:
@@ -79,6 +87,44 @@ def _mask_phone(phone: str) -> str:
 
 def _safe_text(value: Any, limit: int = 180) -> str:
     return str(value or "").strip()[:limit]
+
+
+def _current_assessment_version_id(journey: Dict[str, Any]) -> str:
+    assessment = journey.get("assessment") or {}
+    if assessment.get("id"):
+        return _safe_text(assessment["id"], 80)
+    if assessment.get("version"):
+        return f"assessment-v{assessment['version']}"
+    return ""
+
+
+def _append_information_correction(
+    journey: Dict[str, Any],
+    *,
+    field: str,
+    field_label: str,
+    old_value: Any,
+    new_value: Any,
+    source_type: str,
+    source_label: str,
+    reason: str = "",
+    affected_assessment_version: str = "",
+    impact: str,
+) -> Dict[str, Any]:
+    correction = {
+        "id": str(uuid.uuid4()),
+        "field": field,
+        "field_label": field_label,
+        "old_value": _copy(old_value),
+        "new_value": _copy(new_value),
+        "source": {"type": source_type, "label": source_label},
+        "timestamp": utc_now(),
+        "reason": _safe_text(reason, 300),
+        "affected_assessment_version": _safe_text(affected_assessment_version, 80) or None,
+        "impact": impact,
+    }
+    journey.setdefault("information_corrections", []).append(correction)
+    return correction
 
 
 class CareError(RuntimeError):
@@ -1906,6 +1952,8 @@ class CareRuntime:
         journey = await self._owned_journey(owner_id, journey_id)
         required = ("conditions", "surgeries", "current_medications", "allergies", "family_history", "social_history")
         history = _copy(journey.get("clinical_history") or sample_clinical_history())
+        previous_values = {key: _copy(history.get(key)) for key in required}
+        affected_version = _current_assessment_version_id(journey)
         for key in required:
             if key in payload:
                 value = payload[key]
@@ -1922,16 +1970,35 @@ class CareRuntime:
         complete = all(history["field_statuses"].get(key) in {"confirmed", "unknown"} for key in required)
         history["confirmation_status"] = "confirmed" if complete else "unconfirmed"
         history["confirmed_at"] = utc_now() if complete else None
-        history["source"] = "用户对照完整虚构病例确认"
+        history["source"] = "患者本人核对"
         journey["clinical_history"] = history
+        changed_fields = [key for key in required if previous_values.get(key) != history.get(key)]
+        correction_reasons = payload.get("correction_reasons") if isinstance(payload.get("correction_reasons"), dict) else {}
+        default_reason = _safe_text(payload.get("reason"), 300)
+        for key in changed_fields:
+            _append_information_correction(
+                journey,
+                field=key,
+                field_label=HISTORY_FIELD_LABELS[key],
+                old_value=previous_values.get(key),
+                new_value=history.get(key),
+                source_type="patient",
+                source_label="患者本人",
+                reason=_safe_text(correction_reasons.get(key), 300) or default_reason,
+                affected_assessment_version=affected_version,
+                impact=(
+                    f"AI 已撤回 {affected_version} 并等待重新评估。"
+                    if affected_version else "修改已进入后续问诊和评估输入。"
+                ),
+            )
         self._refresh_consultation_case_document(journey)
         journey["assessment"] = None
         journey["appointment_plan"] = None
         journey["current_stage"] = "record_sync" if complete else "history_confirmation"
-        journey["timeline"].append({"id": str(uuid.uuid4()), "type": "clinical_history_updated", "title": "关键病史已更新", "detail": "旧判断已撤回；历史评估版本仍保留用于对比。", "source": "user", "created_at": utc_now()})
+        journey["timeline"].append({"id": str(uuid.uuid4()), "type": "clinical_history_updated", "title": "关键病史已更新", "detail": f"修改 {len(changed_fields)} 项；旧判断已撤回，历史评估版本仍保留用于对比。", "source": "user", "created_at": utc_now()})
         await self.repository.save_journey(owner_id, journey)
-        await self.repository.audit(owner_id, "clinical_history_updated", "journey", journey_id, {"complete": complete})
-        return {"clinical_history": history, "current_stage": journey["current_stage"], "assessment_withdrawn": True}
+        await self.repository.audit(owner_id, "clinical_history_updated", "journey", journey_id, {"complete": complete, "changed_fields": changed_fields})
+        return {"clinical_history": history, "current_stage": journey["current_stage"], "assessment_withdrawn": True, "corrections_created": len(changed_fields)}
 
     async def sync_record_batch(self, owner_id: str, journey_id: str, batch_key: str) -> Dict[str, Any]:
         journey = await self._owned_journey(owner_id, journey_id)
@@ -2010,6 +2077,7 @@ class CareRuntime:
         record = next((item for item in journey["records"] if item["id"] == record_id), None)
         if record is None:
             raise CareError("record_not_found", "病历记录不存在。", 404)
+        affected_version = _current_assessment_version_id(journey)
         record["verification_status"] = "user_confirmed" if confirmed else "needs_correction"
         record["user_correction"] = _safe_text(correction, 300) if not confirmed else ""
         for evidence in journey["evidence"]:
@@ -2018,6 +2086,19 @@ class CareRuntime:
         journey["assessment"] = None
         journey["appointment_plan"] = None
         journey["current_stage"] = _stage_after_records(journey)
+        if not confirmed:
+            _append_information_correction(
+                journey,
+                field=f"record:{record_id}",
+                field_label=record.get("title") or "病历记录",
+                old_value=record.get("items") or record.get("content") or "原记录",
+                new_value=record["user_correction"] or "患者标记为可能有误",
+                source_type="patient",
+                source_label="患者本人",
+                reason=record["user_correction"],
+                affected_assessment_version=affected_version,
+                impact=(f"该记录已退出当前证据集；{affected_version} 已撤回。" if affected_version else "该记录已退出当前证据集。"),
+            )
         await self.repository.save_journey(owner_id, journey)
         await self.repository.audit(owner_id, "record_reviewed", "record", record_id, {"confirmed": confirmed})
         return {"record": record, "current_stage": journey["current_stage"]}
@@ -2040,6 +2121,7 @@ class CareRuntime:
         clean_reason = _safe_text(reason, 400)
         if not clean_reason:
             raise CareError("dispute_reason_required", "请说明哪一项结果可能有误。")
+        affected_version = _current_assessment_version_id(journey)
         report["verification_status"] = "disputed"
         report["dispute"] = {"reason": clean_reason, "reported_at": utc_now(), "status": "pending_hospital_review"}
         for observation in report.get("observations", []):
@@ -2056,6 +2138,18 @@ class CareRuntime:
         journey["assessment"] = None
         journey["appointment_plan"] = None
         journey["current_stage"] = "confirm_records"
+        _append_information_correction(
+            journey,
+            field=f"exam_report:{report_id}",
+            field_label=report.get("title") or "检查报告",
+            old_value="医院同步结果已进入 AI 证据集",
+            new_value=f"患者提出争议：{clean_reason}",
+            source_type="patient",
+            source_label="患者本人",
+            reason=clean_reason,
+            affected_assessment_version=affected_version,
+            impact=(f"整份报告已退出当前证据集；{affected_version} 已撤回。" if affected_version else "整份报告已退出当前证据集。"),
+        )
         journey.setdefault("timeline", []).append({
             "id": str(uuid.uuid4()), "type": "exam_report_disputed", "title": f"检查结果已提出争议：{report.get('title')}",
             "detail": "该报告已退出当前 Agent 证据集；历史诊断版本保留但不再视为当前判断。",
@@ -2260,6 +2354,19 @@ class CareRuntime:
         }
         followup_at = _safe_text(payload.get("followup_at"), 40)
         journey["doctor_plan"] = plan
+        for revision in plan["comparison"]["revisions"]:
+            _append_information_correction(
+                journey,
+                field="primary_assessment",
+                field_label="AI 辅助判断",
+                old_value=plan["comparison"].get("ai_primary") or "此前 AI 判断",
+                new_value=revision,
+                source_type="doctor",
+                source_label=source_label,
+                reason="医生结合就诊记录复核",
+                affected_assessment_version=plan["comparison"].get("ai_assessment_version_id") or "",
+                impact="医生修正已与 AI 历史判断并列保留，不会覆盖来源记录。",
+            )
         journey["patient_explanations"] = build_patient_explanations(journey)
         explanation_map = {
             item["assessment_version_id"]: item for item in journey["patient_explanations"]
