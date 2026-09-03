@@ -2,6 +2,5 @@ services:
   - type: web
     name: clinicalens-web
     runtime: static
-    plan: free
     buildCommand: python tools/build_web_config.py
     staticPublishPath: ./web
