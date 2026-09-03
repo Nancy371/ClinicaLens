@@ -16,9 +16,9 @@ ClinicaLens 围绕一个持续的健康事件，帮助用户完成：
 
 ## 医疗边界
 
-- AI 提供候选方向、证据解释、反证、紧急度、就医准备和无个体剂量的治疗路径参考。
-- 医生负责确诊、检查医嘱、个体治疗决策、处方和剂量。
-- AI 输出不能创建复诊或用药任务；只有医院回传或医生文档可以。
+- AI 提供候选方向、证据解释、反证、紧急度、就医准备，以及带指南来源的治疗路径与剂量草稿。
+- 医生负责确诊、检查医嘱和个体治疗决策；确认路径只生成医生端草稿，第二次签署后才成为沙箱处方并创建患者提醒。
+- 处方签署必须核对诊断、过敏、感染筛查和剂量；患者或未授权医生不能签署。
 - 命中咯血、明显呼吸困难或意识异常等危险信号时，普通流程立即停止并提示急诊。
 - 本项目不提供线上问诊、电子处方、院内号源或支付。
 
@@ -28,11 +28,11 @@ ClinicaLens 围绕一个持续的健康事件，帮助用户完成：
 
 1. 未登录可切换患者版和医生版完整虚构样例；登录后角色由服务端决定，不能在前端切换。
 2. 问诊先运行咯血、低氧、静息气促和意识异常的确定性安全分流。
-3. 对照完整虚构病例原文，逐项确认疾病史、用药史、过敏史、家族史和暴露史。
+3. AI 根据问诊生成可追溯的病例整理稿；每段可查看来源消息，检查和医生结论不会混入问诊原文。
 4. 检查以医院接口同步为主，按医院—日期—报告连续表格展示；上传仅在同步失败或缺失时兜底。
 5. 患者查看与诊断版本绑定的通俗解释；医生查看 `v1–v4` 主诊断变化、鉴别、支持/反证、缺失检查和危险疾病。
-6. 医生逐项确认、修改或拒绝具体检查建议与无剂量治疗路径，所有决定保留理由和审计。
-7. 同步医生诊断、复诊计划和处方，患者查看审核药物说明并记录执行、错过和不良反应。
+6. 医生查看“可能漏掉的疾病—对应检查”矩阵，并逐项确认、修改或拒绝检查建议。
+7. 医生先确认 AI 指南路径生成剂量草稿，再二次签署为处方；患者查看 AI 与医生结论对比、提醒及审核药物说明。
 
 页面包含医院接口超时、证据未确认、危险症状、低确定性和推送未配置等非成功状态，不会把每条路径伪装为成功。
 
@@ -107,6 +107,8 @@ aiohttp /api/v1
 - `PATCH /api/v1/journeys/{journey_id}/exam-reports/{report_id}`
 - `GET /api/v1/journeys/{journey_id}/patient-explanations`
 - `POST /api/v1/journeys/{journey_id}/consultation/messages`
+- `GET/POST /api/v1/journeys/{journey_id}/consultation-case-documents`
+- `PATCH /api/v1/journeys/{journey_id}/consultation-case-documents/{document_id}`
 - `PATCH /api/v1/journeys/{journey_id}/clinical-history`
 - `POST /api/v1/journeys/{journey_id}/record-batches/{batch_key}/sync`
 - `GET /api/v1/journeys/{journey_id}/assessment-versions`
@@ -121,12 +123,15 @@ aiohttp /api/v1
 
 - `POST /api/v1/care-access-grants`
 - `POST /api/v1/care-access-grants/redeem`
+- `GET /api/v1/care-team-links`
 - `DELETE /api/v1/care-team-links/{link_id}`
 - `GET /api/v1/clinician/journeys`
 - `GET /api/v1/clinician/journeys/{journey_id}`
 - `GET /api/v1/clinician/journeys/{journey_id}/exam-recommendations`
 - `POST /api/v1/clinician/journeys/{journey_id}/exam-recommendations/{recommendation_id}/decision`
 - `POST /api/v1/clinician/journeys/{journey_id}/treatment-recommendations/{recommendation_id}/decision`
+- `POST /api/v1/clinician/journeys/{journey_id}/prescription-drafts/{draft_id}/sign`
+- `POST /api/v1/clinician/journeys/{journey_id}/prescription-drafts/{draft_id}/cancel`
 
 ### 复诊、用药和通知
 

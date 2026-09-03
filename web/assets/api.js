@@ -64,6 +64,8 @@ export class CareApi {
   consultation(id, message, dangerSigns = []) {
     return this.request(`/api/v1/journeys/${encodeURIComponent(id)}/consultation/messages`, { method: "POST", body: { message, danger_signs: dangerSigns } });
   }
+  generateConsultationCase(id) { return this.request(`/api/v1/journeys/${encodeURIComponent(id)}/consultation-case-documents`, { method: "POST", body: {} }); }
+  confirmConsultationCase(journeyId, documentId, corrections = []) { return this.request(`/api/v1/journeys/${encodeURIComponent(journeyId)}/consultation-case-documents/${encodeURIComponent(documentId)}`, { method: "PATCH", body: { corrections } }); }
   updateHistory(id, payload) {
     return this.request(`/api/v1/journeys/${encodeURIComponent(id)}/clinical-history`, { method: "PATCH", body: payload });
   }
@@ -86,6 +88,7 @@ export class CareApi {
   medicationEvent(id, type, note = "") { return this.request(`/api/v1/medications/${encodeURIComponent(id)}/events`, { method: "POST", body: { type, note } }); }
   upload(form) { return this.request("/api/v1/record-imports", { method: "POST", body: form, timeout: 30000 }); }
   createCareAccessGrant(journeyId) { return this.request("/api/v1/care-access-grants", { method: "POST", body: { journey_id: journeyId } }); }
+  careTeamLinks(journeyId) { return this.request(`/api/v1/care-team-links?journey_id=${encodeURIComponent(journeyId)}`); }
   redeemCareAccessGrant(code) { return this.request("/api/v1/care-access-grants/redeem", { method: "POST", body: { code } }); }
   revokeCareTeamLink(id) { return this.request(`/api/v1/care-team-links/${encodeURIComponent(id)}`, { method: "DELETE", body: {} }); }
   clinicianJourneys() { return this.request("/api/v1/clinician/journeys"); }
@@ -93,6 +96,8 @@ export class CareApi {
   clinicianExamRecommendations(id) { return this.request(`/api/v1/clinician/journeys/${encodeURIComponent(id)}/exam-recommendations`); }
   decideExamRecommendation(journeyId, recommendationId, payload) { return this.request(`/api/v1/clinician/journeys/${encodeURIComponent(journeyId)}/exam-recommendations/${encodeURIComponent(recommendationId)}/decision`, { method: "POST", body: payload }); }
   decideTreatmentRecommendation(journeyId, recommendationId, payload) { return this.request(`/api/v1/clinician/journeys/${encodeURIComponent(journeyId)}/treatment-recommendations/${encodeURIComponent(recommendationId)}/decision`, { method: "POST", body: payload }); }
+  signPrescriptionDraft(journeyId, draftId, payload) { return this.request(`/api/v1/clinician/journeys/${encodeURIComponent(journeyId)}/prescription-drafts/${encodeURIComponent(draftId)}/sign`, { method: "POST", body: payload }); }
+  cancelPrescriptionDraft(journeyId, draftId, rationale) { return this.request(`/api/v1/clinician/journeys/${encodeURIComponent(journeyId)}/prescription-drafts/${encodeURIComponent(draftId)}/cancel`, { method: "POST", body: { rationale } }); }
   rerunClinicianAssessment(id) { return this.request(`/api/v1/clinician/journeys/${encodeURIComponent(id)}/assessments`, { method: "POST", body: {} }); }
   subscribe(subscription) { return this.request("/api/v1/push-subscriptions", { method: "POST", body: { subscription } }); }
   metrics() { return this.request("/api/sample/metrics"); }

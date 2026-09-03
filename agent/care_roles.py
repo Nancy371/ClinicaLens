@@ -1,7 +1,7 @@
-"""Role-aware v3 projections and curated sample clinical content.
+"""Role-aware v4 projections and curated sample clinical content.
 
-The module contains deterministic, reviewable sample data only.  It never
-generates patient-facing medical explanations or medication advice at runtime.
+The module contains deterministic, reviewable sample data only. Dose options
+remain clinician-only drafts until a clinician signs them.
 """
 
 from __future__ import annotations
@@ -54,6 +54,7 @@ def _observation(
     impact: str,
     locator: str,
     evidence_role: str = "supporting",
+    trend: str = "当前批次首次记录",
 ) -> Dict[str, Any]:
     return {
         "id": f"observation-{code}",
@@ -68,6 +69,8 @@ def _observation(
         or "暂无经过审核的通俗解释，请咨询医生。",
         "diagnostic_impact": impact,
         "evidence_role": evidence_role,
+        "trend": trend,
+        "entered_assessment_version": None,
         "source_locator": locator,
         "verification_status": "hospital_confirmed",
         "disputed": False,
@@ -133,7 +136,10 @@ def sample_exam_reports() -> List[Dict[str, Any]]:
         ),
     ]
     reports: List[Dict[str, Any]] = []
+    version_by_batch = {"baseline": "v1", "organ": "v2", "serology": "v3", "biopsy": "v4"}
     for report_id, batch_key, title, report_no, observed_at, observations in report_specs:
+        for observation in observations:
+            observation["entered_assessment_version"] = version_by_batch.get(batch_key)
         reports.append({
             "id": report_id,
             "batch_key": batch_key,
@@ -156,6 +162,38 @@ def reports_for_batches(batch_keys: Iterable[str]) -> List[Dict[str, Any]]:
     return [deepcopy(report) for report in sample_exam_reports() if report["batch_key"] in allowed]
 
 
+def legacy_reports_from_records(records: Iterable[Dict[str, Any]], covered_record_ids: Iterable[str] = ()) -> List[Dict[str, Any]]:
+    """Preserve old string observations without inventing ranges or explanations."""
+    covered = set(covered_record_ids)
+    reports: List[Dict[str, Any]] = []
+    for record in records:
+        if record.get("id") in covered:
+            continue
+        if record.get("kind") in {"symptom", "history", "note"}:
+            continue
+        observations = []
+        for index, raw in enumerate(record.get("items") or []):
+            observations.append({
+                "id": f"legacy-{record.get('id', 'record')}-{index}", "code": "legacy_observation",
+                "name": str(raw), "value": str(raw), "unit": "", "reference_range": None,
+                "reference_range_display": "原报告未提供", "interpretation_status": "待医生核对",
+                "patient_explanation": "暂无经过审核的通俗解释，请咨询医生。",
+                "diagnostic_impact": "旧版字符串记录已保留，但需核对原报告后才能解释诊断影响。",
+                "evidence_role": "unresolved", "source_locator": record.get("source", {}).get("locator") or "旧版记录",
+                "trend": "旧版记录未提供趋势", "entered_assessment_version": "legacy",
+                "verification_status": record.get("verification_status") or "unconfirmed", "disputed": False,
+            })
+        reports.append({
+            "id": f"legacy-report-{record.get('id', len(reports))}", "batch_key": "legacy",
+            "source": deepcopy(record.get("source") or {"type": "legacy", "label": "旧版记录", "locator": "未提供"}),
+            "hospital": "旧版数据（医院信息未提供）", "title": record.get("title") or "旧版检查记录",
+            "report_no": "原报告未提供", "observed_at": record.get("observed_at"), "received_at": record.get("observed_at"),
+            "verification_status": record.get("verification_status") or "unconfirmed", "observations": observations,
+            "record_ids": [record.get("id")], "dispute": None,
+        })
+    return reports
+
+
 def patient_explanation(assessment: Dict[str, Any], doctor_plan: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     stage = int(assessment.get("batch_stage") or assessment.get("version") or 1)
     support = {
@@ -170,7 +208,10 @@ def patient_explanation(assessment: Dict[str, Any], doctor_plan: Optional[Dict[s
     ][:3]
     missing = [item.get("name") for item in assessment.get("missing_exams", [])][:4]
     dangerous = [
-        {"name": item.get("name"), "status": item.get("status"), "action": item.get("action")}
+        {
+            "name": item.get("name"), "status": item.get("status"), "action": item.get("action"),
+            "exams": next((link.get("exam_items", []) for link in assessment.get("safety_matrix", []) if link.get("condition_name") == item.get("name")), []),
+        }
         for item in assessment.get("dangerous_conditions", [])
     ]
     confirmed = bool(doctor_plan and doctor_plan.get("verification_status") == "doctor_confirmed")
@@ -234,22 +275,65 @@ def sample_treatment_recommendations() -> List[Dict[str, Any]]:
         "authority": "decision_support",
         "status": "proposed",
         "decision": None,
-        "goals": deepcopy(reference.get("goals", [])),
+        "goals": [reference.get("goal")] if reference.get("goal") else [],
         "pathways": deepcopy(reference.get("pathways", [])),
-        "prerequisites": deepcopy(reference.get("before_use", [])),
+        "prerequisites": deepcopy(reference.get("prerequisites", [])),
         "risks": deepcopy(reference.get("major_risks", [])),
         "monitoring": deepcopy(reference.get("monitoring", [])),
+        "dose_options": [
+            {
+                "id": "rituximab-1g-two-dose",
+                "medication": "利妥昔单抗",
+                "dose": "1 g",
+                "route": "静脉输注",
+                "frequency": "第 1 天与第 15 天",
+                "duration": "两次院内输注",
+                "purpose": "器官威胁型 AAV 诱导缓解路径之一",
+                "dose_source": "KDIGO 2024 Figure 10",
+                "origin": "ai_guideline",
+                "requires": ["医生确认诊断", "感染与乙肝筛查", "血常规与免疫球蛋白基线", "输注条件"],
+            },
+            {
+                "id": "prednisolone-reduced-50-75kg",
+                "medication": "泼尼松",
+                "dose": "60 mg（第 1 周起始）",
+                "route": "口服",
+                "frequency": "第 1 周 60 mg/日；第 2 周 30 mg/日；随后按 PEXIVAS 减量表",
+                "duration": "按医生签署的分阶段计划",
+                "purpose": "联合诱导治疗并减少累计糖皮质激素暴露",
+                "dose_source": "KDIGO 2024 Figure 9 · PEXIVAS reduced-dose regimen",
+                "origin": "ai_guideline",
+                "requires": ["确认体重为 50–75 kg", "评估感染、血糖、血压、骨骼与精神风险", "医生逐阶段核对减量"],
+                "schedule": [
+                    {"period": "第 1 周", "dose": "60 mg 每日一次"},
+                    {"period": "第 2 周", "dose": "30 mg 每日一次"},
+                    {"period": "第 3–4 周", "dose": "25 mg 每日一次"},
+                    {"period": "第 5–6 周", "dose": "20 mg 每日一次"},
+                    {"period": "第 7–8 周", "dose": "15 mg 每日一次"},
+                    {"period": "第 9–10 周", "dose": "12.5 mg 每日一次"},
+                    {"period": "第 11–12 周", "dose": "10 mg 每日一次"},
+                    {"period": "第 13–14 周", "dose": "7.5 mg 每日一次"},
+                    {"period": "第 15–52 周", "dose": "5 mg 每日一次；后续由医生决定"},
+                ],
+            },
+        ],
+        "non_dosed_support": [
+            "肺孢子菌肺炎预防：KDIGO 建议低剂量 TMP-SMX 或替代方案，但本系统不从该指南自动推断具体剂量。",
+            "骨保护及其他支持治疗：具体药物与剂量需由医生依据院内规则补充。",
+        ],
         "guidelines": deepcopy(GUIDELINES),
-        "boundary": "确认治疗方向不会创建处方、剂量、用药任务或患者提醒。",
+        "boundary": "确认路径只生成医生端处方草稿；第二次签署后才创建患者处方与提醒。",
     }]
 
 
 def hydrate_journey_v3(journey: Dict[str, Any]) -> Dict[str, Any]:
     upgraded = deepcopy(journey)
-    upgraded["schema_version"] = "care-journey.v3"
+    upgraded["schema_version"] = "care-journey.v4"
     synced = upgraded.get("synced_batches") or []
     if "exam_reports" not in upgraded:
         upgraded["exam_reports"] = reports_for_batches(synced)
+        covered = {record_id for report in upgraded["exam_reports"] for record_id in report.get("record_ids", [])}
+        upgraded["exam_reports"].extend(legacy_reports_from_records(upgraded.get("records") or [], covered))
     upgraded.setdefault("patient_explanations", build_patient_explanations(upgraded))
     messages = upgraded.setdefault("consultation", {}).setdefault("messages", [])
     existing_updates = {item.get("assessment_version_id") for item in messages if item.get("kind") == "assessment_update"}
@@ -261,10 +345,18 @@ def hydrate_journey_v3(journey: Dict[str, Any]) -> Dict[str, Any]:
                 "assessment_version_id": version_id, "patient_explanation": deepcopy(explanation),
                 "created_at": explanation.get("created_at") or utc_now(),
             })
+    if upgraded.get("recommendation_catalog_version") != 2:
+        upgraded["exam_recommendations"] = sample_exam_recommendations()
+        upgraded["treatment_recommendations"] = sample_treatment_recommendations()
+        upgraded["recommendation_catalog_version"] = 2
     upgraded.setdefault("exam_recommendations", sample_exam_recommendations())
     upgraded.setdefault("exam_orders", [])
     upgraded.setdefault("treatment_recommendations", sample_treatment_recommendations())
     upgraded.setdefault("recommendation_decisions", [])
+    upgraded.setdefault("consultation_case_documents", [deepcopy(upgraded.get("raw_case_document"))] if upgraded.get("raw_case_document") else [])
+    upgraded.setdefault("prescription_drafts", [])
+    upgraded.setdefault("signed_prescriptions", [])
+    upgraded.setdefault("treatment_provenance", [])
     upgraded.setdefault("care_team_links", [])
     upgraded.setdefault("last_hospital_sync_at", None)
     upgraded.setdefault("hospital_sync_status", "not_started")
@@ -275,11 +367,11 @@ def patient_journey_dto(journey: Dict[str, Any]) -> Dict[str, Any]:
     source = hydrate_journey_v3(journey)
     allowed = {
         "schema_version", "id", "title", "status", "current_stage", "created_at", "updated_at",
-        "patient_profile", "clinical_history", "raw_case_document", "consultation", "hospital_connection",
+        "patient_profile", "clinical_history", "raw_case_document", "consultation_case_documents", "consultation", "hospital_connection",
         "hospital_sync_status", "last_hospital_sync_at", "synced_batches", "exam_reports",
         "records",
         "patient_explanations", "triage", "appointment_plan", "doctor_plan", "followups", "medications",
-        "reminders", "timeline", "consents", "confirmed_treatment_direction",
+        "reminders", "timeline", "consents", "confirmed_treatment_direction", "treatment_provenance",
     }
     dto = {key: deepcopy(value) for key, value in source.items() if key in allowed}
     dto["projection"] = "patient"
@@ -304,6 +396,6 @@ def public_sample_projection(journey: Dict[str, Any], audience: str) -> Dict[str
 
 __all__ = [
     "GUIDELINES", "build_patient_explanations", "clinician_journey_dto", "hydrate_journey_v3",
-    "patient_explanation", "patient_journey_dto", "public_sample_projection", "reports_for_batches",
+    "legacy_reports_from_records", "patient_explanation", "patient_journey_dto", "public_sample_projection", "reports_for_batches",
     "sample_exam_recommendations", "sample_exam_reports", "sample_treatment_recommendations",
 ]

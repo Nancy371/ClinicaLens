@@ -27,6 +27,7 @@ from agent.care_product import (
     all_sample_records as product_sample_records,
     answer_consultation,
     assessment_version as product_assessment_version,
+    build_consultation_case_document,
     build_evidence as product_build_evidence,
     hydrate_journey,
     medication_education,
@@ -34,7 +35,6 @@ from agent.care_product import (
     quick_questions,
     sample_clinical_history,
     sample_patient_profile,
-    sample_raw_case_document,
     sample_record_batches,
     treatment_reference,
 )
@@ -979,8 +979,10 @@ def _sample_records() -> List[Dict[str, Any]]:
 
 def new_journey(owner_id: str) -> Dict[str, Any]:
     now = utc_now()
+    initial_history = sample_clinical_history(confirmed=False)
+    initial_case_document = build_consultation_case_document([], initial_history, version=1)
     return hydrate_journey_v3(hydrate_journey({
-        "schema_version": "care-journey.v3",
+        "schema_version": "care-journey.v4",
         "id": str(uuid.uuid4()),
         "owner_id": owner_id,
         "title": "肺与肾的多项异常需要一起理解",
@@ -989,8 +991,9 @@ def new_journey(owner_id: str) -> Dict[str, Any]:
         "created_at": now,
         "updated_at": now,
         "patient_profile": sample_patient_profile(),
-        "clinical_history": sample_clinical_history(confirmed=False),
-        "raw_case_document": sample_raw_case_document(),
+        "clinical_history": initial_history,
+        "raw_case_document": initial_case_document,
+        "consultation_case_documents": [initial_case_document],
         "consultation": {"messages": [], "quick_questions": quick_questions()},
         "synced_batches": [],
         "assessment_versions": [],
@@ -1434,7 +1437,12 @@ class CareRuntime:
             }
         journey["patient_profile"] = _sample_patient_profile()
         journey["clinical_history"] = sample_clinical_history(confirmed=False)
-        journey["raw_case_document"] = sample_raw_case_document()
+        if not journey.get("raw_case_document") or journey.get("raw_case_document", {}).get("origin") != "consultation":
+            journey["raw_case_document"] = build_consultation_case_document(
+                journey.get("consultation", {}).get("messages", []),
+                journey["clinical_history"],
+                version=len(journey.get("consultation_case_documents") or []) + 1,
+            )
         journey["synced_batches"] = list(sample_record_batches())
         journey["records"] = records
         journey["exam_reports"] = reports_for_batches(journey["synced_batches"])
@@ -1604,7 +1612,7 @@ class CareRuntime:
             raise CareError("recommendation_rationale_required", "医生必须填写决策理由。")
         edits = payload.get("edits") if isinstance(payload.get("edits"), dict) else {}
         if action == "modified":
-            for key in ("goals", "pathways", "prerequisites", "risks", "monitoring"):
+            for key in ("goals", "pathways", "prerequisites", "risks", "monitoring", "dose_options"):
                 if key in edits and isinstance(edits[key], list):
                     recommendation[key] = _copy(edits[key][:20])
         decision = {
@@ -1612,25 +1620,186 @@ class CareRuntime:
             "recommendation_type": "treatment", "clinician_id": clinician_id,
             "action": action, "edits": _copy(edits) if action == "modified" else {},
             "rationale": rationale, "decided_at": utc_now(),
-            "boundary": "本决策未创建处方、剂量、用药任务或提醒。",
+            "boundary": "本次只确认指南路径并生成医生端处方草稿；患者处方与提醒尚未生效。",
         }
         recommendation["status"] = action
         recommendation["decision"] = _copy(decision)
         journey.setdefault("recommendation_decisions", []).append(_copy(decision))
+        draft = None
         if action in {"confirmed", "modified"}:
             journey["confirmed_treatment_direction"] = {
                 "title": recommendation.get("title"), "status": action,
                 "rationale": rationale, "source": "clinician", "confirmed_at": utc_now(),
-                "boundary": "这是医生确认的治疗方向，不是处方；实际用药只读取医生处方。",
+                "boundary": "医生已确认治疗方向；剂量草稿仍需第二次签署才会成为处方。",
             }
+            for existing in journey.setdefault("prescription_drafts", []):
+                if existing.get("recommendation_id") == recommendation_id and existing.get("status") == "draft":
+                    existing["status"] = "superseded"
+            items = []
+            for option in recommendation.get("dose_options") or []:
+                if not isinstance(option, dict):
+                    continue
+                medication = _safe_text(option.get("medication"), 100)
+                dose = _safe_text(option.get("dose"), 160)
+                frequency = _safe_text(option.get("frequency"), 240)
+                if not (medication and dose and frequency):
+                    continue
+                items.append({
+                    "id": str(uuid.uuid4()), "medication": medication, "dose": dose,
+                    "route": _safe_text(option.get("route"), 80) or "口服",
+                    "frequency": frequency, "duration": _safe_text(option.get("duration"), 160),
+                    "purpose": _safe_text(option.get("purpose"), 220),
+                    "dose_source": _safe_text(option.get("dose_source"), 220),
+                    "origin": "ai_guideline", "requires": _copy((option.get("requires") or [])[:12]),
+                    "schedule": _copy((option.get("schedule") or [])[:20]),
+                })
+            draft = {
+                "id": str(uuid.uuid4()), "recommendation_id": recommendation_id,
+                "assessment_version_id": (journey.get("assessment") or {}).get("id"),
+                "diagnosis_reference": _safe_text((journey.get("doctor_plan") or {}).get("diagnoses", [""])[0] if (journey.get("doctor_plan") or {}).get("diagnoses") else "", 160),
+                "items": items, "status": "draft", "clinician_id": clinician_id,
+                "path_decision_id": decision["id"], "created_at": utc_now(),
+                "boundary": "AI 生成的指南剂量草稿，仅医生可见；签署前不会创建患者任务。",
+            }
+            journey["prescription_drafts"].append(_copy(draft))
+            journey.setdefault("treatment_provenance", []).extend([
+                {"type": "ai_guideline_path", "label": "AI 提供指南路径", "at": decision["decided_at"]},
+                {"type": "clinician_path_confirmed", "label": "医生确认治疗路径", "at": decision["decided_at"], "clinician_id": clinician_id},
+                {"type": "prescription_draft_created", "label": "已生成剂量草稿，等待医生签署", "at": draft["created_at"], "draft_id": draft["id"]},
+            ])
         elif action == "rejected":
             journey["confirmed_treatment_direction"] = None
-        medication_snapshot = _json(journey.get("medications") or [])
         await self.repository.save_journey(patient_id, journey)
-        if medication_snapshot != _json(journey.get("medications") or []):
-            raise RuntimeError("Treatment recommendation decision must not mutate medications")
         await self.repository.audit(clinician_id, "treatment_recommendation_decided", "journey", journey_id, {"recommendation_id": recommendation_id, "action": action})
-        return {"recommendation": recommendation, "decision": decision, "created_prescription": False, "created_medication_task": False}
+        return {"recommendation": recommendation, "decision": decision, "prescription_draft": draft, "created_prescription_draft": bool(draft), "created_prescription": False, "created_medication_task": False}
+
+    async def sign_prescription_draft(
+        self, clinician_id: str, journey_id: str, draft_id: str, payload: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        patient_id, journey, _ = await self._clinician_journey(clinician_id, journey_id)
+        draft = next((item for item in journey.get("prescription_drafts", []) if item.get("id") == draft_id), None)
+        if draft is None:
+            raise CareError("prescription_draft_not_found", "处方草稿不存在。", 404)
+        if draft.get("status") == "signed":
+            signed = next((item for item in journey.get("signed_prescriptions", []) if item.get("draft_id") == draft_id), None)
+            return {"prescription_draft": draft, "signed_prescription": signed, "medications": journey.get("medications", []), "reminders": journey.get("reminders", []), "idempotent": True}
+        if draft.get("status") != "draft":
+            raise CareError("prescription_draft_not_signable", "该处方草稿已失效或取消。", 409)
+        doctor_plan = journey.get("doctor_plan") or {}
+        if doctor_plan.get("verification_status") != "doctor_confirmed" or not doctor_plan.get("diagnoses"):
+            raise CareError("doctor_diagnosis_required", "签署处方前必须已有医生确认诊断。", 409)
+        history = journey.get("clinical_history") or {}
+        if (history.get("field_statuses") or {}).get("allergies") not in {"confirmed", "unknown"}:
+            raise CareError("allergy_history_required", "签署处方前必须核对过敏史。", 409)
+        acknowledgements = {str(item) for item in payload.get("acknowledgements", []) if item}
+        required_acknowledgements = {"diagnosis", "allergies", "screening", "dose"}
+        if not required_acknowledgements.issubset(acknowledgements):
+            raise CareError("prescription_checks_required", "请完成诊断、过敏、感染筛查和剂量四项核对。", 409)
+        rationale = _safe_text(payload.get("rationale"), 500)
+        if not rationale:
+            raise CareError("prescription_rationale_required", "医生签署处方时必须填写临床理由。")
+        raw_items = payload.get("items") if isinstance(payload.get("items"), list) else draft.get("items") or []
+        items = []
+        for raw in raw_items[:20]:
+            if not isinstance(raw, dict):
+                continue
+            medication = _safe_text(raw.get("medication") or raw.get("name"), 100)
+            dose = _safe_text(raw.get("dose"), 160)
+            frequency = _safe_text(raw.get("frequency"), 240)
+            if not (medication and dose and frequency):
+                continue
+            original = next((item for item in draft.get("items", []) if item.get("medication") == medication), {})
+            items.append({
+                "id": _safe_text(raw.get("id"), 80) or str(uuid.uuid4()),
+                "medication": medication, "dose": dose,
+                "route": _safe_text(raw.get("route"), 80) or "口服",
+                "frequency": frequency, "duration": _safe_text(raw.get("duration") or raw.get("course"), 160),
+                "purpose": _safe_text(raw.get("purpose") or original.get("purpose"), 220),
+                "dose_source": _safe_text(raw.get("dose_source") or original.get("dose_source"), 220) or "医生修改/补充",
+                "origin": _safe_text(raw.get("origin") or original.get("origin"), 40) or "clinician_modified",
+                "requires": _copy((raw.get("requires") or original.get("requires") or [])[:12]),
+                "schedule": _copy((raw.get("schedule") or original.get("schedule") or [])[:20]),
+            })
+        if not items:
+            raise CareError("prescription_items_required", "至少需要一项完整的药物、剂量和频次。")
+        allergy_terms = [
+            str(item.get("allergen") or "")
+            for item in history.get("allergies", [])
+            if isinstance(item, dict) and item.get("status") not in {"known_none", "unknown"}
+        ]
+        for item in items:
+            name = item["medication"]
+            if any(term and (term in name or (term == "磺胺" and "磺胺" in name)) for term in allergy_terms):
+                raise CareError("medication_allergy_conflict", f"{name}与已确认过敏史存在冲突，不能签署。", 409)
+        signed_at = utc_now()
+        signed_source = {
+            "type": "clinician_signed_ai_path", "label": "医生签署的 AI 指南路径处方",
+            "clinician_id": clinician_id, "draft_id": draft_id,
+        }
+        signed = {
+            "id": str(uuid.uuid4()), "draft_id": draft_id,
+            "recommendation_id": draft.get("recommendation_id"),
+            "assessment_version_id": draft.get("assessment_version_id"),
+            "diagnosis_reference": doctor_plan["diagnoses"][0],
+            "items": _copy(items), "rationale": rationale, "status": "signed",
+            "source": signed_source, "signed_at": signed_at,
+            "notice": "沙箱医生签署记录；未向真实医院或药房发送电子处方。",
+        }
+        draft["status"] = "signed"
+        draft["signed_at"] = signed_at
+        draft["signed_prescription_id"] = signed["id"]
+        journey.setdefault("signed_prescriptions", []).append(_copy(signed))
+        existing = [item for item in journey.get("medications", []) if item.get("source", {}).get("draft_id") != draft_id]
+        medications = []
+        for index, item in enumerate(items):
+            scheduled_at = (datetime.now(timezone.utc) + timedelta(hours=24 if item["route"] == "静脉输注" else 8 + index)).isoformat()
+            medication = {
+                "id": str(uuid.uuid4()), "name": item["medication"], "dose": item["dose"],
+                "frequency": item["frequency"], "course": item["duration"], "route": item["route"],
+                "purpose": item["purpose"], "prescription_original": f"{item['medication']} {item['dose']}，{item['frequency']}",
+                "next_at": scheduled_at, "status": "active", "source": _copy(signed_source),
+                "events": [], "education": medication_education(item["medication"]),
+                "boundary": "按医生签署处方执行；改量、停药或换药必须重新由医生签署。",
+            }
+            medications.append(medication)
+        journey["medications"] = existing + medications
+        journey["reminders"] = [item for item in journey.get("reminders", []) if item.get("source", {}).get("draft_id") != draft_id]
+        journey["reminders"].extend([
+            {"id": str(uuid.uuid4()), "kind": "infusion" if item["route"] == "静脉输注" else "medication", "medication_id": medication["id"], "scheduled_at": medication["next_at"], "status": "scheduled", "source": _copy(signed_source)}
+            for item, medication in zip(items, medications)
+        ])
+        doctor_plan.setdefault("signed_prescription_ids", []).append(signed["id"])
+        journey["doctor_plan"] = doctor_plan
+        journey.setdefault("treatment_provenance", []).append({
+            "type": "clinician_prescription_signed", "label": "医生签署处方并创建患者提醒",
+            "at": signed_at, "draft_id": draft_id, "prescription_id": signed["id"],
+        })
+        journey.setdefault("timeline", []).append({
+            "id": str(uuid.uuid4()), "type": "prescription_signed", "title": "医生已签署处方",
+            "detail": f"已创建 {len(medications)} 项用药或院内治疗提醒。", "source": "clinician", "created_at": signed_at,
+        })
+        await self.repository.save_journey(patient_id, journey)
+        await self.repository.audit(clinician_id, "prescription_signed", "journey", journey_id, {"draft_id": draft_id, "medication_count": len(medications)})
+        return {"prescription_draft": draft, "signed_prescription": signed, "medications": medications, "reminders": journey["reminders"], "idempotent": False}
+
+    async def cancel_prescription_draft(
+        self, clinician_id: str, journey_id: str, draft_id: str, rationale: str
+    ) -> Dict[str, Any]:
+        patient_id, journey, _ = await self._clinician_journey(clinician_id, journey_id)
+        draft = next((item for item in journey.get("prescription_drafts", []) if item.get("id") == draft_id), None)
+        if draft is None:
+            raise CareError("prescription_draft_not_found", "处方草稿不存在。", 404)
+        if draft.get("status") == "signed":
+            raise CareError("signed_prescription_immutable", "已签署处方不能作为草稿取消，请按医生变更流程处理。", 409)
+        clean = _safe_text(rationale, 500)
+        if not clean:
+            raise CareError("prescription_rationale_required", "取消草稿必须填写理由。")
+        draft["status"] = "cancelled"
+        draft["cancelled_at"] = utc_now()
+        draft["cancel_rationale"] = clean
+        await self.repository.save_journey(patient_id, journey)
+        await self.repository.audit(clinician_id, "prescription_draft_cancelled", "journey", journey_id, {"draft_id": draft_id})
+        return draft
 
     async def rerun_clinician_assessment(self, clinician_id: str, journey_id: str) -> Dict[str, Any]:
         patient_id, journey, _ = await self._clinician_journey(clinician_id, journey_id)
@@ -1671,9 +1840,67 @@ class CareRuntime:
             journey["triage"] = {"status": "stable", "danger_signs": [], "checked_at": now, "message": "当前未报告列出的急性危险信号；症状仍需按建议线下评估。"}
             journey["current_stage"] = "history_confirmation"
         journey["timeline"].append({"id": str(uuid.uuid4()), "type": "consultation_answered", "title": "完成一次问诊导航", "detail": answer["direct_answer"], "source": "decision_support", "created_at": now})
+        self._refresh_consultation_case_document(journey)
         await self.repository.save_journey(owner_id, journey)
         await self.repository.audit(owner_id, "consultation_answered", "journey", journey_id, {"intent": answer["intent"], "urgency": answer["urgency"]})
-        return {"answer": answer, "triage": journey["triage"], "messages": journey["consultation"]["messages"]}
+        return {"answer": answer, "triage": journey["triage"], "messages": journey["consultation"]["messages"], "case_document": journey["raw_case_document"]}
+
+    @staticmethod
+    def _refresh_consultation_case_document(journey: Dict[str, Any]) -> Dict[str, Any]:
+        documents = journey.setdefault("consultation_case_documents", [])
+        for item in documents:
+            if item.get("status") == "draft":
+                item["status"] = "superseded"
+        document = build_consultation_case_document(
+            journey.get("consultation", {}).get("messages", []),
+            journey.get("clinical_history") or {},
+            version=max([int(item.get("version") or 0) for item in documents] or [0]) + 1,
+        )
+        documents.append(_copy(document))
+        journey["raw_case_document"] = _copy(document)
+        return document
+
+    async def generate_consultation_case_document(self, owner_id: str, journey_id: str) -> Dict[str, Any]:
+        journey = await self._owned_journey(owner_id, journey_id)
+        if not any(item.get("role") == "user" and item.get("text") for item in journey.get("consultation", {}).get("messages", [])):
+            raise CareError("consultation_required", "请先完成至少一轮问诊。", 409)
+        document = self._refresh_consultation_case_document(journey)
+        journey.setdefault("timeline", []).append({
+            "id": str(uuid.uuid4()), "type": "consultation_case_generated",
+            "title": f"已生成问诊病例 v{document['version']}",
+            "detail": "仅整理问诊和已确认病史；医院检查与医生结论保持独立来源。",
+            "source": "decision_support", "created_at": utc_now(),
+        })
+        await self.repository.save_journey(owner_id, journey)
+        return document
+
+    async def confirm_consultation_case_document(
+        self, owner_id: str, journey_id: str, document_id: str, corrections: Optional[List[str]] = None
+    ) -> Dict[str, Any]:
+        journey = await self._owned_journey(owner_id, journey_id)
+        document = next((item for item in journey.get("consultation_case_documents", []) if item.get("id") == document_id), None)
+        if document is None:
+            raise CareError("consultation_case_not_found", "问诊病例版本不存在。", 404)
+        if document.get("status") == "superseded":
+            raise CareError("consultation_case_superseded", "该版本已被更新，请确认最新版本。", 409)
+        clean_corrections = [_safe_text(item, 300) for item in (corrections or [])[:20] if _safe_text(item, 300)]
+        document["patient_corrections"] = clean_corrections
+        document["status"] = "confirmed"
+        document["confirmed_at"] = utc_now()
+        journey["raw_case_document"] = _copy(document)
+        journey.setdefault("timeline", []).append({
+            "id": str(uuid.uuid4()), "type": "consultation_case_confirmed",
+            "title": f"已确认问诊病例 v{document['version']}",
+            "detail": "患者已核对 AI 整理稿；后续新问诊将生成新版本。",
+            "source": "user", "created_at": utc_now(),
+        })
+        await self.repository.save_journey(owner_id, journey)
+        await self.repository.audit(owner_id, "consultation_case_confirmed", "journey", journey_id, {"version": document["version"]})
+        return document
+
+    async def consultation_case_documents(self, owner_id: str, journey_id: str) -> List[Dict[str, Any]]:
+        journey = await self._owned_journey(owner_id, journey_id)
+        return _copy(journey.get("consultation_case_documents") or [])
 
     async def update_clinical_history(self, owner_id: str, journey_id: str, payload: Dict[str, Any]) -> Dict[str, Any]:
         journey = await self._owned_journey(owner_id, journey_id)
@@ -1697,6 +1924,7 @@ class CareRuntime:
         history["confirmed_at"] = utc_now() if complete else None
         history["source"] = "用户对照完整虚构病例确认"
         journey["clinical_history"] = history
+        self._refresh_consultation_case_document(journey)
         journey["assessment"] = None
         journey["appointment_plan"] = None
         journey["current_stage"] = "record_sync" if complete else "history_confirmation"
@@ -1997,6 +2225,7 @@ class CareRuntime:
             "care_summary": _safe_text(payload.get("care_summary"), 400),
             "comparison": {
                 "result": "doctor_confirmed_or_revised",
+                "ai_assessment_version_id": _safe_text((journey.get("assessment") or {}).get("id"), 80),
                 "ai_primary": _safe_text((journey.get("assessment") or {}).get("primary_diagnosis", {}).get("name"), 120),
                 "doctor_diagnosis": diagnoses[0],
                 "confirmed_evidence": [
@@ -2102,7 +2331,7 @@ class CareRuntime:
             medication = next((item for item in journey["medications"] if item["id"] == medication_id), None)
             if medication is None:
                 continue
-            if medication.get("source", {}).get("type") not in {"sandbox_hospital", "uploaded_document", "hospital"}:
+            if medication.get("source", {}).get("type") not in {"sandbox_hospital", "uploaded_document", "hospital", "clinician_signed_ai_path"}:
                 raise CareError("doctor_source_required", "该药物没有可验证的医生来源。", 409)
             event = {"id": str(uuid.uuid4()), "type": event_type, "note": _safe_text(note, 300), "recorded_at": utc_now()}
             medication["events"].append(event)

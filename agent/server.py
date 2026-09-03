@@ -346,6 +346,7 @@ def create_app(
         web.get("/api/v1/record-imports/{import_id}", handle_care_record_import_status),
         web.post("/api/v1/care-access-grants", handle_care_access_grant_create),
         web.post("/api/v1/care-access-grants/redeem", handle_care_access_grant_redeem),
+        web.get("/api/v1/care-team-links", handle_care_team_links),
         web.delete("/api/v1/care-team-links/{link_id}", handle_care_team_link_delete),
         web.get("/api/v1/journeys", handle_care_journeys),
         web.post("/api/v1/journeys", handle_care_create_journey),
@@ -354,6 +355,9 @@ def create_app(
         web.patch("/api/v1/journeys/{journey_id}/exam-reports/{report_id}", handle_care_exam_report_review),
         web.get("/api/v1/journeys/{journey_id}/patient-explanations", handle_care_patient_explanations),
         web.post("/api/v1/journeys/{journey_id}/consultation/messages", handle_care_consultation_message),
+        web.get("/api/v1/journeys/{journey_id}/consultation-case-documents", handle_care_consultation_case_documents),
+        web.post("/api/v1/journeys/{journey_id}/consultation-case-documents", handle_care_consultation_case_generate),
+        web.patch("/api/v1/journeys/{journey_id}/consultation-case-documents/{document_id}", handle_care_consultation_case_confirm),
         web.patch("/api/v1/journeys/{journey_id}/clinical-history", handle_care_clinical_history),
         web.post("/api/v1/journeys/{journey_id}/record-batches/{batch_key}/sync", handle_care_record_batch_sync),
         web.get("/api/v1/journeys/{journey_id}/assessment-versions", handle_care_assessment_versions),
@@ -376,6 +380,8 @@ def create_app(
         web.get("/api/v1/clinician/journeys/{journey_id}/exam-recommendations", handle_clinician_exam_recommendations),
         web.post("/api/v1/clinician/journeys/{journey_id}/exam-recommendations/{recommendation_id}/decision", handle_clinician_exam_recommendation_decision),
         web.post("/api/v1/clinician/journeys/{journey_id}/treatment-recommendations/{recommendation_id}/decision", handle_clinician_treatment_recommendation_decision),
+        web.post("/api/v1/clinician/journeys/{journey_id}/prescription-drafts/{draft_id}/sign", handle_clinician_prescription_draft_sign),
+        web.post("/api/v1/clinician/journeys/{journey_id}/prescription-drafts/{draft_id}/cancel", handle_clinician_prescription_draft_cancel),
         web.post("/api/v1/clinician/journeys/{journey_id}/assessments", handle_clinician_assessment),
     ])
     assets_dir = _WEB_DIR / "assets"
@@ -673,6 +679,22 @@ async def handle_care_access_grant_redeem(request: web.Request) -> web.Response:
     return web.json_response(result, status=201)
 
 
+async def handle_care_team_links(request: web.Request) -> web.Response:
+    session = await _care_auth(request, role="patient")
+    items = await request.app[CARE_RUNTIME_KEY].list_patient_care_team_links(
+        session["user_id"], str(request.query.get("journey_id") or "")
+    )
+    safe = [
+        {
+            "id": str(item.get("id")), "journey_id": str(item.get("journey_id")),
+            "status": item.get("status"), "created_at": item.get("created_at"),
+            "revoked_at": item.get("revoked_at"),
+        }
+        for item in items
+    ]
+    return web.json_response({"care_team_links": safe})
+
+
 async def handle_care_team_link_delete(request: web.Request) -> web.Response:
     session = await _care_auth(request, require_csrf=True, role="patient")
     result = await request.app[CARE_RUNTIME_KEY].revoke_care_team_link(
@@ -741,6 +763,34 @@ async def handle_care_consultation_message(request: web.Request) -> web.Response
         [str(item) for item in signs],
     )
     return web.json_response(result, status=201)
+
+
+async def handle_care_consultation_case_documents(request: web.Request) -> web.Response:
+    session = await _care_auth(request, role="patient")
+    documents = await request.app[CARE_RUNTIME_KEY].consultation_case_documents(
+        session["user_id"], request.match_info.get("journey_id", "")
+    )
+    return web.json_response({"consultation_case_documents": documents})
+
+
+async def handle_care_consultation_case_generate(request: web.Request) -> web.Response:
+    session = await _care_auth(request, require_csrf=True, role="patient")
+    await _care_json(request)
+    document = await request.app[CARE_RUNTIME_KEY].generate_consultation_case_document(
+        session["user_id"], request.match_info.get("journey_id", "")
+    )
+    return web.json_response({"case_document": document}, status=201)
+
+
+async def handle_care_consultation_case_confirm(request: web.Request) -> web.Response:
+    session = await _care_auth(request, require_csrf=True, role="patient")
+    body = await _care_json(request)
+    corrections = body.get("corrections") if isinstance(body.get("corrections"), list) else []
+    document = await request.app[CARE_RUNTIME_KEY].confirm_consultation_case_document(
+        session["user_id"], request.match_info.get("journey_id", ""),
+        request.match_info.get("document_id", ""), [str(item) for item in corrections],
+    )
+    return web.json_response({"case_document": document})
 
 
 async def handle_care_clinical_history(request: web.Request) -> web.Response:
@@ -945,6 +995,26 @@ async def handle_clinician_treatment_recommendation_decision(request: web.Reques
         request.match_info.get("recommendation_id", ""), body,
     )
     return web.json_response(result, status=201)
+
+
+async def handle_clinician_prescription_draft_sign(request: web.Request) -> web.Response:
+    session = await _care_auth(request, require_csrf=True, role="clinician")
+    body = await _care_json(request)
+    result = await request.app[CARE_RUNTIME_KEY].sign_prescription_draft(
+        session["user_id"], request.match_info.get("journey_id", ""),
+        request.match_info.get("draft_id", ""), body,
+    )
+    return web.json_response(result, status=201)
+
+
+async def handle_clinician_prescription_draft_cancel(request: web.Request) -> web.Response:
+    session = await _care_auth(request, require_csrf=True, role="clinician")
+    body = await _care_json(request)
+    result = await request.app[CARE_RUNTIME_KEY].cancel_prescription_draft(
+        session["user_id"], request.match_info.get("journey_id", ""),
+        request.match_info.get("draft_id", ""), str(body.get("rationale") or ""),
+    )
+    return web.json_response({"prescription_draft": result})
 
 
 async def handle_clinician_assessment(request: web.Request) -> web.Response:

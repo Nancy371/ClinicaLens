@@ -22,6 +22,7 @@ class CareApiTests(unittest.IsolatedAsyncioTestCase):
                 "CARE_PUBLIC_DEPLOYMENT": "false",
                 "CARE_AUTH_SECRET": "test-secret-that-is-long-enough",
                 "CARE_DEV_OTP_CODE": "246810",
+                "CARE_DEV_CLINICIAN_PHONES": "13900000000",
                 "CARE_APPOINTMENT_URL": "https://www.114yygh.com/",
             },
             clear=False,
@@ -315,11 +316,14 @@ class CareApiTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(response.status, 200)
         self.assertTrue(payload["patient_profile"]["is_fictional"])
         self.assertEqual(payload["patient_profile"]["name"], "周予安")
-        self.assertEqual(len(payload["raw_case_document"]["sections"]), 10)
+        self.assertEqual(len(payload["raw_case_document"]["sections"]), 5)
+        self.assertEqual(payload["raw_case_document"]["origin"], "consultation")
+        self.assertTrue(payload["raw_case_document"]["generated_from_message_ids"])
+        self.assertNotIn("MPO-ANCA 86", payload["raw_case_document"]["full_text"])
         self.assertEqual(len(payload["assessment_versions"]), 4)
         self.assertEqual(payload["assessment_versions"][1]["primary_diagnosis"]["name"], "肺肾综合征（系统性小血管炎方向）")
         self.assertEqual(len(payload["medications"]), 4)
-        self.assertTrue(all(item["source"]["type"] == "sandbox_hospital" for item in payload["medications"]))
+        self.assertTrue(all(item["source"]["type"] == "clinician_signed_ai_path" for item in payload["medications"]))
 
     async def test_consultation_runs_safety_rule_before_diagnostic_flow(self):
         await self.login()
@@ -403,7 +407,67 @@ class CareApiTests(unittest.IsolatedAsyncioTestCase):
         self.assertNotIn('"dose"', serialized)
         self.assertNotIn('"prescription"', serialized)
         self.assertEqual(len(payload["medications"]), 4)
-        self.assertTrue(all(item["source"]["type"] == "sandbox_hospital" for item in payload["medications"]))
+        self.assertTrue(all(item["source"]["type"] == "clinician_signed_ai_path" for item in payload["medications"]))
+
+    async def test_consultation_case_document_generation_and_confirmation_api(self):
+        await self.login()
+        journey = await self.journey()
+        response = await self.client.post(
+            f"/api/v1/journeys/{journey['id']}/consultation/messages",
+            json={"message": "最近三天有血丝痰，活动后气短。", "danger_signs": []},
+            headers=self.headers(),
+        )
+        self.assertEqual(response.status, 201)
+        response = await self.client.post(
+            f"/api/v1/journeys/{journey['id']}/consultation-case-documents",
+            json={}, headers=self.headers(),
+        )
+        payload = await response.json()
+        self.assertEqual(response.status, 201)
+        document = payload["case_document"]
+        self.assertEqual(document["status"], "draft")
+        self.assertTrue(document["generated_from_message_ids"])
+        response = await self.client.patch(
+            f"/api/v1/journeys/{journey['id']}/consultation-case-documents/{document['id']}",
+            json={"corrections": []}, headers=self.headers(),
+        )
+        self.assertEqual(response.status, 200)
+        self.assertEqual((await response.json())["case_document"]["status"], "confirmed")
+
+    async def test_clinician_two_step_prescription_api(self):
+        journey = await self.sync_and_triage()
+        response = await self.client.post(
+            f"/api/v1/journeys/{journey['id']}/doctor-documents",
+            json={"source_type": "sandbox_hospital", "diagnoses": ["显微镜下多血管炎（沙箱医生确认）"], "prescriptions": []},
+            headers=self.headers(),
+        )
+        self.assertEqual(response.status, 201)
+        response = await self.client.post(
+            "/api/v1/care-access-grants", json={"journey_id": journey["id"]}, headers=self.headers()
+        )
+        grant = await response.json()
+        self.assertEqual(response.status, 201)
+        await self.login("13900000000")
+        response = await self.client.post(
+            "/api/v1/care-access-grants/redeem", json={"code": grant["code"]}, headers=self.headers()
+        )
+        self.assertEqual(response.status, 201)
+        response = await self.client.post(
+            f"/api/v1/clinician/journeys/{journey['id']}/treatment-recommendations/aav-guideline-path/decision",
+            json={"action": "confirmed", "rationale": "采用指南路径并进入剂量核对"}, headers=self.headers(),
+        )
+        decision = await response.json()
+        self.assertEqual(response.status, 201)
+        self.assertTrue(decision["created_prescription_draft"])
+        response = await self.client.post(
+            f"/api/v1/clinician/journeys/{journey['id']}/prescription-drafts/{decision['prescription_draft']['id']}/sign",
+            json={"rationale": "完成四项核对并签署", "acknowledgements": ["diagnosis", "allergies", "screening", "dose"]},
+            headers=self.headers(),
+        )
+        signed = await response.json()
+        self.assertEqual(response.status, 201)
+        self.assertTrue(signed["medications"])
+        self.assertTrue(signed["reminders"])
 
     async def test_allergy_conflict_blocks_doctor_prescription_confirmation(self):
         journey = await self.sync_and_triage()

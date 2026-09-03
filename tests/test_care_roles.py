@@ -7,6 +7,8 @@ from pathlib import Path
 from unittest.mock import patch
 
 from agent.care import CareError, CareRuntime, LocalDocumentStore, SQLiteCareRepository
+from agent.care_product import sample_clinical_history
+from agent.care_roles import hydrate_journey_v3
 
 
 class CareRoleDomainTests(unittest.IsolatedAsyncioTestCase):
@@ -98,10 +100,23 @@ class CareRoleDomainTests(unittest.IsolatedAsyncioTestCase):
         payload = await self.runtime.public_sample("patient")
         observations = [item for report in payload["exam_reports"] for item in report["observations"]]
         self.assertTrue(observations)
-        required = {"name", "value", "unit", "reference_range_display", "interpretation_status", "patient_explanation", "diagnostic_impact", "source_locator"}
+        required = {"name", "value", "unit", "reference_range_display", "interpretation_status", "patient_explanation", "diagnostic_impact", "source_locator", "trend", "entered_assessment_version"}
         self.assertTrue(all(required.issubset(item) for item in observations))
         self.assertTrue(any(item["reference_range_display"] == "原报告未提供" for item in observations))
         self.assertTrue(all(item["patient_explanation"] for item in observations))
+
+    async def test_legacy_string_result_migrates_without_invented_range(self):
+        migrated = hydrate_journey_v3({
+            "id": "legacy", "records": [{
+                "id": "old-1", "title": "旧检查", "items": ["未结构化结果文本"],
+                "verification_status": "imported", "source": {"type": "legacy", "locator": "旧记录第1行"},
+            }], "synced_batches": [], "assessment_versions": [],
+        })
+        report = migrated["exam_reports"][0]
+        observation = report["observations"][0]
+        self.assertEqual(report["batch_key"], "legacy")
+        self.assertEqual(observation["reference_range_display"], "原报告未提供")
+        self.assertIn("暂无经过审核", observation["patient_explanation"])
 
     async def test_case_and_consultation_share_the_same_explanation_version(self):
         payload = await self.runtime.public_sample("patient")
@@ -140,17 +155,90 @@ class CareRoleDomainTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(result["exam_order"]["source"]["type"], "clinician")
         self.assertIn("未向真实医院下单", result["exam_order"]["notice"])
 
-    async def test_treatment_decision_never_creates_medication_or_prescription(self):
+    async def test_treatment_confirmation_creates_draft_but_not_patient_tasks(self):
         await self.authorize()
-        before = (await self.runtime.get_clinician_journey(self.clinician["id"], self.journey_id))["medications"]
+        clinician_journey = await self.runtime.get_clinician_journey(self.clinician["id"], self.journey_id)
+        recommendation = clinician_journey["treatment_recommendations"][0]
+        self.assertTrue(recommendation["goals"])
+        self.assertTrue(recommendation["prerequisites"])
+        before = clinician_journey["medications"]
         result = await self.runtime.decide_treatment_recommendation(
             self.clinician["id"], self.journey_id, "aav-guideline-path",
             {"action": "confirmed", "rationale": "路径方向可作为专科讨论基础"},
         )
         after = (await self.runtime.get_clinician_journey(self.clinician["id"], self.journey_id))["medications"]
-        self.assertFalse(result["created_prescription"])
+        self.assertTrue(result["created_prescription_draft"])
+        self.assertEqual(result["prescription_draft"]["status"], "draft")
         self.assertFalse(result["created_medication_task"])
         self.assertEqual(before, after)
+
+    async def test_second_clinician_signature_creates_prescription_and_reminders(self):
+        await self.runtime.connect_hospital(self.patient["id"], True)
+        await self.runtime.update_clinical_history(
+            self.patient["id"], self.journey_id, sample_clinical_history(confirmed=True)
+        )
+        await self.runtime.apply_doctor_document(
+            self.patient["id"], self.journey_id,
+            {"source_type": "sandbox_hospital", "diagnoses": ["显微镜下多血管炎（沙箱医生确认）"], "prescriptions": []},
+        )
+        await self.authorize()
+        decision = await self.runtime.decide_treatment_recommendation(
+            self.clinician["id"], self.journey_id, "aav-guideline-path",
+            {"action": "confirmed", "rationale": "结合医生确诊选择指南路径"},
+        )
+        draft = decision["prescription_draft"]
+        self.assertGreaterEqual(len(draft["items"]), 2)
+        before = await self.runtime.get_journey(self.patient["id"], self.journey_id)
+        self.assertEqual(before["medications"], [])
+        signed = await self.runtime.sign_prescription_draft(
+            self.clinician["id"], self.journey_id, draft["id"],
+            {"rationale": "已核对诊断、过敏、筛查与剂量", "acknowledgements": ["diagnosis", "allergies", "screening", "dose"]},
+        )
+        self.assertEqual(signed["signed_prescription"]["status"], "signed")
+        self.assertEqual(len(signed["medications"]), len(draft["items"]))
+        self.assertTrue(all(item["source"]["type"] == "clinician_signed_ai_path" for item in signed["medications"]))
+        self.assertEqual(len(signed["reminders"]), len(draft["items"]))
+        patient = await self.runtime.get_patient_journey(self.patient["id"], self.journey_id)
+        self.assertNotIn("prescription_drafts", patient)
+        self.assertEqual(len(patient["medications"]), len(draft["items"]))
+
+    async def test_prescription_signature_requires_doctor_confirmed_diagnosis(self):
+        await self.authorize()
+        decision = await self.runtime.decide_treatment_recommendation(
+            self.clinician["id"], self.journey_id, "aav-guideline-path",
+            {"action": "confirmed", "rationale": "先形成路径草稿"},
+        )
+        with self.assertRaises(CareError) as context:
+            await self.runtime.sign_prescription_draft(
+                self.clinician["id"], self.journey_id, decision["prescription_draft"]["id"],
+                {"rationale": "尝试签署", "acknowledgements": ["diagnosis", "allergies", "screening", "dose"]},
+            )
+        self.assertEqual(context.exception.code, "doctor_diagnosis_required")
+
+    async def test_consultation_case_document_is_traceable_and_excludes_exam_results(self):
+        await self.runtime.send_consultation(
+            self.patient["id"], self.journey_id, "最近三天有血丝痰，活动后气短。", []
+        )
+        document = await self.runtime.generate_consultation_case_document(self.patient["id"], self.journey_id)
+        serialized = json.dumps(document, ensure_ascii=False)
+        self.assertEqual(document["origin"], "consultation")
+        self.assertTrue(document["generated_from_message_ids"])
+        self.assertNotIn("MPO-ANCA 86", serialized)
+        self.assertNotIn("肾活检示", serialized)
+        confirmed = await self.runtime.confirm_consultation_case_document(
+            self.patient["id"], self.journey_id, document["id"]
+        )
+        self.assertEqual(confirmed["status"], "confirmed")
+
+    async def test_dangerous_conditions_link_to_specific_exam_recommendations(self):
+        sample = await self.runtime.public_sample("clinician")
+        matrix = sample["assessment_versions"][-1]["safety_matrix"]
+        recommendation_ids = {item["id"] for item in sample["exam_recommendations"]}
+        self.assertGreaterEqual(len(matrix), 5)
+        for condition in matrix:
+            self.assertTrue(condition["exam_items"])
+            self.assertTrue(condition["exam_links"])
+            self.assertTrue(all(link["recommendation_id"] in recommendation_ids for link in condition["exam_links"]))
 
 
 if __name__ == "__main__":

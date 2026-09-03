@@ -88,7 +88,7 @@ class DemoApiTests(unittest.IsolatedAsyncioTestCase):
         self.assertIn("患者版", index_html)
         self.assertIn("医生版", index_html)
         self.assertIn("病例与检查结果", index_html)
-        self.assertIn("具体药名、剂量和任务只读取医生处方", index_html)
+        self.assertIn("医生第二次签署后生成处方和患者提醒", index_html)
         self.assertNotIn("金融", index_html)
 
     async def test_live_status_fails_closed_without_configuration(self):
