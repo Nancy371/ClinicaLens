@@ -61,8 +61,12 @@ export class CareApi {
   syncRecords(simulate = "success") { return this.request("/api/v1/records/sync", { method: "POST", body: { simulate }, timeout: 20000 }); }
   getJourneys() { return this.request("/api/v1/journeys"); }
   getJourney(id) { return this.request(`/api/v1/journeys/${encodeURIComponent(id)}`); }
-  consultation(id, message, dangerSigns = []) {
-    return this.request(`/api/v1/journeys/${encodeURIComponent(id)}/consultation/messages`, { method: "POST", body: { message, danger_signs: dangerSigns } });
+  consultation(id, message, options = {}) {
+    const body = { message };
+    if (Array.isArray(options.dangerSigns)) body.danger_signs = options.dangerSigns;
+    if (options.summaryConfirmed === true) body.summary_confirmed = true;
+    if (options.correction) body.correction = options.correction;
+    return this.request(`/api/v1/journeys/${encodeURIComponent(id)}/consultation/messages`, { method: "POST", body });
   }
   generateConsultationCase(id) { return this.request(`/api/v1/journeys/${encodeURIComponent(id)}/consultation-case-documents`, { method: "POST", body: {} }); }
   confirmConsultationCase(journeyId, documentId, corrections = []) { return this.request(`/api/v1/journeys/${encodeURIComponent(journeyId)}/consultation-case-documents/${encodeURIComponent(documentId)}`, { method: "PATCH", body: { corrections } }); }

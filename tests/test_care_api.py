@@ -402,6 +402,27 @@ class CareApiTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(changed["consultation_state"]["pending_question"]["id"], "safety_screen")
         self.assertFalse(changed["consultation_state"]["safety_screened"])
 
+    async def test_intake_correction_reopens_summary_and_records_assessment_impact(self):
+        journey = await self.sync_and_triage()
+        response = await self.client.post(
+            f"/api/v1/journeys/{journey['id']}/assessments", json={}, headers=self.headers(),
+        )
+        self.assertEqual(response.status, 202)
+        response = await self.client.post(
+            f"/api/v1/journeys/{journey['id']}/consultation/messages",
+            json={"correction": {"field": "allergy", "new_value": "青霉素过敏，曾出现皮疹", "reason": "刚刚想起"}},
+            headers=self.headers(),
+        )
+        payload = await response.json()
+        self.assertEqual(response.status, 201)
+        self.assertEqual(payload["consultation_state"]["completion_status"], "awaiting_summary_confirmation")
+        updated = await self.journey()
+        correction = updated["information_corrections"][-1]
+        self.assertEqual(correction["field"], "consultation:allergy")
+        self.assertIn("青霉素", correction["new_value"])
+        self.assertTrue(correction["affected_assessment_version"])
+        self.assertNotIn("assessment", updated)
+
     async def test_history_must_be_confirmed_or_explicitly_unknown(self):
         await self.login()
         journey = await self.journey()
