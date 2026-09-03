@@ -69,6 +69,26 @@ class CareApiTests(unittest.IsolatedAsyncioTestCase):
 
     async def sync_and_triage(self):
         await self.login()
+        journey = await self.journey()
+        turns = [
+            ("我最近胸闷和咳嗽，很担心", {"danger_signs": []}),
+            ("3 天前慢慢开始，现在加重，最严重 7 分", {}),
+            ("有血丝痰和活动后气短，没有发热、晕厥或腿肿", {}),
+            ("有高血压，2012 年做过阑尾手术", {}),
+            ("服用氨氯地平，没有已知药物、食物或造影剂过敏", {}),
+            ("家里没有类似疾病，已经戒烟，偶尔接触装修粉尘", {}),
+        ]
+        for message, extra in turns:
+            response = await self.client.post(
+                f"/api/v1/journeys/{journey['id']}/consultation/messages",
+                json={"message": message, **extra}, headers=self.headers(),
+            )
+            self.assertEqual(response.status, 201)
+        response = await self.client.post(
+            f"/api/v1/journeys/{journey['id']}/consultation/messages",
+            json={"summary_confirmed": True}, headers=self.headers(),
+        )
+        self.assertEqual(response.status, 201)
         await self.client.post(
             "/api/v1/hospital-connections",
             json={"consent": True},
@@ -341,6 +361,46 @@ class CareApiTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(payload["answer"]["urgency"], "emergency")
         self.assertEqual(payload["triage"]["status"], "emergency")
         self.assertIn("立即急诊", payload["answer"]["direct_answer"])
+
+    async def test_continuous_intake_tracks_progress_and_requires_summary_confirmation(self):
+        await self.login()
+        journey = await self.journey()
+        response = await self.client.post(
+            f"/api/v1/journeys/{journey['id']}/consultation/messages",
+            json={"message": "我胸闷", "danger_signs": []}, headers=self.headers(),
+        )
+        first = await response.json()
+        self.assertEqual(response.status, 201)
+        self.assertEqual(first["consultation_state"]["current_stage"], "SYMPTOM_CHARACTERIZATION")
+        response = await self.client.post(
+            f"/api/v1/journeys/{journey['id']}/assessments", json={}, headers=self.headers(),
+        )
+        self.assertEqual(response.status, 409)
+        self.assertEqual((await response.json())["error"], "consultation_summary_not_confirmed")
+
+    async def test_intake_does_not_repeat_safety_screen_and_rechecks_on_new_symptom(self):
+        await self.login()
+        journey = await self.journey()
+        response = await self.client.post(
+            f"/api/v1/journeys/{journey['id']}/consultation/messages",
+            json={"message": "我咳嗽", "danger_signs": []}, headers=self.headers(),
+        )
+        first = await response.json()
+        checked_at = first["consultation_state"]["safety_checked_at"]
+        response = await self.client.post(
+            f"/api/v1/journeys/{journey['id']}/consultation/messages",
+            json={"message": "2 天前慢慢开始，最严重 5 分"}, headers=self.headers(),
+        )
+        second = await response.json()
+        self.assertEqual(second["consultation_state"]["safety_checked_at"], checked_at)
+        self.assertNotEqual(second["consultation_state"]["pending_question"]["id"], "safety_screen")
+        response = await self.client.post(
+            f"/api/v1/journeys/{journey['id']}/consultation/messages",
+            json={"message": "刚才开始咯血"}, headers=self.headers(),
+        )
+        changed = await response.json()
+        self.assertEqual(changed["consultation_state"]["pending_question"]["id"], "safety_screen")
+        self.assertFalse(changed["consultation_state"]["safety_screened"])
 
     async def test_history_must_be_confirmed_or_explicitly_unknown(self):
         await self.login()

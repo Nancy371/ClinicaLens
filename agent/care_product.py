@@ -11,6 +11,8 @@ from datetime import datetime, timezone
 from typing import Any, Dict, Iterable, List
 import uuid
 
+from agent.intake import new_consultation_state, sample_consultation_state
+
 
 def utc_now() -> str:
     return datetime.now(timezone.utc).isoformat()
@@ -451,6 +453,7 @@ def hydrate_journey(journey: Dict[str, Any]) -> Dict[str, Any]:
     upgraded.setdefault("patient_profile", sample_patient_profile())
     upgraded.setdefault("clinical_history", sample_clinical_history(confirmed=False))
     upgraded.setdefault("consultation", {"messages": [], "quick_questions": quick_questions()})
+    upgraded.setdefault("consultation_state", new_consultation_state())
     upgraded.setdefault("raw_case_document", sample_raw_case_document())
     if not upgraded["raw_case_document"].get("origin"):
         legacy = deepcopy(upgraded["raw_case_document"])
@@ -494,6 +497,7 @@ def public_sample_journey() -> Dict[str, Any]:
     })
     journey["clinical_history"] = sample_clinical_history(confirmed=True)
     journey["consultation"]["messages"] = sample_consultation_messages()
+    journey["consultation_state"] = sample_consultation_state()
     journey["raw_case_document"] = sample_raw_case_document()
     journey["consultation_case_documents"] = [deepcopy(journey["raw_case_document"])]
     journey["synced_batches"] = ["baseline", "organ", "serology", "biopsy"]

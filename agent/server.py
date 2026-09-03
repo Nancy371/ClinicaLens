@@ -755,12 +755,15 @@ async def handle_care_patient_explanations(request: web.Request) -> web.Response
 async def handle_care_consultation_message(request: web.Request) -> web.Response:
     session = await _care_auth(request, require_csrf=True, role="patient")
     body = await _care_json(request)
-    signs = body.get("danger_signs") if isinstance(body.get("danger_signs"), list) else []
+    signs = body.get("danger_signs") if isinstance(body.get("danger_signs"), list) else None
+    correction = body.get("correction") if isinstance(body.get("correction"), dict) else None
     result = await request.app[CARE_RUNTIME_KEY].send_consultation(
         session["user_id"],
         request.match_info.get("journey_id", ""),
         str(body.get("message") or ""),
-        [str(item) for item in signs],
+        [str(item) for item in signs] if signs is not None else None,
+        confirm_summary=body.get("summary_confirmed") is True,
+        correction=correction,
     )
     return web.json_response(result, status=201)
 

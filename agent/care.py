@@ -47,6 +47,13 @@ from agent.care_roles import (
     public_sample_projection,
     reports_for_batches,
 )
+from agent.intake import (
+    FIELD_LABELS as INTAKE_FIELD_LABELS,
+    apply_consultation_correction,
+    apply_consultation_turn,
+    intake_answer,
+    new_consultation_state,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -1041,6 +1048,7 @@ def new_journey(owner_id: str) -> Dict[str, Any]:
         "raw_case_document": initial_case_document,
         "consultation_case_documents": [initial_case_document],
         "consultation": {"messages": [], "quick_questions": quick_questions()},
+        "consultation_state": new_consultation_state(),
         "synced_batches": [],
         "assessment_versions": [],
         "treatment_reference": treatment_reference(),
@@ -1867,29 +1875,121 @@ class CareRuntime:
         owner_id: str,
         journey_id: str,
         text: str,
-        danger_signs: List[str],
+        danger_signs: Optional[List[str]] = None,
+        *,
+        confirm_summary: bool = False,
+        correction: Optional[Dict[str, Any]] = None,
     ) -> Dict[str, Any]:
         journey = await self._owned_journey(owner_id, journey_id)
         clean = _safe_text(text, 500)
-        if not clean:
+        if not clean and not confirm_summary and not correction:
             raise CareError("message_required", "请输入你现在最担心的问题。")
-        answer = answer_consultation(clean, danger_signs)
         now = utc_now()
-        journey["consultation"]["messages"].extend([
-            {"id": str(uuid.uuid4()), "role": "user", "text": clean, "created_at": now},
-            {"id": str(uuid.uuid4()), "role": "assistant", "answer": answer, "created_at": utc_now()},
-        ])
+        previous_state = _copy(journey.get("consultation_state") or new_consultation_state())
+        previous_status = previous_state.get("completion_status")
+        try:
+            if correction:
+                field = _safe_text(correction.get("field"), 80)
+                value = _safe_text(correction.get("new_value"), 500)
+                reason = _safe_text(correction.get("reason"), 300)
+                state = apply_consultation_correction(previous_state, field, value, reason=reason)
+                changed = state["corrections"][-1]
+                affected_version = _current_assessment_version_id(journey)
+                _append_information_correction(
+                    journey,
+                    field=f"consultation:{field}",
+                    field_label=INTAKE_FIELD_LABELS[field],
+                    old_value=changed.get("old_value"),
+                    new_value=changed.get("new_value"),
+                    source_type="patient",
+                    source_label="患者本人",
+                    reason=reason,
+                    affected_assessment_version=affected_version,
+                    impact=(f"AI 已撤回 {affected_version}；请重新确认摘要后再评估。" if affected_version else "请重新确认摘要后再评估。"),
+                )
+                journey["assessment"] = None
+                journey["appointment_plan"] = None
+            else:
+                state = apply_consultation_turn(
+                    previous_state,
+                    clean,
+                    danger_signs=danger_signs,
+                    confirm_summary=confirm_summary,
+                )
+        except ValueError as exc:
+            errors = {
+                "summary_not_ready": ("summary_not_ready", "信息尚未收集完整，暂时不能确认摘要。", 409),
+                "invalid_correction_field": ("invalid_correction_field", "该问诊字段不能修改。", 400),
+                "correction_value_required": ("correction_value_required", "修改后的信息不能为空。", 400),
+            }
+            code, message, status = errors.get(str(exc), ("invalid_consultation_update", "问诊更新无效。", 400))
+            raise CareError(code, message, status) from exc
+        journey["consultation_state"] = state
+        if confirm_summary:
+            self._apply_confirmed_intake_history(journey, state)
+        if previous_status == "ready_for_assessment" and state.get("completion_status") == "ready_for_assessment" and clean and not correction:
+            answer = answer_consultation(clean, danger_signs or [])
+        else:
+            answer = intake_answer(state)
+        user_kind = "correction" if correction else "summary_confirmation" if confirm_summary else "intake"
+        if clean or correction:
+            journey["consultation"]["messages"].append({
+                "id": str(uuid.uuid4()),
+                "role": "user",
+                "kind": user_kind,
+                "text": clean or f"修改{INTAKE_FIELD_LABELS.get(str(correction.get('field')), '问诊信息')}",
+                "created_at": now,
+            })
+        journey["consultation"]["messages"].append({
+            "id": str(uuid.uuid4()), "role": "assistant", "kind": user_kind,
+            "answer": answer, "consultation_state": _copy(state), "created_at": utc_now(),
+        })
         if answer["urgency"] == "emergency":
-            journey["triage"] = {"status": "emergency", "danger_signs": list(danger_signs), "checked_at": now, "message": answer["direct_answer"]}
+            journey["triage"] = {"status": "emergency", "danger_signs": list(state.get("red_flags") or []), "checked_at": now, "message": answer["direct_answer"]}
             journey["current_stage"] = "emergency"
-        elif isinstance(danger_signs, list):
-            journey["triage"] = {"status": "stable", "danger_signs": [], "checked_at": now, "message": "当前未报告列出的急性危险信号；症状仍需按建议线下评估。"}
-            journey["current_stage"] = "history_confirmation"
+        elif state.get("safety_screened"):
+            journey["triage"] = {"status": "stable", "danger_signs": [], "checked_at": state.get("safety_checked_at"), "message": "当前未报告列出的急性危险信号；如症状变化将重新分流。"}
+            journey["current_stage"] = "record_sync" if state.get("summary_confirmed") else "summary_confirmation" if state.get("completion_status") == "awaiting_summary_confirmation" else "consultation"
         journey["timeline"].append({"id": str(uuid.uuid4()), "type": "consultation_answered", "title": "完成一次问诊导航", "detail": answer["direct_answer"], "source": "decision_support", "created_at": now})
         self._refresh_consultation_case_document(journey)
         await self.repository.save_journey(owner_id, journey)
-        await self.repository.audit(owner_id, "consultation_answered", "journey", journey_id, {"intent": answer["intent"], "urgency": answer["urgency"]})
-        return {"answer": answer, "triage": journey["triage"], "messages": journey["consultation"]["messages"], "case_document": journey["raw_case_document"]}
+        await self.repository.audit(owner_id, "consultation_answered", "journey", journey_id, {"intent": answer["intent"], "urgency": answer["urgency"], "stage": state.get("current_stage")})
+        return {"answer": answer, "triage": journey["triage"], "messages": journey["consultation"]["messages"], "consultation_state": _copy(state)}
+
+    @staticmethod
+    def _apply_confirmed_intake_history(journey: Dict[str, Any], state: Dict[str, Any]) -> None:
+        facts = state.get("known_facts") or {}
+        history = _copy(journey.get("clinical_history") or sample_clinical_history())
+
+        def unknown(field: str) -> bool:
+            value = str(facts.get(field) or "")
+            return any(word in value for word in ("不知道", "不清楚", "不了解", "记不清"))
+
+        history["conditions"] = [{"name": str(facts.get("medical_history") or ""), "detail": "患者问诊摘要"}]
+        history["surgeries"] = [{"name": str(facts.get("surgery_history") or ""), "detail": "患者问诊摘要"}]
+        history["current_medications"] = [{"name": str(facts.get("medication") or ""), "dose": "见患者原述", "frequency": "待医生核对", "source": "患者问诊"}]
+        allergy_text = str(facts.get("allergy") or "")
+        known_none = any(word in allergy_text for word in ("没有", "无已知", "否认"))
+        history["allergies"] = [{
+            "allergen": "患者自述",
+            "reaction": allergy_text,
+            "severity": "none" if known_none else "unknown",
+            "status": "known_none" if known_none else "patient_reported",
+        }]
+        history["family_history"] = [str(facts.get("family_history") or "")]
+        history["social_history"] = {"exposures": str(facts.get("exposure_history") or "")}
+        field_map = {
+            "conditions": "medical_history", "surgeries": "surgery_history",
+            "current_medications": "medication", "allergies": "allergy",
+            "family_history": "family_history", "social_history": "exposure_history",
+        }
+        history["field_statuses"] = {
+            key: "unknown" if unknown(fact_key) else "confirmed" for key, fact_key in field_map.items()
+        }
+        history["confirmation_status"] = "confirmed"
+        history["confirmed_at"] = state.get("summary_confirmed_at") or utc_now()
+        history["source"] = "患者问诊摘要确认"
+        journey["clinical_history"] = history
 
     @staticmethod
     def _refresh_consultation_case_document(journey: Dict[str, Any]) -> Dict[str, Any]:
@@ -2165,6 +2265,7 @@ class CareRuntime:
         return bool(
             journey.get("records")
             and journey.get("triage", {}).get("status") == "stable"
+            and journey.get("consultation_state", {}).get("summary_confirmed") is True
             and journey.get("clinical_history", {}).get("confirmation_status") == "confirmed"
             and all(item.get("verification_status") in accepted for item in journey.get("records", []))
         )
@@ -2201,6 +2302,8 @@ class CareRuntime:
             raise CareError("emergency_path_active", "危险信号未解除，不能用分析替代急诊。", 409)
         if journey["triage"]["status"] != "stable":
             raise CareError("triage_required", "请先完成安全分流。", 409)
+        if journey.get("consultation_state", {}).get("summary_confirmed") is not True:
+            raise CareError("consultation_summary_not_confirmed", "请先完成连续问诊并确认信息摘要。", 409)
         if journey.get("clinical_history", {}).get("confirmation_status") != "confirmed":
             raise CareError("clinical_history_not_confirmed", "请先逐项确认既往史、用药史、过敏史、家族史和暴露史。", 409)
         accepted = {"user_confirmed", "hospital_confirmed", "doctor_confirmed"}
