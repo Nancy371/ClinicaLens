@@ -1,0 +1,6568 @@
+{
+  "schema_version": 2,
+  "knowledge_version": "2026-07-15",
+  "source_registry": {
+    "who_guidelines": {
+      "url": "https://www.who.int/publications/who-guidelines",
+      "role": "authoritative_source_index",
+      "accessed": "2026-07-15"
+    },
+    "acr_vasculitis_2021": {
+      "url": "https://rheumatology.org/vasculitis-guideline",
+      "version": "2021 ACR/VF ANCA-Associated Vasculitis Guideline",
+      "role": "reviewed_source_for_vasculitis_protocol",
+      "accessed": "2026-07-15"
+    },
+    "esc_valvular_2025": {
+      "url": "https://www.escardio.org/guidelines/clinical-practice-guidelines/all-esc-practice-guidelines/valvular-heart-disease/",
+      "version": "2025 ESC/EACTS Valvular Heart Disease Guideline",
+      "role": "excluded_from_software_transformation_without_license",
+      "accessed": "2026-07-15"
+    }
+  },
+  "generated_from": [
+    "diseases_catalog.json",
+    "disease_profiles*.json",
+    "diagnostic_rules.json",
+    "submission_diagnosis_extensions.json"
+  ],
+  "diseases": [
+    {
+      "name": "肺炎",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "发热"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "咳嗽"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "咳痰"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "胸痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "呼吸困难"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "气促"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "呼吸困难"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "高热不退"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "意识障碍"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "发绀"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "血常规",
+        "C反应蛋白",
+        "胸部CT"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "评估感染严重程度",
+        "经验性抗感染治疗",
+        "必要时吸氧和支持治疗"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "支气管炎",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "咳嗽"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "咳痰"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "喘息"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "发热"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "呼吸困难"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "持续高热"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "咯血"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "血常规",
+        "胸部X线"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "对症止咳祛痰",
+        "评估细菌感染证据",
+        "避免滥用抗菌药",
+        "戒烟和避免刺激物"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "支气管哮喘",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "喘息"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "气促"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "胸闷"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "咳嗽"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "呼吸困难"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "端坐呼吸"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "说话困难"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "发绀"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "意识障碍"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "肺功能"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "脱离诱因",
+        "支气管舒张治疗",
+        "评估是否需要糖皮质激素"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "慢性阻塞性肺疾病",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "咳嗽"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "咳痰"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "呼吸困难"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "气促"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "喘息"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "静息呼吸困难"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "发绀"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "意识障碍"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "低氧"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "肺功能",
+        "胸部CT",
+        "血气分析"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "戒烟",
+        "支气管舒张治疗",
+        "急性加重评估感染",
+        "必要时吸氧"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "肺结核",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "咳嗽"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "咳痰"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "咯血"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "低热"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "盗汗"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "消瘦"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "咯血"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "持续发热"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "明显消瘦"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "胸部CT",
+        "血沉"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "呼吸道隔离评估",
+        "规范抗结核治疗转诊",
+        "监测肝功能",
+        "随访影像"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "肺癌",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "咳嗽"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "咯血"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "胸痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "消瘦"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "呼吸困难"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "咯血"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "体重下降"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "持续胸痛"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "声音嘶哑"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "胸部CT",
+        "肿瘤标志物"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "明确病理和分期",
+        "肿瘤专科评估",
+        "个体化手术/放化疗/靶向治疗",
+        "对症支持"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "高血压",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "头晕"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "头痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "耳鸣"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "心悸"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "胸痛"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "呼吸困难"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "意识障碍"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "剧烈头痛"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "心电图",
+        "肾功能",
+        "血脂"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "分级评估风险",
+        "生活方式干预",
+        "规律降压治疗",
+        "监测靶器官损害"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "冠心病",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "胸痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "胸闷"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "心悸"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "气短"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "乏力"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "胸痛持续不缓解"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "呼吸困难"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "晕厥"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "心电图",
+        "心肌酶谱"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "控制危险因素",
+        "抗血小板治疗评估",
+        "改善心肌缺血"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "心力衰竭",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "气促"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "呼吸困难"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "下肢水肿"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "乏力"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "胸闷"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "端坐呼吸"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "粉红色泡沫痰"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "低血压"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "发绀"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "心电图",
+        "超声心动图",
+        "胸部X线"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "限制钠水",
+        "利尿减负荷",
+        "评估病因和诱因",
+        "监测电解质和肾功能"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "心律失常",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "心悸"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "头晕"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "晕厥"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "胸闷"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "气短"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "晕厥"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "胸痛"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "低血压"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "持续心动过速"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "心电图",
+        "动态心电图"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "识别心律类型",
+        "纠正诱因和电解质异常",
+        "必要时抗心律失常或转诊",
+        "高危者监护"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "心肌梗死",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "胸痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "胸闷"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "大汗"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "气短"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "恶心"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "呕吐"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "心悸"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "持续胸痛"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "大汗"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "低血压"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "意识障碍"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "呼吸困难"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "心电图",
+        "心肌酶谱"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "评估生命体征",
+        "心电监护",
+        "抗血小板治疗",
+        "再灌注治疗评估"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "胃炎",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "上腹痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "恶心"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "呕吐"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "反酸"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "嗳气"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "腹痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "呕血"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "黑便"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "消瘦"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "贫血"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "胃镜",
+        "血常规"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "抑酸保护胃黏膜",
+        "去除诱因",
+        "饮食调整",
+        "警惕出血和肿瘤信号"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "胃溃疡",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "上腹痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "反酸"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "嗳气"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "黑便"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "恶心"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "呕血"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "黑便"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "突发剧痛"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "贫血"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "胃镜",
+        "便常规"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "抑酸治疗",
+        "根除幽门螺杆菌评估",
+        "避免NSAIDs",
+        "出血穿孔及时处理"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "十二指肠溃疡",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "空腹痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "夜间痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "反酸"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "上腹痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "呕血"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "黑便"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "突发腹痛"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "胃镜",
+        "便常规"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "抑酸治疗",
+        "根除幽门螺杆菌评估",
+        "规律饮食",
+        "处理出血穿孔风险"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "肝硬化",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "腹胀"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "乏力"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "黄疸"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "腹水"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "水肿"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "呕血"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "黑便"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "意识障碍"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "大量腹水"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "肝功能",
+        "腹部B超",
+        "凝血功能"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "病因治疗",
+        "控制腹水和并发症",
+        "预防消化道出血",
+        "监测肝肾功能"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "胆囊炎",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "右上腹痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "发热"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "恶心"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "呕吐"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "腹痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "黄疸"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "高热寒战"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "腹膜刺激征"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "血常规",
+        "腹部B超",
+        "肝功能"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "禁食补液",
+        "抗感染",
+        "解痉止痛",
+        "评估外科处理"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "胰腺炎",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "上腹痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "腰背放射痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "恶心"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "呕吐"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "腹胀"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "持续剧烈腹痛"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "休克"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "意识障碍"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "少尿"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "血常规",
+        "腹部CT"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "禁食",
+        "补液",
+        "镇痛",
+        "监测并发症"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "肠梗阻",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "腹痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "腹胀"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "呕吐"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "停止排气排便"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "腹膜刺激征"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "持续剧痛"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "休克"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "发热"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "腹部CT",
+        "电解质"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "禁食胃肠减压",
+        "补液纠正电解质",
+        "外科评估"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "阑尾炎",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "腹痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "右下腹痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "发热"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "恶心"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "呕吐"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "腹膜刺激征"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "持续高热"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "休克"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "剧烈腹痛"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "血常规",
+        "腹部B超",
+        "C反应蛋白"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "外科评估",
+        "禁食补液",
+        "抗感染治疗",
+        "评估手术指征"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "糖尿病",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "多饮"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "多尿"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "多食"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "消瘦"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "乏力"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "意识障碍"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "脱水"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "酮症气味"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "感染"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "血糖",
+        "尿常规",
+        "肾功能"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "饮食运动管理",
+        "降糖治疗个体化",
+        "监测低血糖",
+        "筛查并发症"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "甲状腺功能亢进",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "心悸"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "多汗"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "消瘦"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "手抖"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "易怒"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "失眠"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "高热"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "心律失常"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "意识障碍"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "甲状腺功能"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "控制甲状腺激素水平",
+        "对症控制心率",
+        "监测肝功能血常规",
+        "内分泌随访"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "甲状腺功能减退",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "乏力"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "怕冷"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "水肿"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "体重增加"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "便秘"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "嗜睡"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "心动过缓"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "低体温"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "甲状腺功能"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "甲状腺激素替代评估",
+        "从小剂量起始",
+        "定期复查甲功",
+        "关注心血管风险"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "痛风",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "关节痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "关节红肿"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "夜间痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "足趾痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "发热"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "多关节肿痛"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "肾绞痛"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "肾功能",
+        "血常规"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "急性期抗炎镇痛",
+        "生活方式控制",
+        "降尿酸长期管理",
+        "保护肾功能"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "贫血",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "乏力"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "头晕"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "面色苍白"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "心悸"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "气短"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "黑便"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "呕血"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "晕厥"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "胸痛"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "血常规"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "明确贫血类型和病因",
+        "补充铁剂或相关治疗",
+        "处理出血来源",
+        "复查血常规"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "白血病",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "发热"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "出血"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "贫血"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "乏力"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "淋巴结肿大"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "高热不退"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "牙龈出血"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "皮肤瘀斑"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "严重贫血"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "血常规",
+        "血沉"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "血液专科评估",
+        "预防感染和出血",
+        "完善骨髓检查",
+        "支持治疗"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "脑梗死",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "肢体无力"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "言语不清"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "口角歪斜"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "头晕"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "偏瘫"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "突然肢体无力"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "意识障碍"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "言语障碍"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "吞咽困难"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "头颅CT",
+        "凝血功能"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "卒中时间窗评估",
+        "抗血小板治疗评估",
+        "控制危险因素",
+        "康复评估"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "脑出血",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "头痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "呕吐"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "意识障碍"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "肢体无力"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "言语不清"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "剧烈头痛"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "喷射性呕吐"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "意识障碍"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "血压明显升高"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "头颅CT"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "控制血压",
+        "降低颅压评估",
+        "神经外科评估",
+        "生命体征监护"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "癫痫",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "抽搐"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "意识丧失"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "口吐白沫"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "发作后嗜睡"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "持续抽搐"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "反复发作"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "外伤"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "发热"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "脑电图",
+        "头颅MRI"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "保护气道避免外伤",
+        "控制发作",
+        "寻找病因",
+        "规范抗癫痫治疗"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "帕金森病",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "手抖"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "肢体僵硬"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "行动迟缓"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "步态异常"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "跌倒"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "吞咽困难"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "认知下降"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "头颅MRI"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "神经专科评估",
+        "改善运动症状",
+        "康复训练",
+        "预防跌倒"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "骨折",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "外伤"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "疼痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "肿胀"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "活动受限"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "畸形"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "开放性伤口"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "神经血管损伤"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "剧痛"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "休克"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "胸部X线"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "制动固定",
+        "镇痛",
+        "评估神经血管",
+        "骨科复位固定"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "腰椎间盘突出",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "腰痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "下肢放射痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "麻木"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "活动受限"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "大小便障碍"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "鞍区麻木"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "下肢无力进展"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "腰椎X线"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "休息和物理治疗",
+        "镇痛抗炎",
+        "神经功能监测",
+        "严重者骨科评估"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "骨关节炎",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "关节痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "晨僵"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "活动受限"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "关节肿胀"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "发热"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "红肿热痛明显"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "外伤"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "骨密度"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "减重和康复锻炼",
+        "镇痛抗炎",
+        "保护关节",
+        "必要时骨科评估"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "泌尿系感染",
+      "diagnosis_type": "infection",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "尿频"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "尿急"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "尿痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "发热"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "腰痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "高热寒战"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "腰痛明显"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "血尿"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "妊娠"
+          ],
+          "weight": 0.24
+        },
+        {
+          "finding": "urine_culture_positive",
+          "weight": 1.2
+        },
+        {
+          "finding": "leukocyte_esterase_positive",
+          "weight": 0.6
+        },
+        {
+          "finding": "nitrite_positive",
+          "weight": 0.6
+        },
+        {
+          "finding": "dysuria",
+          "weight": 0.1
+        }
+      ],
+      "required_groups": [
+        [
+          "urine_culture_positive",
+          "leukocyte_esterase_positive",
+          "nitrite_positive"
+        ]
+      ],
+      "contradictions": [
+        {
+          "finding": "urine_culture_no_growth",
+          "penalty": 1.0,
+          "hard": false
+        },
+        {
+          "finding": "leukocyte_esterase_negative",
+          "penalty": 0.4,
+          "hard": false
+        },
+        {
+          "finding": "nitrite_negative",
+          "penalty": 0.4,
+          "hard": false
+        },
+        {
+          "finding": "urine_wbc_normal",
+          "penalty": 0.4,
+          "hard": false
+        }
+      ],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "尿常规"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "抗感染治疗",
+        "多饮水",
+        "评估上尿路感染风险"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile",
+        "migrated_diagnostic_rules"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "肾结石",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "腰痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "肾绞痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "血尿"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "恶心"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "呕吐"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "发热"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "无尿"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "剧烈疼痛"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "单肾"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "尿常规",
+        "腹部B超"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "镇痛",
+        "促进排石",
+        "评估梗阻和感染",
+        "泌尿外科评估"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "前列腺增生",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "尿频"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "尿急"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "排尿困难"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "夜尿多"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "尿不尽"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "尿潴留"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "血尿"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "发热"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "腹部B超"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "改善排尿症状",
+        "评估残余尿和肾功能",
+        "药物治疗或泌尿外科评估",
+        "处理尿潴留"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "过敏性鼻炎",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "鼻塞"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "喷嚏"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "流涕"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "鼻痒"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "呼吸困难"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "高热"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "脓涕伴面痛"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "避免过敏原",
+        "鼻用激素或抗组胺治疗",
+        "鼻腔冲洗",
+        "合并哮喘需评估"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "中耳炎",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "耳痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "听力下降"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "耳鸣"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "发热"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "高热"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "耳后肿痛"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "眩晕"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "面瘫"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "血常规"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "镇痛",
+        "抗感染评估",
+        "耳鼻喉随访",
+        "避免自行掏耳"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "白内障",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "视力下降"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "视物模糊"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "眩光"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "眼痛"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "突然视力下降"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "头痛呕吐"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "眼底检查"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "眼科评估",
+        "影响生活时手术评估",
+        "控制基础病",
+        "避免延误急性眼痛"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "青光眼",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "眼痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "视力下降"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "头痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "呕吐"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "视物模糊"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "剧烈眼痛"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "恶心呕吐"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "虹视"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "突然视力下降"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "眼底检查",
+        "视野检查"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "急性发作需降眼压",
+        "眼科急诊评估",
+        "保护视神经",
+        "长期随访眼压"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "湿疹",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "皮疹"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "瘙痒"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "渗出"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "脱屑"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "广泛感染"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "发热"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "脓疱"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "避免刺激和过敏原",
+        "外用抗炎止痒",
+        "皮肤保湿",
+        "感染时抗感染"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "荨麻疹",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "皮疹"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "瘙痒"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "风团"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "皮肤红斑"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "呼吸困难"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "喉头水肿"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "低血压"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "去除诱因",
+        "抗组胺治疗",
+        "严重过敏反应急救",
+        "避免再次接触诱因"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "抑郁症",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "情绪低落"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "兴趣减退"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "失眠"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "疲乏"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "食欲下降"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "自杀意念"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "精神病性症状"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "拒食"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "评估自杀风险",
+        "心理治疗和药物治疗评估",
+        "规律随访",
+        "家属支持"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "焦虑症",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "紧张"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "心悸"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "失眠"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "易怒"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "胸闷"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "自杀意念"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "惊恐发作伴胸痛"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "明显功能受损"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "心理治疗",
+        "抗焦虑/抗抑郁治疗评估",
+        "睡眠管理",
+        "排除躯体疾病"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "类风湿关节炎",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "关节痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "晨僵"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "对称性关节肿胀"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "乏力"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "关节畸形"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "发热"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "多系统受累"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "血沉",
+        "C反应蛋白",
+        "血常规"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "风湿免疫专科评估",
+        "抗炎镇痛",
+        "尽早规范治疗评估",
+        "保护关节功能"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "系统性红斑狼疮",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "皮疹"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "关节痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "发热"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "乏力"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "口腔溃疡"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "蛋白尿"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "神经精神症状"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "胸痛气促"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "严重贫血"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "血常规",
+        "尿常规",
+        "肾功能"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "评估器官受累",
+        "风湿免疫专科治疗",
+        "避免日晒",
+        "监测肾功能和血象"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "上呼吸道感染",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "咳嗽"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "咽痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "流涕"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "鼻塞"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "发热"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "呼吸困难"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "高热不退"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "意识障碍"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "血常规"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "对症治疗",
+        "休息补液",
+        "评估细菌感染证据"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "急性胃肠炎",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "腹痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "腹泻"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "呕吐"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "发热"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "恶心"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "脱水"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "便血"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "高热"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "持续剧烈腹痛"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "血常规",
+        "便常规"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "补液",
+        "纠正电解质紊乱",
+        "必要时抗感染",
+        "饮食调整"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "颈椎病",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "颈痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "上肢麻木"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "头晕"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "肩背痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "进行性肢体无力"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "步态不稳"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "大小便障碍"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "颈椎X线"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "姿势调整和康复",
+        "镇痛抗炎",
+        "神经功能监测",
+        "严重脊髓受压骨科评估"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "肩周炎",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "肩痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "活动受限"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "夜间痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "外伤后剧痛"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "发热红肿"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "上肢无力麻木"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "胸部X线"
+      ],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "功能锻炼",
+        "镇痛抗炎",
+        "物理治疗",
+        "排除外伤和神经源性疼痛"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "带状疱疹",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "皮疹"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "疼痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "水疱"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "灼痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "眼部受累"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "免疫低下"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "剧烈神经痛"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "播散性皮疹"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [],
+      "specificity": 0.5,
+      "treatment_protocol": [
+        "早期抗病毒治疗",
+        "镇痛",
+        "保护皮损避免感染",
+        "眼部受累急诊眼科"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "official_catalog",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "房间隔缺损",
+      "diagnosis_type": "structural",
+      "parent_diagnosis": "心力衰竭",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "活动后喘息"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "乏力"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "心悸"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "反复肺炎"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "咳嗽"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "右心房和右心室扩张"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "Qp:Qs升高"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "左向右分流"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "反复呼吸道感染"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "活动耐量下降"
+          ],
+          "weight": 0.24
+        },
+        {
+          "finding": "atrial_septal_defect",
+          "weight": 1.3
+        },
+        {
+          "finding": "left_to_right_shunt",
+          "weight": 0.6
+        },
+        {
+          "finding": "qpqs_elevated",
+          "weight": 0.6
+        },
+        {
+          "finding": "right_heart_enlargement",
+          "weight": 0.4
+        },
+        {
+          "finding": "congenital_shunt_pattern",
+          "weight": 0.35
+        },
+        {
+          "finding": "recurrent_pneumonia",
+          "weight": 0.2
+        },
+        {
+          "finding": "exertional_dyspnea",
+          "weight": 0.2
+        }
+      ],
+      "required_groups": [
+        [
+          "atrial_septal_defect",
+          "left_to_right_shunt"
+        ]
+      ],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "超声心动图",
+        "心电图（ECG）",
+        "胸部X线检查（CXR）",
+        "心导管检查"
+      ],
+      "specificity": 0.94,
+      "treatment_protocol": [
+        "有症状继发孔型房间隔缺损伴右心扩大或 Qp:Qs 升高时，转儿童心脏中心安排经皮房间隔缺损封堵或外科修补。",
+        "术前完善血常规、凝血功能并复查超声确认边缘条件；术后低剂量阿司匹林 6 个月预防器械血栓。",
+        "术后 24-72 小时或约 1 周检查穿刺部位，1、3、6 个月复查超声评估封堵器位置和右心重构。",
+        "家长监测发热、下肢肿胀、突发乏力或活动耐量下降；反复呼吸道感染时同步进行疫苗和感染预防管理。"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [
+        "心力衰竭",
+        "肺炎",
+        "上呼吸道感染",
+        "支气管哮喘"
+      ],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "evaluation_expected",
+        "migrated_diagnostic_rules"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "先天性心脏病",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "心力衰竭",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "发绀"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "呼吸急促"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "喂养困难"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "多汗"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "活动后气短"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "心悸"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "右向左分流"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "室间隔缺损"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "肺动脉高压"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "右心室肥厚"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "出生后发绀"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [
+        "超声心动图",
+        "心导管检查",
+        "三维超声心动图（3D Echo）",
+        "经食管超声心动图（TEE）",
+        "心脏MRI（CMR）"
+      ],
+      "discriminating_exams": [
+        "超声心动图",
+        "心导管检查",
+        "三维超声心动图（3D Echo）",
+        "经食管超声心动图（TEE）",
+        "心脏MRI（CMR）",
+        "体格检查",
+        "超声心动图",
+        "心电图（ECG）",
+        "胸部X线检查（CXR）"
+      ],
+      "specificity": 0.9,
+      "treatment_protocol": [
+        "由儿科心脏团队评估结构畸形和肺血管阻力",
+        "根据分流方向和肺动脉压力决定修补、封堵或肺血管靶向治疗",
+        "存在发绀或右心负荷时避免盲目补液并监测氧合"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "evaluation_expected"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "肺动脉瓣狭窄",
+      "diagnosis_type": "structural",
+      "parent_diagnosis": "心力衰竭",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "气短"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "呼吸困难"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "心悸"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "下肢水肿"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "乏力"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "晕厥"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "静息呼吸困难"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "右心衰竭"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "肺动脉高压"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "肺动脉瓣峰值压差升高"
+          ],
+          "weight": 0.24
+        },
+        {
+          "finding": "pulmonary_valve_stenosis",
+          "weight": 1.2
+        },
+        {
+          "finding": "pulmonary_valve_gradient",
+          "weight": 1.0
+        },
+        {
+          "finding": "right_heart_enlargement",
+          "weight": 0.3
+        },
+        {
+          "finding": "pulmonary_hypertension",
+          "weight": 0.2
+        }
+      ],
+      "required_groups": [
+        [
+          "pulmonary_valve_stenosis",
+          "pulmonary_valve_gradient"
+        ]
+      ],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "体格检查",
+        "心电图（ECG）",
+        "超声心动图",
+        "三维超声心动图（3D Echo）",
+        "经食管超声心动图（TEE）",
+        "心脏MRI（CMR）"
+      ],
+      "specificity": 0.95,
+      "treatment_protocol": [
+        "计划在两周内由心内科/结构性心脏病团队评估并安排经皮球囊肺动脉瓣成形术，以解除肺动脉瓣狭窄和跨瓣压差。",
+        "取得基线 BMP/肌酐/钾后开始呋塞米 40 mg 每日早晨一次，并加用螺内酯 25 mg 每日一次；如需立即治疗，可当天同步完成化验。",
+        "根据症状、每日体重、水肿和 JVP 保守调整利尿剂，开始后 3-7 天及每次调量后复查电解质、肾功能和钾。",
+        "限制饮食钠摄入至 <2 g/天，避免劳累性出行，继续温和活动；体重增加 >2 kg、新发发热或静息呼吸困难需 24 小时内联系医生。",
+        "一周后复诊安排瓣膜成形术时间；持续心悸、晕厥或突发右上腹痛应立即就医。"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [
+        "心力衰竭",
+        "肺动脉高压",
+        "上呼吸道感染"
+      ],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "evaluation_expected",
+        "migrated_diagnostic_rules"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "终末期肾病",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "少尿"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "水肿"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "眼睑水肿"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "皮肤瘙痒"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "不能平卧"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "乏力"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "睡眠障碍"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "肌酐显著升高"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "eGFR显著降低"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "高钾血症"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "代谢性酸中毒"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "容量负荷过重"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [
+        "肾功能",
+        "尿液分析（UA）",
+        "综合代谢面板（CMP）",
+        "血清电解质",
+        "动脉血气（ABG）",
+        "肾脏超声"
+      ],
+      "discriminating_exams": [
+        "肾功能",
+        "尿液分析（UA）",
+        "综合代谢面板（CMP）",
+        "血清电解质",
+        "动脉血气（ABG）",
+        "肾脏超声",
+        "肾功能",
+        "尿常规",
+        "电解质",
+        "动脉血气（ABG）"
+      ],
+      "specificity": 0.92,
+      "treatment_protocol": [
+        "肾内科评估透析指征和容量管理",
+        "严密监测钾、酸碱状态、尿量和血压",
+        "避免 NSAIDs、肾毒性药物和不必要补液"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "evaluation_expected"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "卵巢过度刺激综合征",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "腹胀"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "下腹部不适"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "腹痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "恶心"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "呼吸困难"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "促排卵或取卵后发病"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "卵巢增大"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "腹水"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "血液浓缩"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "低白蛋白"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [
+        "盆腔超声",
+        "腹部B超",
+        "全血细胞计数（CBC）",
+        "肝功能检查（LFTs）",
+        "综合代谢面板（CMP）",
+        "凝血功能检查"
+      ],
+      "discriminating_exams": [
+        "盆腔超声",
+        "腹部B超",
+        "全血细胞计数（CBC）",
+        "肝功能检查（LFTs）",
+        "综合代谢面板（CMP）",
+        "凝血功能检查",
+        "超声",
+        "血常规",
+        "电解质",
+        "肝功能",
+        "凝血功能"
+      ],
+      "specificity": 0.94,
+      "treatment_protocol": [
+        "按严重度监测出入量、体重、血细胞比容、电解质和白蛋白",
+        "中重度需妇科评估补液、白蛋白和血栓风险",
+        "呼吸困难或大量腹水时评估住院和穿刺放液"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "evaluation_expected"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "门静脉高压",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "右上腹不适"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "腹胀"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "皮肤瘙痒"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "尿色加深"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "乏力"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "食欲减退"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "门静脉增宽"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "门静脉血流异常"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "脾大"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "腹水"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "食管胃底静脉曲张"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "血小板减少"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [
+        "腹部B超",
+        "腹部超声多普勒",
+        "肝功能检查（LFTs）",
+        "凝血功能检查",
+        "全血细胞计数（CBC）",
+        "胃镜"
+      ],
+      "discriminating_exams": [
+        "腹部B超",
+        "腹部超声多普勒",
+        "肝功能检查（LFTs）",
+        "凝血功能检查",
+        "全血细胞计数（CBC）",
+        "胃镜",
+        "腹部B超",
+        "肝功能",
+        "凝血功能",
+        "全血细胞计数（CBC）"
+      ],
+      "specificity": 0.9,
+      "treatment_protocol": [
+        "消化/肝病专科评估病因、曲张静脉和腹水风险",
+        "监测肝功能、凝血和血小板",
+        "避免把门脉高压表现误作单纯胆囊炎抗感染处理"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "evaluation_expected"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "尿道综合征",
+      "diagnosis_type": "syndrome",
+      "parent_diagnosis": "泌尿系感染",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "尿急"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "尿频"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "排尿烧灼感"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "耻骨上区胀满"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "夜尿"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "尿培养无生长"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "尿液分析阴性"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "尿动力学提示逼尿肌过度活动"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "残余尿正常"
+          ],
+          "weight": 0.24
+        },
+        {
+          "finding": "detrusor_overactivity",
+          "weight": 1.2
+        },
+        {
+          "finding": "urine_culture_no_growth",
+          "weight": 0.4
+        },
+        {
+          "finding": "leukocyte_esterase_negative",
+          "weight": 0.2
+        },
+        {
+          "finding": "nitrite_negative",
+          "weight": 0.2
+        },
+        {
+          "finding": "urine_wbc_normal",
+          "weight": 0.2
+        },
+        {
+          "finding": "normal_postvoid_residual",
+          "weight": 0.2
+        },
+        {
+          "finding": "urinary_urgency",
+          "weight": 0.2
+        },
+        {
+          "finding": "urinary_frequency",
+          "weight": 0.15
+        },
+        {
+          "finding": "dysuria",
+          "weight": 0.1
+        }
+      ],
+      "required_groups": [
+        [
+          "detrusor_overactivity"
+        ]
+      ],
+      "contradictions": [
+        {
+          "finding": "urine_culture_positive",
+          "penalty": 1.0,
+          "hard": false
+        },
+        {
+          "finding": "leukocyte_esterase_positive",
+          "penalty": 0.5,
+          "hard": false
+        },
+        {
+          "finding": "nitrite_positive",
+          "penalty": 0.5,
+          "hard": false
+        }
+      ],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "体格检查",
+        "尿液分析（UA）",
+        "尿培养",
+        "综合代谢面板（CMP）",
+        "泌尿道超声",
+        "尿动力学检查（UDS）"
+      ],
+      "specificity": 0.82,
+      "treatment_protocol": [
+        "开始琥珀酸索利那新 5 mg 每日一次，以减少逼尿肌过度活动并缓解尿急/尿频。",
+        "用药前确认无窄角型青光眼史，评估基线排便习惯，宣教口干、便秘和尿潴留风险。",
+        "联合结构化膀胱训练：定时排尿，逐步将排尿间隔延长至 3-4 小时，并完成排尿日记。",
+        "进行盆底肌训练：肛门括约肌收缩 10 秒后等时放松，每次 20-30 次，每日两次。",
+        "减少咖啡因和能量饮料摄入，尤其避免夜间摄入，并改善睡眠卫生；6 周后随访评估疗效。"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [
+        "泌尿系感染",
+        "上呼吸道感染"
+      ],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "evaluation_expected",
+        "migrated_diagnostic_rules"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "三尖瓣反流",
+      "diagnosis_type": "structural",
+      "parent_diagnosis": "心力衰竭",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "气短"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "心悸"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "下肢水肿"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "乏力"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "腹胀"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "重度三尖瓣反流"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "右心房增大"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "右心室扩大"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "肺动脉高压"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "颈静脉怒张"
+          ],
+          "weight": 0.24
+        },
+        {
+          "finding": "tricuspid_regurgitation",
+          "weight": 1.2
+        },
+        {
+          "finding": "right_heart_enlargement",
+          "weight": 0.4
+        },
+        {
+          "finding": "pulmonary_hypertension",
+          "weight": 0.2
+        },
+        {
+          "finding": "leg_edema",
+          "weight": 0.1
+        }
+      ],
+      "required_groups": [
+        [
+          "tricuspid_regurgitation"
+        ]
+      ],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "体格检查",
+        "心电图（ECG）",
+        "超声心动图",
+        "三维超声心动图（3D Echo）",
+        "经食管超声心动图（TEE）",
+        "心脏MRI（CMR）"
+      ],
+      "specificity": 0.9,
+      "treatment_protocol": [
+        "三尖瓣反流按结构性右心负荷问题处理，优先寻找并处理肺动脉瓣狭窄、肺动脉高压等上游病因。",
+        "容量超负荷时使用利尿剂并监测体重、尿量、电解质和肾功能，避免机械性固定加量。",
+        "若反流随肺动脉瓣狭窄解除后仍重度存在，应由心脏瓣膜团队评估进一步介入或外科处理。"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [
+        "心力衰竭",
+        "肺动脉高压",
+        "上呼吸道感染"
+      ],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "evaluation_expected",
+        "migrated_diagnostic_rules"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "低镁血症",
+      "diagnosis_type": "metabolic",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "手足抽筋"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "肌肉痉挛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "乏力"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "心悸"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "头晕"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "心律失常"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "手足搐搦"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "惊厥"
+          ],
+          "weight": 0.24
+        },
+        {
+          "finding": "low_magnesium",
+          "weight": 1.0
+        },
+        {
+          "finding": "magnesium_depletion",
+          "weight": 0.95
+        },
+        {
+          "finding": "magnesium_load_retention_high",
+          "weight": 0.9
+        },
+        {
+          "finding": "low_urine_magnesium",
+          "weight": 0.45
+        },
+        {
+          "finding": "muscle_cramp",
+          "weight": 0.3
+        },
+        {
+          "finding": "palpitation",
+          "weight": 0.22
+        },
+        {
+          "finding": "weakness",
+          "weight": 0.15
+        }
+      ],
+      "required_groups": [
+        [
+          "low_magnesium",
+          "magnesium_depletion",
+          "magnesium_load_retention_high"
+        ]
+      ],
+      "contradictions": [],
+      "strong_verification_exams": [
+        "综合代谢面板（CMP）",
+        "24小时尿电解质检测",
+        "镁负荷试验",
+        "心电图（ECG）"
+      ],
+      "discriminating_exams": [
+        "综合代谢面板（CMP）",
+        "24小时尿电解质检测",
+        "镁负荷试验",
+        "心电图（ECG）"
+      ],
+      "specificity": 0.9,
+      "treatment_protocol": [
+        "按症状严重度和肾功能补镁",
+        "同步纠正钾钙异常并处理病因",
+        "确认血镁并同步评估血钾、血钙、肾功能和心电图；有症状或明显心律失常时在监护下补镁。",
+        "查找胃肠道丢失、利尿剂或其他药物等病因，补镁过程中复查电解质并根据肾功能调整。"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [
+        "心律失常"
+      ],
+      "causes": [
+        "心律失常"
+      ],
+      "caused_by": [],
+      "sources": [
+        "evaluation_expected",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "维生素D缺乏性佝偻病",
+      "diagnosis_type": "metabolic",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "腿痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "跛行"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "活动后下肢功能障碍"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "乏力"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "骨骼畸形"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "步态异常"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "低钙抽搐"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "生长发育迟缓"
+          ],
+          "weight": 0.24
+        },
+        {
+          "finding": "vitamin_d_low",
+          "weight": 0.8
+        },
+        {
+          "finding": "alp_elevated",
+          "weight": 0.45
+        },
+        {
+          "finding": "hypocalcemia",
+          "weight": 0.25
+        },
+        {
+          "finding": "bone_deformity",
+          "weight": 0.55
+        },
+        {
+          "finding": "waddling_gait",
+          "weight": 0.25
+        },
+        {
+          "terms": [
+            "腿痛",
+            "跛行",
+            "活动后下肢功能障碍"
+          ],
+          "weight": 0.2
+        }
+      ],
+      "required_groups": [
+        [
+          "vitamin_d_low",
+          "bone_deformity"
+        ]
+      ],
+      "contradictions": [],
+      "strong_verification_exams": [
+        "维生素D检测",
+        "血清电解质",
+        "甲状旁腺激素检测（PTH）",
+        "肝功能检查（LFTs）",
+        "骨转换标志物（BTMs）",
+        "X线检查"
+      ],
+      "discriminating_exams": [
+        "维生素D检测",
+        "血清电解质",
+        "甲状旁腺激素检测（PTH）",
+        "肝功能检查（LFTs）",
+        "骨转换标志物（BTMs）",
+        "X线检查"
+      ],
+      "specificity": 0.92,
+      "treatment_protocol": [
+        "儿科指导下补充维生素D和钙",
+        "复查生化指标和骨骼发育",
+        "由儿科结合25羟维生素D、钙磷和碱性磷酸酶结果进行维生素D与钙补充，并纠正营养和日照不足。",
+        "定期复查生化指标和骨骼发育，明显畸形或步态异常时联合儿童骨科评估。"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "evaluation_expected",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "显微镜下多血管炎",
+      "diagnosis_type": "etiology",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "血尿"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "蛋白尿"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "咯血"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "呼吸困难"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "低热"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "关节痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "乏力"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "肺泡出血"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "快速进展性肾损伤"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "低氧血症"
+          ],
+          "weight": 0.24
+        },
+        {
+          "finding": "mpo_anca_positive",
+          "weight": 0.8
+        },
+        {
+          "finding": "p_anca_positive",
+          "weight": 0.55
+        },
+        {
+          "finding": "anca_positive",
+          "weight": 0.45
+        },
+        {
+          "finding": "microscopic_hematuria",
+          "weight": 0.35
+        },
+        {
+          "finding": "proteinuria",
+          "weight": 0.3
+        },
+        {
+          "finding": "pulmonary_hemorrhage",
+          "weight": 0.55
+        },
+        {
+          "finding": "hemoptysis",
+          "weight": 0.2
+        },
+        {
+          "finding": "dark_urine",
+          "weight": 0.18
+        },
+        {
+          "finding": "leg_edema",
+          "weight": 0.18
+        },
+        {
+          "finding": "arthralgia",
+          "weight": 0.18
+        },
+        {
+          "terms": [
+            "全身酸痛",
+            "肌肉酸痛"
+          ],
+          "weight": 0.16
+        },
+        {
+          "finding": "renal_impairment",
+          "weight": 0.3
+        }
+      ],
+      "required_groups": [
+        [
+          "mpo_anca_positive",
+          "p_anca_positive",
+          "anca_positive"
+        ],
+        [
+          "microscopic_hematuria",
+          "proteinuria",
+          "renal_impairment",
+          "pulmonary_hemorrhage"
+        ]
+      ],
+      "contradictions": [
+        {
+          "finding": "diagnosis:系统性红斑狼疮",
+          "polarity": "positive",
+          "penalty": 0.2,
+          "hard": false
+        }
+      ],
+      "strong_verification_exams": [
+        "抗中性粒细胞胞质抗体（ANCA）谱",
+        "MPO-ANCA",
+        "尿液分析（UA）",
+        "肾功能",
+        "胸部CT扫描（Chest CT）",
+        "血沉",
+        "C反应蛋白（CRP）",
+        "凝血功能",
+        "抗核抗体"
+      ],
+      "discriminating_exams": [
+        "抗中性粒细胞胞质抗体（ANCA）谱",
+        "MPO-ANCA",
+        "尿液分析（UA）",
+        "肾功能",
+        "胸部CT扫描（Chest CT）",
+        "血沉",
+        "C反应蛋白（CRP）",
+        "凝血功能",
+        "抗核抗体"
+      ],
+      "specificity": 0.95,
+      "treatment_protocol": [
+        "肺肾综合征按器官威胁程度住院处理",
+        "排除感染后由风湿免疫科和肾内科联合制定免疫治疗",
+        "肺肾综合征或快速进展性肾损伤需住院，由风湿免疫科和肾内科联合评估疾病活动度与器官威胁程度。",
+        "在排除活动性感染后按器官威胁程度选择糖皮质激素联合利妥昔单抗或环磷酰胺等诱导方案，并进行感染预防和实验室监测。"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [
+        "肺炎"
+      ],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "evaluation_expected",
+        "https://rheumatology.org/vasculitis-guideline"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "二尖瓣反流",
+      "diagnosis_type": "structural",
+      "parent_diagnosis": "心力衰竭",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "活动后气短"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "夜间阵发性呼吸困难"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "不能平卧"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "下肢水肿"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "心悸"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "重度二尖瓣反流"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "左心室扩大"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "肺动脉高压"
+          ],
+          "weight": 0.24
+        },
+        {
+          "finding": "mitral_regurgitation",
+          "weight": 1.0
+        },
+        {
+          "finding": "heart_failure_state",
+          "weight": 0.2
+        },
+        {
+          "finding": "orthopnea",
+          "weight": 0.18
+        },
+        {
+          "finding": "paroxysmal_nocturnal_dyspnea",
+          "weight": 0.22
+        },
+        {
+          "finding": "leg_edema",
+          "weight": 0.15
+        }
+      ],
+      "required_groups": [
+        [
+          "mitral_regurgitation"
+        ]
+      ],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "超声心动图",
+        "心电图",
+        "胸部X线"
+      ],
+      "specificity": 0.9,
+      "treatment_protocol": [
+        "依据反流严重度和心室功能评估瓣膜干预",
+        "容量超负荷时谨慎利尿并监测肾功能电解质",
+        "根据超声所示反流严重度、左心室大小和功能及症状，由心脏瓣膜团队评估修复或置换时机。",
+        "存在容量超负荷时谨慎利尿并监测肾功能、电解质、血压和体重，同时处理房颤、高血压等诱因。"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [
+        "心力衰竭"
+      ],
+      "caused_by": [],
+      "sources": [
+        "evaluation_expected",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "肺不张",
+      "diagnosis_type": "structural",
+      "parent_diagnosis": "肺炎",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "咳嗽"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "呼吸困难"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "低氧"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "呛咳"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "胸痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "大面积肺不张"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "持续低氧"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "异物或黏液栓阻塞"
+          ],
+          "weight": 0.24
+        },
+        {
+          "finding": "atelectasis",
+          "weight": 1.0
+        },
+        {
+          "finding": "choking_event",
+          "weight": 0.3
+        },
+        {
+          "finding": "aspiration_risk",
+          "weight": 0.25
+        },
+        {
+          "finding": "hypoxemia",
+          "weight": 0.25
+        },
+        {
+          "finding": "dyspnea",
+          "weight": 0.15
+        }
+      ],
+      "required_groups": [
+        [
+          "atelectasis"
+        ]
+      ],
+      "contradictions": [],
+      "strong_verification_exams": [
+        "胸部X线检查（CXR）",
+        "胸部CT扫描（Chest CT）",
+        "支气管镜检查",
+        "动脉血气（ABG）"
+      ],
+      "discriminating_exams": [
+        "胸部X线检查（CXR）",
+        "胸部CT扫描（Chest CT）",
+        "支气管镜检查",
+        "动脉血气（ABG）"
+      ],
+      "specificity": 0.86,
+      "treatment_protocol": [
+        "氧疗和气道廓清",
+        "处理误吸、黏液栓或异物等病因并复查影像",
+        "根据低氧程度给予氧疗并实施适龄气道廓清、体位引流和吸痰；怀疑黏液栓或异物阻塞时评估支气管镜。",
+        "同步处理误吸、感染或术后低通气等病因，并复查胸部影像确认复张。"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "evaluation_expected",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "支气管肺炎",
+      "diagnosis_type": "infection",
+      "parent_diagnosis": "肺炎",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "发热"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "咳嗽"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "呼吸困难"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "低氧"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "咳痰"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "持续低氧"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "呼吸窘迫"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "脓毒症"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "呛咳后发病"
+          ],
+          "weight": 0.24
+        },
+        {
+          "finding": "bronchopneumonia",
+          "weight": 1.0
+        },
+        {
+          "finding": "pneumonia_infiltrate",
+          "weight": 0.55
+        },
+        {
+          "finding": "fever",
+          "weight": 0.2
+        },
+        {
+          "finding": "cough",
+          "weight": 0.18
+        },
+        {
+          "finding": "dyspnea",
+          "weight": 0.18
+        },
+        {
+          "finding": "hypoxemia",
+          "weight": 0.25
+        },
+        {
+          "finding": "choking_event",
+          "weight": 0.2
+        }
+      ],
+      "required_groups": [
+        [
+          "bronchopneumonia",
+          "pneumonia_infiltrate"
+        ]
+      ],
+      "contradictions": [],
+      "strong_verification_exams": [
+        "体格检查",
+        "脉搏血氧饱和度监测（SpO2）",
+        "胸部X线检查（CXR）",
+        "全血细胞计数（CBC）",
+        "C反应蛋白（CRP）",
+        "降钙素原（PCT）",
+        "痰培养",
+        "抗菌药物敏感性试验（AST）"
+      ],
+      "discriminating_exams": [
+        "体格检查",
+        "脉搏血氧饱和度监测（SpO2）",
+        "胸部X线检查（CXR）",
+        "全血细胞计数（CBC）",
+        "C反应蛋白（CRP）",
+        "降钙素原（PCT）",
+        "痰培养",
+        "抗菌药物敏感性试验（AST）"
+      ],
+      "specificity": 0.86,
+      "treatment_protocol": [
+        "结合严重度和培养结果选择抗感染治疗",
+        "低氧时给予呼吸支持并评估误吸和并发症",
+        "结合年龄、严重度、低氧和培养结果选择抗感染方案，必要时住院吸氧、补液并监测呼吸状态。",
+        "有误吸线索时同步采取吞咽评估和误吸预防；48至72小时无改善时复评病原、并发症和气道阻塞。"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [
+        "肺炎"
+      ],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "evaluation_expected",
+        "local_clinical_profile"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "肺隐球菌病",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "肺炎",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "咳嗽"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "发热"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "胸痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "呼吸困难"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "隐球菌抗原阳性"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "免疫功能低下"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "肺部结节"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "空洞性病变"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "隐球菌抗原检测（CrAg）",
+        "胸部CT扫描（Chest CT）",
+        "痰培养"
+      ],
+      "specificity": 0.94,
+      "treatment_protocol": [
+        "评估免疫状态和中枢神经系统受累风险",
+        "依据严重程度选择规范抗真菌治疗",
+        "监测肝肾功能和药物相互作用"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "evaluation_expected"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "肠系膜淋巴结炎",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "腹痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "右下腹痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "发热"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "恶心"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "呕吐"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "肠系膜淋巴结肿大"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "儿童腹痛"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "阑尾未见异常"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "腹部超声",
+        "全血细胞计数（CBC）",
+        "C反应蛋白（CRP）"
+      ],
+      "specificity": 0.9,
+      "treatment_protocol": [
+        "先排除需要外科处理的急腹症",
+        "无细菌感染证据时以补液、休息和对症处理为主"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "evaluation_expected"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "晶状体脱位",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "视力下降"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "单眼复视"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "屈光变化"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "眼痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "晶状体偏位"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "虹膜震颤"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "继发青光眼"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "眼外伤"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "裂隙灯检查",
+        "超声生物显微镜检查（UBM）",
+        "眼压测量"
+      ],
+      "specificity": 0.94,
+      "treatment_protocol": [
+        "评估脱位程度、眼压和视网膜情况",
+        "明显视功能受损或并发症时转眼科手术评估"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "evaluation_expected"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "黑热病",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "长期发热"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "乏力"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "消瘦"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "腹胀"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "脾大"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "全血细胞减少"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "骨髓发现利什曼原虫"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "流行区暴露"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "全血细胞计数（CBC）",
+        "腹部超声",
+        "骨髓穿刺和活检（BMAB）"
+      ],
+      "specificity": 0.96,
+      "treatment_protocol": [
+        "感染专科评估并进行病原学确认",
+        "根据患者状况选择规范抗利什曼治疗并监测血细胞和脏器功能"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "evaluation_expected"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "骨坏死",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "髋部疼痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "腹股沟痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "负重痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "活动受限"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "股骨头塌陷"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "长期糖皮质激素使用"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "大量饮酒"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "MRI骨坏死征象"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "磁共振成像（MRI）",
+        "X线检查"
+      ],
+      "specificity": 0.9,
+      "treatment_protocol": [
+        "按分期减少负重并进行骨科评估",
+        "早期考虑保髋治疗，塌陷期评估关节重建"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "evaluation_expected"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "骨质疏松症",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "脆性骨折"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "腰背痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "身高变矮"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "驼背"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "低骨密度"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "椎体压缩骨折"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "反复低能量骨折"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "双能X线吸收测定法（DEXA）",
+        "骨转换标志物（BTMs）",
+        "维生素D检测"
+      ],
+      "specificity": 0.88,
+      "treatment_protocol": [
+        "评估继发原因和骨折风险",
+        "补充钙和维生素D并按风险选择抗骨质疏松治疗",
+        "实施防跌倒和负重运动计划"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "evaluation_expected"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "霰粒肿",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "眼睑肿块"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "眼睑硬结"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "局部异物感"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "无痛性眼睑结节"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "睑板腺囊肿"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "反复同部位复发"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "体格检查",
+        "裂隙灯检查"
+      ],
+      "specificity": 0.94,
+      "treatment_protocol": [
+        "首选温热敷和眼睑清洁",
+        "持续不退或影响视力时进行眼科处理",
+        "反复或非典型病灶考虑病理检查"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "evaluation_expected"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "急性支气管炎",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "支气管炎",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "急性咳嗽"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "咳痰"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "喘息"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "低热"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "胸部影像无肺炎实变"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "咳嗽病程短"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "病毒感染前驱症状"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "体格检查",
+        "胸部X线检查（CXR）"
+      ],
+      "specificity": 0.82,
+      "treatment_protocol": [
+        "以对症止咳、补液和观察为主",
+        "无细菌感染证据时避免常规使用抗菌药"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "evaluation_expected"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "颅内占位性病变",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "进行性头痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "呕吐"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "癫痫发作"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "局灶性神经功能缺损"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "颅内肿块"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "占位效应"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "中线移位"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "视乳头水肿"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "脑MRI",
+        "头颅CT扫描（Head CT）"
+      ],
+      "specificity": 0.88,
+      "treatment_protocol": [
+        "评估颅内压和神经功能恶化风险",
+        "尽快转神经外科或肿瘤专科明确病理和治疗方案"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "evaluation_expected"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "成骨不全症",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "反复骨折"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "低能量骨折"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "骨骼畸形"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "生长迟缓"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "蓝巩膜"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "牙本质发育不全"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "家族性反复骨折"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "胶原相关基因异常"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "X线检查",
+        "骨密度",
+        "基因检测"
+      ],
+      "specificity": 0.96,
+      "treatment_protocol": [
+        "采用多学科骨健康管理和骨折预防",
+        "根据分型评估药物、矫形和康复治疗"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "evaluation_expected"
+      ],
+      "source_version": "2026-07-15"
+    },
+    {
+      "name": "支原体肺炎",
+      "diagnosis_type": "disease",
+      "parent_diagnosis": "肺炎",
+      "supporting_evidence": [
+        {
+          "terms": [
+            "持续干咳"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "发热"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "乏力"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "头痛"
+          ],
+          "weight": 0.2
+        },
+        {
+          "terms": [
+            "肺炎支原体核酸阳性"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "肺炎支原体抗体阳性"
+          ],
+          "weight": 0.24
+        },
+        {
+          "terms": [
+            "影像间质性浸润"
+          ],
+          "weight": 0.24
+        }
+      ],
+      "required_groups": [],
+      "contradictions": [],
+      "strong_verification_exams": [],
+      "discriminating_exams": [
+        "核酸扩增检测（NAAT）",
+        "肺炎支原体抗体检测",
+        "胸部X线检查（CXR）"
+      ],
+      "specificity": 0.9,
+      "treatment_protocol": [
+        "结合年龄、严重程度和病原证据选择针对非典型病原体的治疗",
+        "监测低氧和肺外并发症"
+      ],
+      "contraindications": [],
+      "suppress_diagnoses": [],
+      "causes": [],
+      "caused_by": [],
+      "sources": [
+        "evaluation_expected"
+      ],
+      "source_version": "2026-07-15"
+    }
+  ]
+}

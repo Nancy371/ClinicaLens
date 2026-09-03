@@ -1,0 +1,22 @@
+{
+  "knowledge_version": "2026-07-21-graph-v2",
+  "diseases": [
+    {
+      "name": "房间隔缺损",
+      "required_groups": [
+        [
+          {"finding": "atrial_septal_defect"},
+          {"finding": "diagnosis:房间隔缺损"}
+        ]
+      ],
+      "supporting_evidence": [
+        {"finding": "atrial_septal_defect", "weight": 1.3},
+        {"finding": "qpqs_elevated", "weight": 0.45},
+        {"finding": "right_heart_enlargement", "weight": 0.24}
+      ],
+      "contradictions": [
+        {"finding": "ventricular_septal_defect", "hard": false, "penalty": 0.28}
+      ]
+    }
+  ]
+}

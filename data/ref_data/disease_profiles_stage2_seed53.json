@@ -1,0 +1,130 @@
+{
+  "version": "2026-07-22-stage2-seed53",
+  "source": "stage2_seed52_53_failure_analysis",
+  "profiles": [
+    {
+      "name": "老视",
+      "aliases": ["老花眼", "presbyopia", "年龄相关调节不足"],
+      "category": "ophthalmology",
+      "body_system": "ophthalmology",
+      "family": "age_related_refractive_error",
+      "diagnosis_type": "specific",
+      "specificity": 0.86,
+      "common_symptoms": ["看近模糊", "阅读困难", "近距离工作困难", "远视力相对保留"],
+      "hallmark_findings": ["near_vision_difficulty", "age_related_near_blur", "refractive_correction_improves_near_vision", "presbyopia_pattern", "refractive_error"],
+      "required_groups": [
+        [{"finding": "near_vision_difficulty"}, {"finding": "diagnosis:老视"}],
+        [{"finding": "refractive_correction_improves_near_vision"}, {"finding": "presbyopia_pattern"}, {"finding": "age_related_near_blur"}]
+      ],
+      "negative_features": ["iris_coloboma", "lens_dislocation", "intraocular_mass"],
+      "common_confusions": ["晶状体脱位", "虹膜缺损", "青光眼", "白内障"],
+      "generalization_suppressions": ["晶状体脱位", "虹膜缺损", "青光眼", "白内障"],
+      "strong_verification_exams": ["视力检查", "屈光检查"],
+      "required_exams": ["视力检查", "屈光检查"],
+      "treatment_principles": ["配阅读眼镜或渐进多焦镜", "进行近距离用眼卫生教育", "复查视力和屈光状态"],
+      "avoid_mistakes": ["年龄相关看近模糊不要默认归入晶状体脱位或结构性眼病"]
+    },
+    {
+      "name": "卵睾性别发育异常（Ovotesticular DSD）",
+      "aliases": ["卵睾性DSD", "卵睾性别发育异常", "ovotesticular DSD"],
+      "category": "endocrine_genetic",
+      "body_system": "endocrine_genetic",
+      "family": "sex_development_disorder",
+      "diagnosis_type": "structural",
+      "specificity": 0.97,
+      "common_symptoms": ["外生殖器发育异常", "尿道下裂", "隐睾", "性别发育不一致"],
+      "hallmark_findings": ["ambiguous_genitalia", "sex_development_disorder", "ovotesticular_tissue"],
+      "required_groups": [
+        [{"finding": "ambiguous_genitalia"}, {"finding": "sex_development_disorder"}, {"finding": "diagnosis:卵睾性别发育异常（Ovotesticular DSD）"}],
+        [{"finding": "ovotesticular_tissue"}, {"finding": "karyotype_mosaic"}]
+      ],
+      "negative_features": ["renal_colic", "renal_stone"],
+      "common_confusions": ["肾结石", "尿道综合征", "泌尿系感染", "多囊卵巢综合征"],
+      "generalization_suppressions": ["肾结石", "尿道综合征", "泌尿系感染"],
+      "strong_verification_exams": ["染色体核型分析", "性激素六项", "盆腔超声", "组织病理学检查"],
+      "required_exams": ["染色体核型分析", "性激素六项", "盆腔超声"],
+      "treatment_principles": ["多学科评估染色体、性腺和内外生殖器结构", "避免在未完成评估前做不可逆性手术", "结合家庭和患者意愿进行长期随访"]
+    },
+    {
+      "name": "颞下颌关节脱位（TMJ）",
+      "aliases": ["颞下颌关节脱位", "下颌关节脱位", "TMJ dislocation", "jaw dislocation"],
+      "category": "musculoskeletal",
+      "body_system": "musculoskeletal",
+      "family": "temporomandibular_joint_disorder",
+      "diagnosis_type": "structural",
+      "specificity": 0.92,
+      "common_symptoms": ["张口后不能闭口", "耳前区疼痛", "下颌偏斜", "咀嚼困难"],
+      "hallmark_findings": ["jaw_locked_open", "unable_close_mouth", "preauricular_pain", "tmj_dislocation"],
+      "required_groups": [
+        [{"finding": "jaw_locked_open"}, {"finding": "unable_close_mouth"}, {"finding": "diagnosis:颞下颌关节脱位（TMJ）"}],
+        [{"finding": "tmj_dislocation"}]
+      ],
+      "negative_features": ["vesicular_rash", "dermatomal_pain"],
+      "common_confusions": ["带状疱疹", "骨折", "成骨不全症", "骨质疏松症"],
+      "generalization_suppressions": ["带状疱疹", "骨折", "成骨不全症", "骨质疏松症"],
+      "strong_verification_exams": ["体格检查", "X线检查", "CT扫描（CT）"],
+      "required_exams": ["体格检查", "X线检查"],
+      "treatment_principles": ["及时复位并镇痛", "复位后短期限制张口和软食", "复发或创伤时口腔颌面外科随访"]
+    },
+    {
+      "name": "尖锐湿疣",
+      "aliases": ["生殖器疣", "肛生殖器疣", "HPV疣", "condyloma acuminatum", "genital warts"],
+      "category": "dermatology_genitourinary",
+      "body_system": "dermatology_genitourinary",
+      "family": "anogenital_hpv_infection",
+      "diagnosis_type": "etiology",
+      "specificity": 0.92,
+      "common_symptoms": ["外阴或肛周赘生物", "菜花样疣体", "局部瘙痒", "接触性出血"],
+      "hallmark_findings": ["anogenital_warts", "cauliflower_lesions", "hpv_related_lesions"],
+      "required_groups": [
+        [{"finding": "anogenital_warts"}, {"finding": "cauliflower_lesions"}, {"finding": "diagnosis:尖锐湿疣"}],
+        [{"finding": "hpv_related_lesions"}]
+      ],
+      "common_confusions": ["湿疹", "水痘", "雅司病", "尿道综合征"],
+      "generalization_suppressions": ["湿疹", "水痘", "雅司病", "尿道综合征"],
+      "strong_verification_exams": ["体格检查", "组织病理学检查", "HPV检测"],
+      "required_exams": ["体格检查", "组织病理学检查"],
+      "treatment_principles": ["局部物理或药物去疣", "评估伴侣和其他性传播感染", "复发风险和安全性教育"]
+    },
+    {
+      "name": "滴虫性阴道炎",
+      "aliases": ["阴道毛滴虫感染", "trichomoniasis", "trichomonas vaginitis"],
+      "category": "genitourinary",
+      "body_system": "genitourinary",
+      "family": "vaginitis_sti",
+      "diagnosis_type": "etiology",
+      "specificity": 0.9,
+      "common_symptoms": ["泡沫样阴道分泌物", "外阴瘙痒", "阴道异味", "宫颈草莓样改变"],
+      "hallmark_findings": ["frothy_vaginal_discharge", "vaginal_pruritus", "trichomonas_positive", "strawberry_cervix"],
+      "required_groups": [
+        [{"finding": "frothy_vaginal_discharge"}, {"finding": "vaginal_pruritus"}, {"finding": "diagnosis:滴虫性阴道炎"}],
+        [{"finding": "trichomonas_positive"}, {"finding": "strawberry_cervix"}]
+      ],
+      "common_confusions": ["湿疹", "尿道综合征", "泌尿系感染", "细菌性阴道病"],
+      "generalization_suppressions": ["湿疹", "尿道综合征", "泌尿系感染"],
+      "strong_verification_exams": ["阴道分泌物湿片检查", "阴道pH检测", "病原体核酸检测"],
+      "required_exams": ["阴道分泌物湿片检查"],
+      "treatment_principles": ["硝基咪唑类治疗并处理伴侣", "治疗期间避免性生活", "复查或复诊持续症状"]
+    },
+    {
+      "name": "脐尿管囊肿",
+      "aliases": ["脐尿管残余囊肿", "urachal cyst", "urachal remnant cyst"],
+      "category": "genitourinary",
+      "body_system": "genitourinary",
+      "family": "urachal_remnant",
+      "diagnosis_type": "structural",
+      "specificity": 0.93,
+      "common_symptoms": ["脐部流液", "脐周或下腹痛", "脐下正中肿块", "反复脐部感染"],
+      "hallmark_findings": ["umbilical_discharge", "midline_suprapubic_pain", "umbilical_mass", "midline_suprapubic_cyst", "urachal_remnant_pattern", "urachal_cyst_imaging"],
+      "required_groups": [
+        [{"finding": "umbilical_discharge"}, {"finding": "umbilical_mass"}, {"finding": "diagnosis:脐尿管囊肿"}],
+        [{"finding": "urachal_remnant_pattern"}, {"finding": "urachal_cyst_imaging"}, {"finding": "midline_suprapubic_cyst"}]
+      ],
+      "common_confusions": ["骨折", "带状疱疹", "急性细菌性前列腺炎", "肺结核"],
+      "generalization_suppressions": ["骨折", "带状疱疹", "肺结核"],
+      "strong_verification_exams": ["腹部B超", "腹部CT", "尿液分析（UA）"],
+      "required_exams": ["腹部B超", "腹部CT"],
+      "treatment_principles": ["感染期抗感染控制后择期切除脐尿管残余", "评估脓肿和泌尿系统相通", "避免误按皮肤带状疱疹或骨折处理"]
+    }
+  ]
+}

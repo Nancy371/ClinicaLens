@@ -1,0 +1,52 @@
+{
+  "records": [
+    {
+      "title": "\u80ba\u52a8\u9759\u8109\u7618",
+      "aliases": ["PAVM", "\u80ba\u52a8\u9759\u8109\u7578\u5f62", "\u80ba\u5185\u53f3\u5411\u5de6\u5206\u6d41"],
+      "candidate_diseases": ["\u80ba\u52a8\u9759\u8109\u7618"],
+      "mechanism_ids": ["pulmonary_vascular_shunt"],
+      "family_id": "pulmonary_arteriovenous_malformation_family",
+      "body_system": "pulmonary_vascular",
+      "terms": ["hypoxemia", "cyanosis", "hemoptysis", "pulmonary vascular shunt", "right-to-left shunt", "\u4f4e\u6c27", "\u53d1\u7ec0", "\u54af\u8840", "\u80ba\u7ed3\u8282"],
+      "recommended_exams": ["\u80ba\u52a8\u8109CTA", "\u80f8\u90e8\u589e\u5f3aCT", "\u8d85\u58f0\u5fc3\u52a8\u56fe\u53f3\u5fc3\u58f0\u5b66\u9020\u5f71", "\u52a8\u8109\u8840\u6c14\u5206\u6790"],
+      "summary": "Unreviewed external seed: pulmonary vascular shunt family can explain exertional dyspnea, cyanosis, hypoxemia and hemoptysis; confirm with pulmonary CTA or contrast echocardiography.",
+      "source_label": "offline_unreviewed_external_seed"
+    },
+    {
+      "title": "\u6f0f\u6597\u80f8",
+      "aliases": ["pectus excavatum", "\u80f8\u9aa8\u51f9\u9677", "\u524d\u80f8\u51f9\u9677", "\u80f8\u5eca\u7578\u5f62"],
+      "candidate_diseases": ["\u6f0f\u6597\u80f8"],
+      "mechanism_ids": ["chest_wall_structural_deformity"],
+      "family_id": "pectus_deformity",
+      "body_system": "musculoskeletal_thoracic",
+      "terms": ["sternal depression", "chest wall deformity", "Haller index", "exercise intolerance", "\u80f8\u9aa8\u51f9\u9677", "\u80f8\u5eca\u7578\u5f62"],
+      "recommended_exams": ["\u80f8\u90e8CT", "Haller index", "\u4f53\u683c\u68c0\u67e5", "\u80ba\u529f\u80fd\u68c0\u67e5", "\u8d85\u58f0\u5fc3\u52a8\u56fe"],
+      "summary": "Unreviewed external seed: structural chest wall deformity family; chest CT with Haller index and focused physical exam distinguish it from cardiopulmonary primary disease.",
+      "source_label": "offline_unreviewed_external_seed"
+    },
+    {
+      "title": "\u767d\u585e\u7efc\u5408\u5f81",
+      "aliases": ["Behcet disease", "Behcet syndrome", "\u767d\u585e\u75c5", "\u53e3-\u773c-\u751f\u6b96\u5668\u6e83\u75a1\u7efc\u5408\u5f81"],
+      "candidate_diseases": ["\u767d\u585e\u7efc\u5408\u5f81"],
+      "mechanism_ids": ["mucocutaneous_ocular_vasculitis"],
+      "family_id": "behcet_spectrum",
+      "body_system": "systemic_vasculitis",
+      "terms": ["recurrent oral ulcers", "genital ulcers", "ocular inflammation", "vasculitis", "\u53e3\u8154\u6e83\u75a1", "\u5916\u9634\u6e83\u75a1", "\u751f\u6b96\u5668\u6e83\u75a1", "\u7ed3\u819c\u708e", "\u8461\u8404\u819c\u708e"],
+      "recommended_exams": ["\u773c\u79d1\u88c2\u9699\u706f\u68c0\u67e5", "\u9488\u523a\u53cd\u5e94\u8bd5\u9a8c", "HLA-B51", "\u8840\u6c89", "C\u53cd\u5e94\u86cb\u767d"],
+      "summary": "Unreviewed external seed: recurrent oral/genital ulcers with ocular inflammation supports Behcet-spectrum vasculitis; infection and other ulcer causes still require exclusion.",
+      "source_label": "offline_unreviewed_external_seed"
+    },
+    {
+      "title": "\u8110\u5c3f\u7ba1\u5f02\u5e38\u5bb6\u65cf",
+      "aliases": ["urachal remnant", "\u8110\u5c3f\u7ba1\u7aa6", "\u8110\u5c3f\u7ba1\u7618", "\u8110\u5c3f\u7ba1\u56ca\u80bf"],
+      "candidate_diseases": ["\u8110\u5c3f\u7ba1\u56ca\u80bf"],
+      "mechanism_ids": ["urachal_remnant_anomaly"],
+      "family_id": "urachal_remnant",
+      "body_system": "genitourinary_midline_embryologic",
+      "terms": ["umbilical discharge", "midline opening", "embryologic remnant", "urachal remnant", "\u8110\u90e8\u6e17\u6db2", "\u4e2d\u7ebf\u5f02\u5e38\u5f00\u53e3"],
+      "recommended_exams": ["\u8110\u90e8-\u8180\u80f1\u8d85\u58f0", "\u4e0b\u8179\u90e8CT", "\u6ccc\u5c3f\u5916\u79d1\u4f53\u68c0"],
+      "summary": "Unreviewed external seed: recurrent umbilical discharge suggests a midline embryologic remnant tract; imaging from umbilicus to bladder is discriminating.",
+      "source_label": "offline_unreviewed_external_seed"
+    }
+  ]
+}

@@ -1,0 +1,159 @@
+{
+  "knowledge_version": "2026-07-16",
+  "source_registry": {
+    "evaluation_stage2_seed48": {
+      "title": "Stage 2 training failure analysis",
+      "role": "local evaluation-derived diagnostic gaps"
+    }
+  },
+  "diseases": [
+    {
+      "name": "肺动脉瓣狭窄",
+      "diagnosis_type": "structural",
+      "parent_diagnosis": "心力衰竭",
+      "specificity": 0.92,
+      "supporting_evidence": [
+        {"finding": "pulmonary_valve_stenosis", "weight": 1.0},
+        {"finding": "pulmonary_valve_gradient", "weight": 1.0},
+        {"finding": "right_ventricular_hypertrophy", "weight": 0.45},
+        {"finding": "cyanosis", "weight": 0.35},
+        {"finding": "pulmonary_hypertension", "weight": 0.25}
+      ],
+      "sources": ["evaluation_stage2_seed48"]
+    },
+    {
+      "name": "先天性心脏病",
+      "diagnosis_type": "structural",
+      "parent_diagnosis": "心力衰竭",
+      "specificity": 0.9,
+      "supporting_evidence": [
+        {"finding": "congenital_heart_defect", "weight": 1.0},
+        {"finding": "ventricular_septal_defect", "weight": 1.0},
+        {"finding": "right_to_left_shunt", "weight": 0.95},
+        {"finding": "pulmonary_hypertension", "weight": 0.45},
+        {"finding": "right_ventricular_hypertrophy", "weight": 0.4},
+        {"finding": "cyanosis", "weight": 0.45},
+        {"finding": "feeding_diaphoresis", "weight": 0.35},
+        {"finding": "dysphagia", "weight": 0.2},
+        {"finding": "dyspnea", "weight": 0.2}
+      ],
+      "required_groups": [
+        [
+          {"finding": "congenital_heart_defect"},
+          {"finding": "ventricular_septal_defect"},
+          {"finding": "right_to_left_shunt"}
+        ],
+        [
+          {"finding": "cyanosis"},
+          {"finding": "feeding_diaphoresis"},
+          {"finding": "pulmonary_hypertension"}
+        ]
+      ],
+      "contradictions": [
+        {"finding": "diagnosis:先天性心脏病", "polarity": "negative", "penalty": 0.65, "hard": true},
+        {"finding": "congenital_heart_defect", "polarity": "negative", "penalty": 0.55, "hard": true},
+        {"finding": "ventricular_septal_defect", "polarity": "negative", "penalty": 0.45, "hard": false}
+      ],
+      "discriminating_exams": ["体格检查", "超声心动图", "心电图（ECG）", "胸部X线检查（CXR）", "心导管检查", "三维超声心动图（3D Echo）", "经食管超声心动图（TEE）", "心脏MRI（CMR）"],
+      "treatment_protocol": ["儿科心脏团队评估结构畸形、分流方向和肺血管阻力。", "根据肺动脉压力和肺血管反应性决定修补、封堵或肺血管靶向治疗。", "存在发绀和右心负荷时监测氧合、液体出入量和心功能。"],
+      "suppress_diagnoses": ["上呼吸道感染"],
+      "sources": ["evaluation_stage2_seed48"]
+    },
+    {
+      "name": "终末期肾病",
+      "diagnosis_type": "metabolic",
+      "specificity": 0.92,
+      "supporting_evidence": [
+        {"finding": "renal_impairment", "weight": 1.0},
+        {"finding": "egfr_low", "weight": 1.0},
+        {"finding": "urea_elevated", "weight": 0.65},
+        {"finding": "oliguria", "weight": 0.45},
+        {"finding": "leg_edema", "weight": 0.3},
+        {"finding": "eyelid_edema", "weight": 0.3},
+        {"finding": "orthopnea", "weight": 0.2},
+        {"finding": "pruritus", "weight": 0.25},
+        {"finding": "hyperkalemia", "weight": 0.45},
+        {"finding": "metabolic_acidosis", "weight": 0.45}
+      ],
+      "required_groups": [
+        [
+          {"finding": "renal_impairment"},
+          {"finding": "egfr_low"},
+          {"finding": "uremia"}
+        ]
+      ],
+      "contradictions": [
+        {"finding": "renal_impairment", "polarity": "negative", "penalty": 0.55, "hard": true}
+      ],
+      "discriminating_exams": ["肾功能", "尿液分析（UA）", "尿常规", "综合代谢面板（CMP）", "血清电解质", "动脉血气（ABG）", "肾脏超声"],
+      "treatment_protocol": ["肾内科评估透析指征、容量管理和电解质酸碱紊乱。", "避免 NSAIDs、肾毒性药物和不必要补液。"],
+      "suppress_diagnoses": ["骨质疏松症"],
+      "sources": ["evaluation_stage2_seed48"]
+    },
+    {
+      "name": "卵巢过度刺激综合征",
+      "diagnosis_type": "syndrome",
+      "specificity": 0.94,
+      "supporting_evidence": [
+        {"finding": "ohss_risk", "weight": 0.8},
+        {"finding": "ovarian_enlargement", "weight": 1.0},
+        {"finding": "ascites", "weight": 0.75},
+        {"finding": "abdominal_distension", "weight": 0.35},
+        {"terms": ["下腹部不适"], "weight": 0.25},
+        {"finding": "hemoconcentration", "weight": 0.65},
+        {"finding": "hypoalbuminemia", "weight": 0.45},
+        {"finding": "dyspnea", "weight": 0.15}
+      ],
+      "required_groups": [
+        [
+          {"finding": "ohss_risk"},
+          {"finding": "ovarian_enlargement"}
+        ],
+        [
+          {"finding": "ascites"},
+          {"finding": "hemoconcentration"},
+          {"finding": "hypoalbuminemia"}
+        ]
+      ],
+      "contradictions": [
+        {"finding": "ovarian_enlargement", "polarity": "negative", "penalty": 0.4, "hard": false}
+      ],
+      "discriminating_exams": ["盆腔超声", "腹部B超", "全血细胞计数（CBC）", "肝功能检查（LFTs）", "综合代谢面板（CMP）", "凝血功能检查", "血清β-hCG"],
+      "treatment_protocol": ["按 OHSS 严重度监测体重、尿量、血细胞比容、电解质和白蛋白。", "中重度病例由妇科评估住院、白蛋白、抗凝和腹水处理。"],
+      "suppress_diagnoses": ["上呼吸道感染"],
+      "sources": ["evaluation_stage2_seed48"]
+    },
+    {
+      "name": "门静脉高压",
+      "diagnosis_type": "structural",
+      "specificity": 0.9,
+      "supporting_evidence": [
+        {"finding": "portal_vein_dilation", "weight": 1.0},
+        {"finding": "portal_flow_abnormal", "weight": 0.85},
+        {"finding": "splenomegaly", "weight": 0.65},
+        {"finding": "ascites", "weight": 0.55},
+        {"finding": "varices", "weight": 0.95},
+        {"finding": "thrombocytopenia", "weight": 0.35},
+        {"finding": "dark_urine", "weight": 0.15},
+        {"finding": "pruritus", "weight": 0.15}
+      ],
+      "required_groups": [
+        [
+          {"finding": "portal_vein_dilation"},
+          {"finding": "portal_flow_abnormal"},
+          {"finding": "varices"}
+        ],
+        [
+          {"finding": "splenomegaly"},
+          {"finding": "ascites"},
+          {"finding": "thrombocytopenia"}
+        ]
+      ],
+      "contradictions": [],
+      "discriminating_exams": ["腹部B超", "腹部超声多普勒", "肝功能检查（LFTs）", "凝血功能检查", "全血细胞计数（CBC）", "胃镜", "腹部CT扫描"],
+      "treatment_protocol": ["消化/肝病专科评估门静脉高压病因、腹水和曲张静脉风险。", "监测肝功能、凝血和血小板，避免仅按胆囊炎抗感染处理。"],
+      "suppress_diagnoses": ["胆囊炎"],
+      "sources": ["evaluation_stage2_seed48"]
+    }
+  ]
+}

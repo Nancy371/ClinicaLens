@@ -1,0 +1,88 @@
+services:
+  - type: web
+    name: clinicalens-web
+    runtime: static
+    plan: free
+    buildCommand: python tools/build_web_config.py
+    staticPublishPath: ./web
+    envVars:
+      - key: CARE_API_BASE_URL
+        sync: false
+      - key: CARE_VAPID_PUBLIC_KEY
+        sync: false
+
+  - type: web
+    name: clinicalens-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: CARE_PUBLIC_DEPLOYMENT
+        value: "true"
+      - key: CARE_COOKIE_SECURE
+        value: "true"
+      - key: CARE_AUTH_SECRET
+        generateValue: true
+      - key: CARE_ALLOWED_ORIGINS
+        sync: false
+      - key: CARE_DATABASE_URL
+        sync: false
+      - key: CARE_SMS_PROVIDER_URL
+        sync: false
+      - key: CARE_SMS_PROVIDER_TOKEN
+        sync: false
+      - key: CARE_S3_BUCKET
+        sync: false
+      - key: CARE_S3_ENDPOINT
+        sync: false
+      - key: CARE_S3_REGION
+        sync: false
+      - key: CARE_S3_ACCESS_KEY_ID
+        sync: false
+      - key: CARE_S3_SECRET_ACCESS_KEY
+        sync: false
+      - key: CARE_APPOINTMENT_URL
+        value: "https://www.114yygh.com/"
+      - key: CARE_APPOINTMENT_HOSTS
+        value: "www.114yygh.com,114yygh.com"
+      - key: CARE_VAPID_PRIVATE_KEY
+        sync: false
+      - key: CARE_VAPID_SUBJECT
+        sync: false
+      - key: DEMO_LIVE_ENABLED
+        value: "false"
+      - key: DEMO_PUBLIC_DEPLOYMENT
+        value: "true"
+      - key: SERVER_TEST_ACCESS_TOKEN
+        generateValue: true
+      - key: DEMO_DAILY_LIMIT
+        value: "10"
+      - key: DEMO_IP_DAILY_LIMIT
+        value: "2"
+      - key: DEMO_MAX_QUEUE
+        value: "3"
+      - key: DEMO_JOB_TTL_SECONDS
+        value: "1800"
+      - key: DEMO_RUN_TIMEOUT_SECONDS
+        value: "240"
+      - key: DEMO_TRUST_PROXY
+        value: "true"
+      - key: DEMO_ALLOWED_ORIGINS
+        sync: false
+      - key: DEMO_CASE_MAP_JSON
+        sync: false
+      - key: DEMO_RATE_LIMIT_SALT
+        generateValue: true
+      - key: SERVICE_BASE_URL
+        sync: false
+      - key: SERVICE_TRAIN_TOKEN
+        sync: false
+      - key: MODEL_API_KEY
+        sync: false
+      - key: TEAM_ID
+        sync: false
+      - key: UPSTASH_REDIS_REST_URL
+        sync: false
+      - key: UPSTASH_REDIS_REST_TOKEN
+        sync: false

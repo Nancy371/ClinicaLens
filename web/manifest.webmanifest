@@ -1,0 +1,13 @@
+{
+  "name": "ClinicaLens｜就医与健康管理助手",
+  "short_name": "ClinicaLens",
+  "description": "从问诊、安全分流到版本化诊断与治后管理",
+  "lang": "zh-CN",
+  "start_url": "/#consultation",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f6f9f7",
+  "theme_color": "#edf5f1",
+  "categories": ["medical", "health", "productivity"]
+}

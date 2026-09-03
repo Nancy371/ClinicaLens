@@ -1,0 +1,235 @@
+# Hospital Agent Baseline Example 配置文件
+
+# 输出目录：训练和测试运行产物的输出目录
+output_dir: outputs
+
+# Structured trace capture. Disabled by default so normal local runs and tests do
+# not create trajectory files unless a training/eval profile explicitly enables it.
+trace:
+  enabled: true
+  output_dir: outputs/traces
+  fail_open: true
+  capture_artifacts: true
+  capture_raw_tool_result: true
+  capture_raw_model_prompt: false
+  max_inline_payload_chars: 4000
+  max_artifact_bytes: 5242880
+  flush_each_event: true
+  redact_sensitive_fields: true
+
+# 标准参考数据目录；疾病/检查名称必须与其中 catalog 保持一致
+ref_data_dir: data/ref_data
+
+# 比赛后端安全配置。密钥仍通过环境变量或平台请求传入，不写在这里。
+service:
+  # 如果后端接口不是 /ask_patient，而是 /api/ask_patient，可填 ["/api"]
+  endpoint_prefixes: []
+  # 当前比赛后端通过统一 /invoke 接收问诊；检查和评估使用独立真实路径。
+  use_invoke: true
+  invoke_path: /invoke
+  exam_results_path: /exam/results
+  case_evaluation_path: /evaluate/case
+  batch_evaluation_path: /evaluate
+
+# 训练配置
+train:
+  # 患者选取方式：random / forward / reverse
+  selection: random
+  # 训练患者数量；为空时使用全部患者
+  patient_count: 2
+  # 随机种子（selection: random 时使用）
+  random_seed: 9022026
+  # 指定训练患者 ID 列表；非空时优先使用，忽略 selection、patient_count 和 random_seed
+  patient_ids: []
+
+# 测试配置
+test:
+  # 患者选取方式：random / forward / reverse
+  selection: forward
+  # 测试患者数量；建议保持较小，便于快速验证
+  patient_count: 1
+  # 随机种子
+  random_seed: 42
+  # 指定测试患者 ID 列表
+  patient_ids:
+    - Patient_Comorbid-00012
+
+# LLM 配置
+llm:
+  # API 基础 URL（兼容 OpenAI Chat Completions API）
+  # 默认使用通义千问 DashScope 兼容接口
+  # 环境变量 MODEL_BASE_URL 优先
+  base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+  # 模型名称
+  # 环境变量 MODEL_NAME 优先
+  model_name: qwen-plus
+  # 生成温度（0.0-1.0）
+  temperature: 0.7
+  # 最大生成 token 数
+  max_tokens: 1024
+  # 速率限制重试次数
+  max_retries: 1
+  # 重试基础延迟（秒，指数退避）
+  retry_base_delay: 1.0
+  # 单次模型请求超时；完整闭环包含规划、批判、诊断、反思，单次超时仍要受控。
+  request_timeout: 30
+
+# 记忆配置
+memory:
+  # JSON 记忆文件路径
+  json_path: outputs/runtime_state/memory.json
+  # Markdown 记忆文件路径（旧格式，自动迁移）
+  md_path: data/memory_data/memory.md
+  # Full evidence/candidate/evaluation traces for deterministic offline replay.
+  diagnostic_replay_path: outputs/runtime_state/diagnostic_replay.jsonl
+  # 最大记忆条目数
+  max_notes: 100
+  # 单条记忆最大字符数
+  max_note_chars: 500
+
+# 结构化记忆系统配置
+memory_system:
+  # 单病例工作记忆保留时间，单位秒
+  working_ttl_seconds: 7200
+  # 同时保留的工作病例数量上限
+  max_working_cases: 32
+  # 每次召回的历史病例经验数量
+  episodic_top_k: 3
+
+# Hybrid RAG 配置：本地混合召回，不依赖外部向量数据库
+rag:
+  # 最终注入 prompt 的 chunk 数量上限
+  top_k: 8
+  # 低于该分数的弱相关 chunk 会被过滤；为空则不过滤
+  score_threshold: 0.15
+  # 启用规则版多查询扩展，例如“胸口闷”扩展为胸闷/胸痛/心悸等
+  enable_mqe: true
+  # 查询扩展强度，数值越大召回越宽
+  mqe_expansions: 2
+  # 先扩大候选池再去重排序，提升疾病画像召回覆盖
+  candidate_pool_multiplier: 4
+  # 是否把 shadow 状态策略补丁注入 RAG；测试阶段建议 false
+  include_policy_shadow: false
+  # 单个 chunk 注入 prompt 的最大字符数
+  max_chunk_chars: 700
+
+external_medical_retrieval:
+  enabled: true
+  provider: offline_seed
+  top_k: 5
+  seed_path: data/ref_data/medical_knowledge/external_retrieval_seeds.json
+
+# Evidence-first diagnosis arbitration. The allowed namespace is the 50
+# official catalog labels plus the controlled extension file.
+diagnosis:
+  enabled: true
+  # LLM may propose specific diagnoses outside the submission namespace.
+  # The resolver must map them to an official or controlled name before use.
+  open_world_candidates: true
+  name_match_threshold: 0.84
+  name_match_margin: 0.08
+  max_open_world_candidates: 10
+  llm_pattern_hypothesis:
+    enabled: true
+    use_existing_diagnosis_output: true
+    use_thinking_snapshots: true
+    allow_extra_llm_call: false
+    max_hypotheses: 3
+    max_recall_candidates: 3
+    max_protected_candidates: 2
+    active_min_strength: 0.55
+    protection_min_strength: 0.75
+    min_entity_link_confidence: 0.85
+    max_expansion_rounds: 1
+    allow_direct_gap_creation: false
+    allow_judge_score_contribution: false
+    allow_eligibility_evidence_contribution: false
+  trusted_threshold: 0.65
+  differential_threshold: 0.35
+  required_group_policy: gap_only
+  weights:
+    evidence: 0.52
+    prior: 0.10
+    specificity: 0.08
+    explain: 0.16
+    exam_match: 0.06
+    temporal: 0.03
+    age: 0.02
+    risk: 0.03
+    residual: 0.10
+    contradiction: 1.0
+  margin_threshold: 0.12
+  max_final_diagnoses: 3
+  candidate_limit: 12
+  judge_top_k: 5
+  filtered_pool_max_size: 8
+  differential_score_margin: 0.12
+  pairwise_close_margin: 0.18
+  discriminating_exam_max_items: 6
+  dynamic_rerank_after_discriminating_exams: true
+  etiology_priority_bonus: 0.08
+  etiology_close_margin: 0.12
+  max_evidence_gap_targets: 2
+  residual_drop_threshold: 0.58
+  evidence_gap_coverage_threshold: 0.32
+  evidence_gap_residual_threshold: 0.72
+  learning_path: outputs/runtime_state/pending_diagnostic_rules.json
+
+# 训练反馈只写入 pending/shadow。正式知识和 active 策略必须经独立回放或人工审核后晋级。
+learning:
+  freeze_active_knowledge: true
+  auto_promote_exam_aliases: false
+
+# At most one bounded LLM critic call is allowed for each case. Deterministic
+# review remains active when the time budget is too small for another LLM call.
+final_critic:
+  mode: judge
+  reject_unexplained_major_findings: true
+  llm_on_low_confidence: true
+  max_llm_calls: 1
+  min_remaining_seconds: 35
+  corrective_exam_min_seconds: 30
+  max_corrective_exams: 4
+  max_corrective_exam_items: 4
+
+# 问诊轮次上限
+max_ask_rounds: 2
+
+# 检查轮次上限
+max_exam_rounds: 2
+
+# 执行控制：默认使用完整 Planner + 批判 + 反思闭环，同时用预算约束避免无限等待。
+execution:
+  fast_mode: false
+  case_timeout_seconds: 240
+  fallback_reserve_seconds: 20
+  # 训练病例为 evaluation + Reflection 预留；测试病例不占用这段预算。
+  train_post_submit_reserve_seconds: 55
+  train_evaluation_timeout_seconds: 12
+  train_reflection_timeout_seconds: 40
+  max_llm_calls_per_case: 18
+  planner_criticism_max_calls: 1
+  planner_max_total_actions: 5
+  skip_train_reflection: false
+  fast_max_exam_items: 10
+  fast_exam_items:
+    - 体格检查
+    - 超声心动图
+    - 心电图（ECG）
+    - 胸部X线检查（CXR）
+    - 心导管检查
+    - 血常规
+    - C反应蛋白
+    - 胸部CT
+    - 尿常规
+    - 腹部B超
+    - 甲状腺功能
+
+# 是否记录每次大模型调用的 prompt 和响应（调试用）
+log_llm_prompts: false
+
+# 自迭代配置：训练后把低分原因沉淀为策略补丁
+self_improve_enabled: true
+self_improve_use_llm_attribute: true
+policy_store_path: outputs/runtime_state/policies.json
+candidate_policy_store_path: outputs/runtime_state/candidate_policies.json

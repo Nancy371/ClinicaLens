@@ -1,0 +1,237 @@
+{
+  "schema_version": "sample-assessment.v1",
+  "case": {
+    "key": "multi-organ-pattern",
+    "number": "02",
+    "eyebrow": "多器官证据关联",
+    "title": "肺与肾，看似分散的同一条线索",
+    "summary": "把呼吸、肾脏和免疫学证据绑定为可验证的疾病模式。",
+    "focus": "跨器官证据如何形成统一解释",
+    "tags": [
+      "肺肾综合征",
+      "模式识别",
+      "因果解释"
+    ]
+  },
+  "mode": "offline",
+  "status": "completed",
+  "timeline": [
+    {
+      "step": 1,
+      "phase": "信息采集",
+      "title": "从主诉建立初始问题空间",
+      "summary": "咯血、呼吸困难、关节痛",
+      "meta": "识别 3 个症状线索"
+    },
+    {
+      "step": 2,
+      "phase": "检查解析",
+      "title": "把检查结果转换为结构化证据",
+      "summary": "尿常规、肾功能、抗体检测、胸部CT",
+      "meta": "解析 4 组检查"
+    },
+    {
+      "step": 3,
+      "phase": "候选仲裁",
+      "title": "比较解释力、反证与未决缺口",
+      "summary": "显微镜下多血管炎 → 终末期肾病 → 肺动静脉瘘",
+      "meta": "展示前 5 个候选"
+    },
+    {
+      "step": 4,
+      "phase": "结论生成",
+      "title": "输出结论，同时保留边界",
+      "summary": "显微镜下多血管炎",
+      "meta": "跨器官证据如何形成统一解释"
+    }
+  ],
+  "evidence": [
+    {
+      "label": "咯血",
+      "value": "患者主诉",
+      "source": "问诊",
+      "role": "supporting",
+      "reason": "进入候选召回与模式匹配。"
+    },
+    {
+      "label": "呼吸困难",
+      "value": "患者主诉",
+      "source": "问诊",
+      "role": "supporting",
+      "reason": "进入候选召回与模式匹配。"
+    },
+    {
+      "label": "关节痛",
+      "value": "患者主诉",
+      "source": "问诊",
+      "role": "supporting",
+      "reason": "进入候选召回与模式匹配。"
+    },
+    {
+      "label": "尿红细胞",
+      "value": "50 个/HPF［参考值：0-3］",
+      "source": "尿常规",
+      "role": "supporting",
+      "reason": "客观检查结果进入证据评分。"
+    },
+    {
+      "label": "尿蛋白",
+      "value": "尿蛋白阳性",
+      "source": "尿常规",
+      "role": "supporting",
+      "reason": "客观检查结果进入证据评分。"
+    },
+    {
+      "label": "肌酐",
+      "value": "220 umol/L［参考值：44-133］",
+      "source": "肾功能",
+      "role": "supporting",
+      "reason": "客观检查结果进入证据评分。"
+    },
+    {
+      "label": "MPO-ANCA",
+      "value": "MPO-ANCA阳性",
+      "source": "抗体检测",
+      "role": "supporting",
+      "reason": "客观检查结果进入证据评分。"
+    },
+    {
+      "label": "结论",
+      "value": "弥漫性肺泡出血",
+      "source": "胸部CT",
+      "role": "supporting",
+      "reason": "客观检查结果进入证据评分。"
+    },
+    {
+      "label": "感染性病因是否充分排除",
+      "value": "尚未确认",
+      "source": "信息缺口",
+      "role": "unresolved",
+      "reason": "影响诊断边界或后续处置。"
+    },
+    {
+      "label": "肾活检或其他确证依据",
+      "value": "尚未确认",
+      "source": "信息缺口",
+      "role": "unresolved",
+      "reason": "影响诊断边界或后续处置。"
+    },
+    {
+      "label": "器官威胁程度与治疗禁忌",
+      "value": "尚未确认",
+      "source": "信息缺口",
+      "role": "unresolved",
+      "reason": "影响诊断边界或后续处置。"
+    }
+  ],
+  "candidates": [
+    {
+      "rank": 1,
+      "diagnosis": "显微镜下多血管炎",
+      "score": 1.0,
+      "coverage": 1.0,
+      "status": "selected",
+      "summary": "证据覆盖充分，且通过提交授权。",
+      "supporting_evidence": [
+        "咯血",
+        "呼吸困难",
+        "关节痛",
+        "结论: 弥漫性肺泡出血"
+      ],
+      "contradicting_evidence": [],
+      "unresolved_gap_count": 0
+    },
+    {
+      "rank": 2,
+      "diagnosis": "终末期肾病",
+      "score": 0.4985,
+      "coverage": 0.1235,
+      "status": "differential",
+      "summary": "保留为鉴别方向，但解释覆盖弱于首选结论。",
+      "supporting_evidence": [
+        "肌酐: 220 umol/L［参考值：44-133］"
+      ],
+      "contradicting_evidence": [],
+      "unresolved_gap_count": 0
+    },
+    {
+      "rank": 3,
+      "diagnosis": "肺动静脉瘘",
+      "score": 0.0652,
+      "coverage": 0.0941,
+      "status": "differential",
+      "summary": "保留为鉴别方向，但解释覆盖弱于首选结论。",
+      "supporting_evidence": [
+        "咯血"
+      ],
+      "contradicting_evidence": [],
+      "unresolved_gap_count": 3
+    },
+    {
+      "rank": 4,
+      "diagnosis": "卵巢过度刺激综合征",
+      "score": 0.0,
+      "coverage": 0.0941,
+      "status": "blocked",
+      "summary": "存在关键反证或缺少必要确证条件。",
+      "supporting_evidence": [
+        "呼吸困难"
+      ],
+      "contradicting_evidence": [],
+      "unresolved_gap_count": 2
+    },
+    {
+      "rank": 5,
+      "diagnosis": "白血病",
+      "score": 0.0454,
+      "coverage": 0.1176,
+      "status": "differential",
+      "summary": "保留为鉴别方向，但解释覆盖弱于首选结论。",
+      "supporting_evidence": [
+        "结论: 弥漫性肺泡出血"
+      ],
+      "contradicting_evidence": [],
+      "unresolved_gap_count": 2
+    }
+  ],
+  "conclusion": {
+    "leading_direction": [
+      "显微镜下多血管炎"
+    ],
+    "status": "requires_doctor_confirmation",
+    "care_navigation": "该证据组合提示潜在器官威胁，建议尽快由风湿免疫科与肾内科联合评估；检查医嘱和治疗方案由医生决定。",
+    "doctor_plan": null,
+    "reasoning": "咯血与肺泡出血提示肺部毛细血管损伤，血尿、蛋白尿和肌酐升高提示肾小球损害；MPO-ANCA 阳性把两组证据连接为小血管炎模式。",
+    "uncertainty": {
+      "level": "low",
+      "label": "证据一致性较高",
+      "detail": "模式一致性高，但治疗强度必须结合感染排除、肾脏病理和器官威胁程度决定。"
+    },
+    "conversation_rounds": 1,
+    "ordered_examinations": [
+      "尿常规",
+      "肾功能",
+      "抗体检测",
+      "胸部CT"
+    ],
+    "disclaimer": "这是完整虚构病例中的 AI 辅助判断，不是医生确诊；检查、治疗和用药由医生负责。"
+  },
+  "metrics": {
+    "expected": [
+      "显微镜下多血管炎"
+    ],
+    "recall_at_5": true,
+    "top1_hit": true,
+    "exact_match": true,
+    "confidence": 1.0
+  },
+  "runtime": {
+    "engine": "deterministic-evidence-engine",
+    "source": "sanitized regression fixture",
+    "generated_on": "2026-09-03",
+    "duration_seconds": 0,
+    "timed_out": false,
+    "fallback_used": false,
+    "snapshot_notice": "确定性完整虚构病例，不是实时模型调用，也不是临床准确率验证。"
+  }
+}

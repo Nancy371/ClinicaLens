@@ -1,0 +1,127 @@
+{
+  "schema_version": "evidence_registry.v1",
+  "evidence": [
+    {
+      "evidence_id": "blast_present",
+      "aliases": ["原始细胞", "母细胞", "blast", "myeloblast", "lymphoblast"],
+      "preferred_sections": ["peripheral_blood_smear", "bone_marrow", "laboratory", "外周血涂片", "骨髓"],
+      "verification_type": "presence_or_percentage",
+      "positive_terms": ["阳性", "提示", "发现", "可见", "存在", "检出", "positive", "+"],
+      "negative_terms": ["阴性", "未见", "未发现", "未检出", "无", "negative"],
+      "ambiguous_terms": ["异常幼稚细胞", "可疑幼稚细胞"],
+      "followup_exam": "外周血涂片",
+      "evidence_level": "diagnostic_pattern",
+      "information_value": 0.96
+    },
+    {
+      "evidence_id": "pulmonary_cta_positive",
+      "aliases": ["肺动脉CTA阳性", "CTA提示肺动静脉瘘", "肺血管畸形", "pulmonary CTA positive"],
+      "preferred_sections": ["CTA", "CT", "imaging"],
+      "verification_type": "imaging_confirmation",
+      "positive_terms": ["阳性", "提示", "发现", "可见", "存在", "检出", "positive"],
+      "negative_terms": ["阴性", "未见", "未发现", "未提示", "未检出", "negative"],
+      "followup_exam": "肺动脉CTA",
+      "evidence_level": "diagnostic_pattern",
+      "information_value": 0.98
+    },
+    {
+      "evidence_id": "bubble_echo_right_to_left_shunt",
+      "aliases": ["右心声学造影阳性", "声学造影右向左分流", "bubble echo right-to-left shunt"],
+      "preferred_sections": ["echocardiography", "超声"],
+      "verification_type": "imaging_confirmation",
+      "positive_terms": ["阳性", "提示", "发现", "可见", "存在", "positive"],
+      "negative_terms": ["阴性", "未见", "未发现", "未提示", "negative"],
+      "followup_exam": "超声心动图右心声学造影",
+      "evidence_level": "diagnostic_pattern",
+      "information_value": 0.97
+    },
+    {
+      "evidence_id": "feeding_pulmonary_artery_present",
+      "aliases": ["供血肺动脉", "供血动脉", "feeding pulmonary artery"],
+      "preferred_sections": ["CTA", "CT", "imaging", "胸部增强CT"],
+      "verification_type": "targeted_exam_observation",
+      "positive_terms": ["阳性", "提示", "发现", "可见", "存在", "positive"],
+      "negative_terms": ["阴性", "未见", "未发现", "未提示", "negative"],
+      "followup_exam": "肺动脉CTA",
+      "evidence_level": "observed_imaging",
+      "information_value": 0.94
+    },
+    {
+      "evidence_id": "draining_pulmonary_vein_present",
+      "aliases": ["引流肺静脉", "早期引流肺静脉", "draining pulmonary vein"],
+      "preferred_sections": ["CTA", "CT", "imaging", "胸部增强CT"],
+      "verification_type": "targeted_exam_observation",
+      "positive_terms": ["阳性", "提示", "发现", "可见", "存在", "positive"],
+      "negative_terms": ["阴性", "未见", "未发现", "未提示", "negative"],
+      "followup_exam": "肺动脉CTA",
+      "evidence_level": "observed_imaging",
+      "information_value": 0.94
+    },
+    {
+      "evidence_id": "early_pulmonary_venous_enhancement",
+      "aliases": ["早期肺静脉显影", "肺静脉早期显影", "early pulmonary venous enhancement"],
+      "preferred_sections": ["CTA", "CT", "imaging", "胸部增强CT"],
+      "verification_type": "targeted_exam_observation",
+      "positive_terms": ["阳性", "提示", "发现", "可见", "存在", "positive"],
+      "negative_terms": ["阴性", "未见", "未发现", "未提示", "negative"],
+      "followup_exam": "胸部增强CT",
+      "evidence_level": "observed_imaging",
+      "information_value": 0.93
+    },
+    {
+      "evidence_id": "abnormal_pulmonary_vascular_cluster",
+      "aliases": ["异常肺血管团", "异常血管团", "强化血管团", "迂曲血管"],
+      "preferred_sections": ["CTA", "CT", "imaging", "胸部增强CT"],
+      "verification_type": "targeted_exam_observation",
+      "positive_terms": ["阳性", "提示", "发现", "可见", "存在", "positive"],
+      "negative_terms": ["阴性", "未见", "未发现", "未提示", "negative"],
+      "followup_exam": "胸部增强CT",
+      "evidence_level": "observed_imaging",
+      "information_value": 0.82
+    },
+    {
+      "evidence_id": "abnormal_pulmonary_av_connection_described",
+      "aliases": ["肺动静脉交通", "动静脉异常交通", "肺动静脉瘘样血管结构"],
+      "preferred_sections": ["CTA", "CT", "imaging", "胸部增强CT"],
+      "verification_type": "targeted_exam_observation",
+      "positive_terms": ["阳性", "提示", "发现", "可见", "存在", "positive"],
+      "negative_terms": ["阴性", "未见", "未发现", "未提示", "negative"],
+      "followup_exam": "肺动脉CTA",
+      "evidence_level": "observed_imaging",
+      "information_value": 0.98
+    },
+    {
+      "evidence_id": "delayed_bubbles_in_left_heart",
+      "aliases": ["微泡延迟进入左心", "左心延迟显影", "delayed bubbles in left heart"],
+      "preferred_sections": ["echocardiography", "超声", "右心声学造影"],
+      "verification_type": "targeted_exam_observation",
+      "positive_terms": ["阳性", "提示", "发现", "可见", "存在", "positive"],
+      "negative_terms": ["阴性", "未见", "未发现", "未提示", "negative"],
+      "followup_exam": "超声心动图右心声学造影",
+      "evidence_level": "observed_imaging",
+      "information_value": 0.96
+    },
+    {
+      "evidence_id": "intrapulmonary_right_to_left_shunt_observed",
+      "aliases": ["肺内右向左分流", "肺内分流", "intrapulmonary right-to-left shunt"],
+      "preferred_sections": ["echocardiography", "超声", "右心声学造影"],
+      "verification_type": "targeted_exam_observation",
+      "positive_terms": ["阳性", "提示", "发现", "可见", "存在", "positive"],
+      "negative_terms": ["阴性", "未见", "未发现", "未提示", "negative"],
+      "followup_exam": "超声心动图右心声学造影",
+      "evidence_level": "observed_imaging",
+      "information_value": 0.96
+    },
+    {
+      "evidence_id": "vascular_pulmonary_nodule_suspected",
+      "aliases": ["血管性肺结节", "血管影增粗", "肺内血管性病变"],
+      "preferred_sections": ["CT", "imaging", "胸部CT"],
+      "verification_type": "support_observation",
+      "positive_terms": ["阳性", "提示", "发现", "可见", "存在", "positive"],
+      "negative_terms": ["阴性", "未见", "未发现", "未提示", "negative"],
+      "followup_exam": "胸部增强CT",
+      "evidence_level": "support",
+      "information_value": 0.58
+    }
+  ]
+}

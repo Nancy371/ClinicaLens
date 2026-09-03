@@ -1,0 +1,211 @@
+{
+  "version": "2026-08-03-clinical-patterns-v1",
+  "patterns": [
+    {
+      "pattern_id": "mucocutaneous_platelet_bleeding_pattern",
+      "pattern_type": "bleeding_pattern",
+      "body_system": "hematology",
+      "required_groups": [
+        {
+          "domain": "hematology_skin",
+          "findings": [
+            "petechiae",
+            "purpura",
+            "ecchymosis"
+          ],
+          "min_match": 1
+        },
+        {
+          "domain": "hematology_mucosal",
+          "findings": [
+            "epistaxis",
+            "gingival_bleeding",
+            "menorrhagia",
+            "mucosal_bleeding"
+          ],
+          "min_match": 1
+        }
+      ],
+      "optional_findings": [
+        "platelet_low",
+        "thrombocytopenia",
+        "isolated_thrombocytopenia",
+        "coagulation_test_normal"
+      ],
+      "finding_domains": {
+        "petechiae": "hematology_skin",
+        "purpura": "hematology_skin",
+        "ecchymosis": "hematology_skin",
+        "epistaxis": "hematology_mucosal",
+        "gingival_bleeding": "hematology_mucosal",
+        "menorrhagia": "hematology_mucosal",
+        "mucosal_bleeding": "hematology_mucosal",
+        "platelet_low": "hematology_lab",
+        "thrombocytopenia": "hematology_lab",
+        "isolated_thrombocytopenia": "hematology_lab",
+        "coagulation_test_normal": "hematology_lab"
+      },
+      "contradicting_findings": [
+        "hemarthrosis",
+        "deep_muscle_hematoma",
+        "pt_prolonged",
+        "aptt_prolonged"
+      ],
+      "mechanism_ids": [
+        "primary_hemostasis_disorder",
+        "platelet_disorder"
+      ],
+      "family_ids": [
+        "thrombocytopenic_disorders",
+        "hematologic_bleeding_disorders"
+      ],
+      "retrieval_terms": [
+        "mucocutaneous platelet bleeding",
+        "primary hemostasis disorder",
+        "immune thrombocytopenia",
+        "ITP",
+        "thrombocytopenic purpura"
+      ],
+      "information_value": 0.86,
+      "min_confidence": 0.62,
+      "candidate_entities": [
+        {
+          "entity_id": "D100056",
+          "name": "特发性血小板减少性紫癜",
+          "role": "primary_pattern_candidate",
+          "priority": 0.94
+        },
+        {
+          "name": "白血病",
+          "role": "important_differential",
+          "priority": 0.76
+        }
+      ]
+    },
+    {
+      "pattern_id": "postinfectious_arthritis_uroocular_pattern",
+      "pattern_type": "postinfectious_inflammatory_pattern",
+      "body_system": "rheumatology",
+      "required_groups": [
+        {
+          "domain": "musculoskeletal",
+          "findings": [
+            "arthritis",
+            "arthralgia",
+            "inflammatory_joint_pain",
+            "asymmetric_lower_limb_arthritis"
+          ],
+          "min_match": 1
+        },
+        {
+          "domain": "genitourinary",
+          "findings": [
+            "urethritis",
+            "dysuria",
+            "genitourinary_infection"
+          ],
+          "min_match": 1
+        }
+      ],
+      "optional_findings": [
+        "conjunctivitis",
+        "ocular_redness",
+        "uveitis",
+        "recent_genitourinary_infection",
+        "recent_gastrointestinal_infection"
+      ],
+      "finding_domains": {
+        "arthritis": "musculoskeletal",
+        "arthralgia": "musculoskeletal",
+        "inflammatory_joint_pain": "musculoskeletal",
+        "asymmetric_lower_limb_arthritis": "musculoskeletal",
+        "urethritis": "genitourinary",
+        "dysuria": "genitourinary",
+        "genitourinary_infection": "genitourinary",
+        "conjunctivitis": "ocular",
+        "ocular_redness": "ocular_soft",
+        "uveitis": "ocular",
+        "recent_genitourinary_infection": "trigger_history",
+        "recent_gastrointestinal_infection": "trigger_history"
+      },
+      "contradicting_findings": [
+        "trauma_history",
+        "post_traumatic_joint_pain",
+        "renal_colic"
+      ],
+      "mechanism_ids": [
+        "postinfectious_immune_inflammation"
+      ],
+      "family_ids": [
+        "seronegative_spondyloarthritis",
+        "reactive_arthritis_spectrum"
+      ],
+      "retrieval_terms": [
+        "reactive arthritis",
+        "Reiter syndrome",
+        "postinfectious arthritis urethritis conjunctivitis",
+        "seronegative spondyloarthritis"
+      ],
+      "information_value": 0.84,
+      "min_confidence": 0.62,
+      "candidate_entities": [
+        {
+          "entity_id": "D100057",
+          "name": "赖特综合征",
+          "role": "primary_pattern_candidate",
+          "priority": 0.94
+        }
+      ]
+    }
+  ],
+  "relation_schemas": {
+    "exposure_temporal_organ_injury": {
+      "required_relation_slots": [
+        "exposure",
+        "organ_manifestation",
+        "imaging_or_objective_finding"
+      ],
+      "minimum_independent_evidence_groups": 3,
+      "objective_evidence_requirement": true,
+      "maximum_verification_level": "protected_recall",
+      "temporal_constraints": {
+        "allowed_temporal_classes": [
+          "post",
+          "after",
+          "subacute",
+          "ago"
+        ]
+      }
+    },
+    "structural_function_abnormality": {
+      "required_relation_slots": [
+        "structure_or_credible_sign",
+        "function_impairment"
+      ],
+      "minimum_independent_evidence_groups": 2,
+      "objective_evidence_requirement": false,
+      "maximum_verification_level": "recall_boost"
+    },
+    "left_sided_valvular_regurgitation": {
+      "required_relation_slots": [
+        "structure_or_credible_sign",
+        "function_impairment",
+        "regurgitation_specific"
+      ],
+      "minimum_independent_evidence_groups": 3,
+      "objective_evidence_requirement": true,
+      "maximum_verification_level": "protected_recall"
+    }
+  },
+  "family_links": {
+    "exposure_temporal_organ_injury": [
+      "radiation_related_lung_injury"
+    ],
+    "structural_function_abnormality": [
+      "valvular_left_heart"
+    ],
+    "left_sided_valvular_regurgitation": [
+      "valvular_left_heart"
+    ]
+  }
+}

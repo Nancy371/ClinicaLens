@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "trace_v1.schema.json",
+  "title": "Aggregated Trace v1",
+  "type": "object",
+  "required": [
+    "trace_id",
+    "run_id",
+    "case_id",
+    "status",
+    "event_count",
+    "artifact_count",
+    "events",
+    "artifacts"
+  ],
+  "properties": {
+    "trace_id": {"type": ["string", "null"]},
+    "run_id": {"type": ["string", "null"]},
+    "case_id": {"type": ["string", "null"]},
+    "status": {"type": "string", "enum": ["completed", "failed", "incomplete"]},
+    "event_count": {"type": "integer", "minimum": 0},
+    "artifact_count": {"type": "integer", "minimum": 0},
+    "first_event_at": {"type": ["string", "null"]},
+    "last_event_at": {"type": ["string", "null"]},
+    "events": {"type": "array"},
+    "artifacts": {"type": "array"}
+  },
+  "additionalProperties": false
+}

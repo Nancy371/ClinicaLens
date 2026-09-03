@@ -1,0 +1,24 @@
+# Hospital Agent Baseline Example 依赖
+
+# YAML 配置文件解析
+pyyaml>=6.0
+
+# 异步 HTTP 客户端（Actions 类依赖）
+httpx>=0.24.0
+
+# 异步 HTTP 服务框架（server.py 依赖）
+aiohttp>=3.8.0
+
+# 其他常用库
+python-dotenv>=1.0.0
+
+# Public demo persistent rate limiting (fail-closed when not configured)
+upstash-redis>=1.4.0
+upstash-ratelimit>=1.1.0
+
+# C-end durable state and encrypted S3-compatible document storage
+asyncpg>=0.29.0
+boto3>=1.34.0
+pywebpush>=2.0.3
+
+hospital-agent-sdk==0.2.2

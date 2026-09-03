@@ -1,0 +1,17 @@
+{
+  "case_id": "Patient_03175",
+  "contract_kind": "target_trace_contract",
+  "target_chain": [
+    "reactive_arthritis_bridge_pattern_visible_in_judge_audit",
+    "bridge_candidate_enters_primary_arbitration",
+    "score_used_only_as_tie_breaker",
+    "zoster_without_anchor_cannot_lock_primary",
+    "arbitration_action_recorded",
+    "submission_traces_back_to_latest_judge"
+  ],
+  "minimum_trace_requirements": [
+    "diagnosis_decision artifact",
+    "decision.made event",
+    "submission.created event"
+  ]
+}

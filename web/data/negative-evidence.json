@@ -1,0 +1,247 @@
+{
+  "schema_version": "sample-assessment.v1",
+  "case": {
+    "key": "negative-evidence",
+    "number": "03",
+    "eyebrow": "反证驱动排除",
+    "title": "症状像感染，检查却在说“不”",
+    "summary": "用阴性培养和正常尿检约束模型，避免把症状相似当成感染确诊。",
+    "focus": "反证如何阻止常见误判",
+    "tags": [
+      "阴性证据",
+      "鉴别诊断",
+      "边界意识"
+    ]
+  },
+  "mode": "offline",
+  "status": "completed",
+  "timeline": [
+    {
+      "step": 1,
+      "phase": "信息采集",
+      "title": "从主诉建立初始问题空间",
+      "summary": "尿急、尿频、排尿烧灼感",
+      "meta": "识别 3 个症状线索"
+    },
+    {
+      "step": 2,
+      "phase": "检查解析",
+      "title": "把检查结果转换为结构化证据",
+      "summary": "尿培养、尿常规、尿动力学检查",
+      "meta": "解析 3 组检查"
+    },
+    {
+      "step": 3,
+      "phase": "候选仲裁",
+      "title": "比较解释力、反证与未决缺口",
+      "summary": "尿道综合征 → 压力性尿失禁 → 前列腺增生",
+      "meta": "展示前 5 个候选"
+    },
+    {
+      "step": 4,
+      "phase": "结论生成",
+      "title": "输出结论，同时保留边界",
+      "summary": "尿道综合征",
+      "meta": "反证如何阻止常见误判"
+    }
+  ],
+  "evidence": [
+    {
+      "label": "尿急",
+      "value": "患者主诉",
+      "source": "问诊",
+      "role": "supporting",
+      "reason": "进入候选召回与模式匹配。"
+    },
+    {
+      "label": "尿频",
+      "value": "患者主诉",
+      "source": "问诊",
+      "role": "supporting",
+      "reason": "进入候选召回与模式匹配。"
+    },
+    {
+      "label": "排尿烧灼感",
+      "value": "患者主诉",
+      "source": "问诊",
+      "role": "supporting",
+      "reason": "进入候选召回与模式匹配。"
+    },
+    {
+      "label": "培养结果",
+      "value": "尿培养无生长",
+      "source": "尿培养",
+      "role": "contradicting",
+      "reason": "阴性结果削弱常见感染假设。"
+    },
+    {
+      "label": "白细胞酯酶",
+      "value": "阴性",
+      "source": "尿常规",
+      "role": "contradicting",
+      "reason": "阴性结果削弱常见感染假设。"
+    },
+    {
+      "label": "亚硝酸盐",
+      "value": "阴性",
+      "source": "尿常规",
+      "role": "contradicting",
+      "reason": "阴性结果削弱常见感染假设。"
+    },
+    {
+      "label": "尿白细胞",
+      "value": "0-5 个/HPF，正常",
+      "source": "尿常规",
+      "role": "contradicting",
+      "reason": "阴性结果削弱常见感染假设。"
+    },
+    {
+      "label": "结论",
+      "value": "尿动力学提示逼尿肌过度活动，残余尿正常",
+      "source": "尿动力学检查",
+      "role": "supporting",
+      "reason": "客观检查结果进入证据评分。"
+    },
+    {
+      "label": "症状持续时间与诱因",
+      "value": "尚未确认",
+      "source": "信息缺口",
+      "role": "unresolved",
+      "reason": "影响诊断边界或后续处置。"
+    },
+    {
+      "label": "既往泌尿系统病史",
+      "value": "尚未确认",
+      "source": "信息缺口",
+      "role": "unresolved",
+      "reason": "影响诊断边界或后续处置。"
+    },
+    {
+      "label": "随访中尿检是否发生变化",
+      "value": "尚未确认",
+      "source": "信息缺口",
+      "role": "unresolved",
+      "reason": "影响诊断边界或后续处置。"
+    }
+  ],
+  "candidates": [
+    {
+      "rank": 1,
+      "diagnosis": "尿道综合征",
+      "score": 1.0,
+      "coverage": 1.0,
+      "status": "selected",
+      "summary": "证据覆盖充分，且通过提交授权。",
+      "supporting_evidence": [
+        "结论: 尿动力学提示逼尿肌过度活动，残余尿正常",
+        "尿急",
+        "尿频",
+        "排尿烧灼感"
+      ],
+      "contradicting_evidence": [],
+      "unresolved_gap_count": 0
+    },
+    {
+      "rank": 2,
+      "diagnosis": "压力性尿失禁",
+      "score": 0.8797,
+      "coverage": 0.644,
+      "status": "differential",
+      "summary": "保留为鉴别方向，但解释覆盖弱于首选结论。",
+      "supporting_evidence": [
+        "结论: 尿动力学提示逼尿肌过度活动，残余尿正常",
+        "培养结果: 尿培养无生长",
+        "白细胞酯酶: 阴性",
+        "亚硝酸盐: 阴性"
+      ],
+      "contradicting_evidence": [],
+      "unresolved_gap_count": 1
+    },
+    {
+      "rank": 3,
+      "diagnosis": "前列腺增生",
+      "score": 0.3535,
+      "coverage": 0.1675,
+      "status": "differential",
+      "summary": "保留为鉴别方向，但解释覆盖弱于首选结论。",
+      "supporting_evidence": [
+        "尿频",
+        "尿急"
+      ],
+      "contradicting_evidence": [],
+      "unresolved_gap_count": 1
+    },
+    {
+      "rank": 4,
+      "diagnosis": "急性细菌性前列腺炎",
+      "score": 0.0,
+      "coverage": 0.2513,
+      "status": "blocked",
+      "summary": "存在关键反证或缺少必要确证条件。",
+      "supporting_evidence": [
+        "尿频",
+        "尿急",
+        "排尿烧灼感"
+      ],
+      "contradicting_evidence": [
+        "培养结果: 尿培养无生长",
+        "白细胞酯酶: 阴性",
+        "亚硝酸盐: 阴性",
+        "尿白细胞: 0-5 个/HPF，正常"
+      ],
+      "unresolved_gap_count": 3
+    },
+    {
+      "rank": 5,
+      "diagnosis": "赖特综合征",
+      "score": 0.0,
+      "coverage": 0.0838,
+      "status": "blocked",
+      "summary": "存在关键反证或缺少必要确证条件。",
+      "supporting_evidence": [
+        "排尿烧灼感"
+      ],
+      "contradicting_evidence": [],
+      "unresolved_gap_count": 4
+    }
+  ],
+  "conclusion": {
+    "leading_direction": [
+      "尿道综合征"
+    ],
+    "status": "requires_doctor_confirmation",
+    "care_navigation": "携带尿检、尿培养和尿动力学结果前往泌尿专科，由医生结合症状持续时间和诱因决定后续检查与处理。",
+    "doctor_plan": null,
+    "reasoning": "尿急、尿频和排尿烧灼感容易触发感染假设，但尿培养无生长、白细胞酯酶和亚硝酸盐阴性、尿白细胞正常共同削弱感染；尿动力学提示逼尿肌过度活动，更支持尿道综合征。",
+    "uncertainty": {
+      "level": "low",
+      "label": "证据一致性较高",
+      "detail": "当前证据不支持细菌感染，但仍需结合完整病史和随访排除其他泌尿系统病因。"
+    },
+    "conversation_rounds": 1,
+    "ordered_examinations": [
+      "尿培养",
+      "尿常规",
+      "尿动力学检查"
+    ],
+    "disclaimer": "这是完整虚构病例中的 AI 辅助判断，不是医生确诊；检查、治疗和用药由医生负责。"
+  },
+  "metrics": {
+    "expected": [
+      "尿道综合征"
+    ],
+    "recall_at_5": true,
+    "top1_hit": true,
+    "exact_match": true,
+    "confidence": 1.0
+  },
+  "runtime": {
+    "engine": "deterministic-evidence-engine",
+    "source": "sanitized regression fixture",
+    "generated_on": "2026-09-03",
+    "duration_seconds": 0,
+    "timed_out": false,
+    "fallback_used": false,
+    "snapshot_notice": "确定性完整虚构病例，不是实时模型调用，也不是临床准确率验证。"
+  }
+}

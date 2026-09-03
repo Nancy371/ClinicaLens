@@ -1,0 +1,21 @@
+{
+  "cases": 7,
+  "candidate_recall_at_5": 1.0,
+  "top1_accuracy": 1.0,
+  "exact_match_rate": 1.0,
+  "namespace_legal_rate": 1.0,
+  "negation_false_positive_rate": 0.0,
+  "negation_false_positive_count": 0,
+  "targets": {
+    "candidate_recall_at_5": 0.9,
+    "top1_accuracy": 0.7,
+    "namespace_legal_rate": 1.0
+  },
+  "maximum_targets": {
+    "negation_false_positive_rate": 0.0
+  },
+  "generated_on": "2026-09-03",
+  "dataset": "7 个仓库内确定性回归病例",
+  "method": "固定证据输入，不调用 LLM 或远程患者服务",
+  "disclaimer": "该结果衡量回归集上的工程行为，不代表真实临床有效性。"
+}

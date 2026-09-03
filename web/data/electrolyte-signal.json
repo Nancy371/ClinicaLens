@@ -1,0 +1,208 @@
+{
+  "schema_version": "sample-assessment.v1",
+  "case": {
+    "key": "electrolyte-signal",
+    "number": "01",
+    "eyebrow": "单一强证据收敛",
+    "title": "抽筋与心悸背后的关键异常",
+    "summary": "从常见症状中识别高信息量实验室指标，避免在泛化候选中停留。",
+    "focus": "强证据如何快速改变候选排序",
+    "tags": [
+      "电解质",
+      "证据评分",
+      "低不确定性"
+    ]
+  },
+  "mode": "offline",
+  "status": "completed",
+  "timeline": [
+    {
+      "step": 1,
+      "phase": "信息采集",
+      "title": "从主诉建立初始问题空间",
+      "summary": "手足抽筋、心悸、乏力",
+      "meta": "识别 3 个症状线索"
+    },
+    {
+      "step": 2,
+      "phase": "检查解析",
+      "title": "把检查结果转换为结构化证据",
+      "summary": "电解质",
+      "meta": "解析 1 组检查"
+    },
+    {
+      "step": 3,
+      "phase": "候选仲裁",
+      "title": "比较解释力、反证与未决缺口",
+      "summary": "低镁血症 → 冠心病 → 贫血",
+      "meta": "展示前 5 个候选"
+    },
+    {
+      "step": 4,
+      "phase": "结论生成",
+      "title": "输出结论，同时保留边界",
+      "summary": "低镁血症",
+      "meta": "强证据如何快速改变候选排序"
+    }
+  ],
+  "evidence": [
+    {
+      "label": "手足抽筋",
+      "value": "患者主诉",
+      "source": "问诊",
+      "role": "supporting",
+      "reason": "进入候选召回与模式匹配。"
+    },
+    {
+      "label": "心悸",
+      "value": "患者主诉",
+      "source": "问诊",
+      "role": "supporting",
+      "reason": "进入候选召回与模式匹配。"
+    },
+    {
+      "label": "乏力",
+      "value": "患者主诉",
+      "source": "问诊",
+      "role": "supporting",
+      "reason": "进入候选召回与模式匹配。"
+    },
+    {
+      "label": "血镁",
+      "value": "0.45 mmol/L［参考值：0.75-1.02 mmol/L］",
+      "source": "电解质",
+      "role": "supporting",
+      "reason": "客观检查结果进入证据评分。"
+    },
+    {
+      "label": "低镁的病因与持续时间",
+      "value": "尚未确认",
+      "source": "信息缺口",
+      "role": "unresolved",
+      "reason": "影响诊断边界或后续处置。"
+    },
+    {
+      "label": "肾功能及其他电解质",
+      "value": "尚未确认",
+      "source": "信息缺口",
+      "role": "unresolved",
+      "reason": "影响诊断边界或后续处置。"
+    },
+    {
+      "label": "是否伴随心电图异常",
+      "value": "尚未确认",
+      "source": "信息缺口",
+      "role": "unresolved",
+      "reason": "影响诊断边界或后续处置。"
+    }
+  ],
+  "candidates": [
+    {
+      "rank": 1,
+      "diagnosis": "低镁血症",
+      "score": 1.0,
+      "coverage": 1.0,
+      "status": "selected",
+      "summary": "证据覆盖充分，且通过提交授权。",
+      "supporting_evidence": [
+        "手足抽筋",
+        "乏力",
+        "心悸",
+        "血镁: 0.45 mmol/L［参考值：0.75-1.02 mmol/L］"
+      ],
+      "contradicting_evidence": [],
+      "unresolved_gap_count": 0
+    },
+    {
+      "rank": 2,
+      "diagnosis": "冠心病",
+      "score": 0.2138,
+      "coverage": 0.3019,
+      "status": "differential",
+      "summary": "保留为鉴别方向，但解释覆盖弱于首选结论。",
+      "supporting_evidence": [
+        "心悸",
+        "乏力"
+      ],
+      "contradicting_evidence": [],
+      "unresolved_gap_count": 0
+    },
+    {
+      "rank": 3,
+      "diagnosis": "贫血",
+      "score": 0.2138,
+      "coverage": 0.3019,
+      "status": "differential",
+      "summary": "保留为鉴别方向，但解释覆盖弱于首选结论。",
+      "supporting_evidence": [
+        "乏力",
+        "心悸"
+      ],
+      "contradicting_evidence": [],
+      "unresolved_gap_count": 0
+    },
+    {
+      "rank": 4,
+      "diagnosis": "心律失常",
+      "score": 0.0488,
+      "coverage": 0.3019,
+      "status": "differential",
+      "summary": "保留为鉴别方向，但解释覆盖弱于首选结论。",
+      "supporting_evidence": [
+        "心悸"
+      ],
+      "contradicting_evidence": [],
+      "unresolved_gap_count": 0
+    },
+    {
+      "rank": 5,
+      "diagnosis": "高血压",
+      "score": 0.1296,
+      "coverage": 0.3019,
+      "status": "differential",
+      "summary": "保留为鉴别方向，但解释覆盖弱于首选结论。",
+      "supporting_evidence": [
+        "心悸"
+      ],
+      "contradicting_evidence": [],
+      "unresolved_gap_count": 0
+    }
+  ],
+  "conclusion": {
+    "leading_direction": [
+      "低镁血症"
+    ],
+    "status": "requires_doctor_confirmation",
+    "care_navigation": "携带电解质报告尽快线下就医，由医生结合肾功能、其他电解质、用药史和心电图决定检查与治疗。",
+    "doctor_plan": null,
+    "reasoning": "血镁 0.45 mmol/L 明显低于参考范围，可统一解释手足抽筋、心悸和乏力；相比冠心病、贫血等宽泛候选，低镁血症具有更直接的客观锚点。",
+    "uncertainty": {
+      "level": "low",
+      "label": "证据一致性较高",
+      "detail": "诊断证据较充分，但低镁原因及心律风险仍需结合肾功能、用药史和心电图确认。"
+    },
+    "conversation_rounds": 1,
+    "ordered_examinations": [
+      "电解质"
+    ],
+    "disclaimer": "这是完整虚构病例中的 AI 辅助判断，不是医生确诊；检查、治疗和用药由医生负责。"
+  },
+  "metrics": {
+    "expected": [
+      "低镁血症"
+    ],
+    "recall_at_5": true,
+    "top1_hit": true,
+    "exact_match": true,
+    "confidence": 1.0
+  },
+  "runtime": {
+    "engine": "deterministic-evidence-engine",
+    "source": "sanitized regression fixture",
+    "generated_on": "2026-09-03",
+    "duration_seconds": 0,
+    "timed_out": false,
+    "fallback_used": false,
+    "snapshot_notice": "确定性完整虚构病例，不是实时模型调用，也不是临床准确率验证。"
+  }
+}

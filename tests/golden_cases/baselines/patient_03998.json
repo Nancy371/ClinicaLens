@@ -1,0 +1,21 @@
+{
+  "case_id": "Patient_03998",
+  "baseline_kind": "current_behavior_snapshot",
+  "capture_status": "pending_backend_capture",
+  "code_commit": "23dd8ce4c30b51cbb6c773d194dd5a3820bcb257",
+  "branch": "checkpoint-stage2-training",
+  "config_profile": "default",
+  "knowledge_version": "local_ref_data_current",
+  "prompt_version": "local_prompt_current",
+  "model": "configured_by_runtime",
+  "final_submission": null,
+  "candidate_set_summary": [],
+  "judge_decision_summary": {},
+  "ordered_examinations": [],
+  "exam_result_summary": {},
+  "evaluation_result": {},
+  "notes": [
+    "P0 baseline file records the comparable snapshot contract without secrets.",
+    "Populate final_submission and tool fixtures from a trace-enabled backend run before using strict baseline comparison."
+  ]
+}

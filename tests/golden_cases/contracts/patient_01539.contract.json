@@ -1,0 +1,17 @@
+{
+  "case_id": "Patient_01539",
+  "contract_kind": "target_trace_contract",
+  "target_chain": [
+    "leukemia_candidate_or_family_visible",
+    "hematology_confirmation_gap_created_when_needed",
+    "bone_marrow_or_flow_or_smear_exam_selected_when_gap_active",
+    "urinary_or_prostate_direction_does_not_consume_all_gap_slots",
+    "submission_traces_back_to_judge"
+  ],
+  "minimum_trace_requirements": [
+    "diagnosis_decision artifact",
+    "exam_plan artifact",
+    "tool.called/tool.returned pair",
+    "submission.created event"
+  ]
+}

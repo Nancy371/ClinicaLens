@@ -1,0 +1,519 @@
+{
+  "schema_version": 2,
+  "description": "Stage-2 seed50-52 recall repair profiles. These are disease-level patterns, not patient-id hardcoding.",
+  "profiles": [
+    {
+      "name": "水痘",
+      "department": "感染科",
+      "aliases": ["水痘-带状疱疹病毒感染", "varicella", "chickenpox", "VZV原发感染"],
+      "category": "vesicular_viral_exanthem",
+      "body_system": "dermatology_infectious",
+      "family": "vesicular_viral_exanthem",
+      "diagnosis_type": "etiology",
+      "specificity": 0.9,
+      "common_symptoms": ["皮肤水疱", "瘙痒", "发热", "头晕"],
+      "red_flags": ["成批水疱", "幼儿园或学校接触史", "水痘接触史"],
+      "hallmark_findings": [
+        {"finding": "vesicular_rash", "weight": 0.62},
+        {"finding": "childcare_exposure", "weight": 0.42}
+      ],
+      "discriminating_features": [
+        {"finding": "pruritus", "weight": 0.22},
+        {"finding": "fever", "weight": 0.14},
+        {"finding": "maculopapular_rash", "weight": 0.18}
+      ],
+      "required_groups": [
+        [{"finding": "vesicular_rash"}, {"finding": "diagnosis:水痘"}],
+        [{"finding": "childcare_exposure"}, {"finding": "pruritus"}, {"finding": "fever"}]
+      ],
+      "strong_verification_exams": ["体格检查", "血清学抗体检测"],
+      "required_exams": ["体格检查"],
+      "common_confusions": ["湿疹", "荨麻疹", "带状疱疹", "上呼吸道感染"],
+      "generalization_suppressions": ["湿疹", "荨麻疹", "带状疱疹"],
+      "treatment_principles": ["隔离至皮疹结痂", "对症止痒退热并避免阿司匹林", "高危或重症时评估阿昔洛韦"],
+      "avoid_mistakes": ["儿童成批水疱伴瘙痒和集体接触史不要提交为湿疹"]
+    },
+    {
+      "name": "结核性心包炎",
+      "department": "心血管内科",
+      "aliases": ["结核性心包炎症", "tuberculous pericarditis", "TB pericarditis"],
+      "category": "tuberculous_pericardial_disease",
+      "body_system": "cardiovascular",
+      "family": "tuberculous_pericardial_disease",
+      "diagnosis_type": "etiology",
+      "specificity": 0.95,
+      "parent_diagnosis": "肺结核",
+      "common_symptoms": ["胸痛", "呼吸急促", "低热", "咳嗽"],
+      "red_flags": ["平卧加重前倾缓解胸痛", "心包积液", "心包增厚", "结核接触史"],
+      "hallmark_findings": [
+        {"finding": "pericarditic_chest_pain", "weight": 0.54},
+        {"finding": "pericardial_effusion", "weight": 0.58},
+        {"finding": "pericardial_thickening", "weight": 0.42}
+      ],
+      "discriminating_features": [
+        {"finding": "tuberculosis_exposure", "weight": 0.32},
+        {"finding": "fever", "weight": 0.12},
+        {"finding": "dyspnea", "weight": 0.12}
+      ],
+      "required_groups": [
+        [{"finding": "pericarditic_chest_pain"}, {"finding": "pericardial_effusion"}, {"finding": "diagnosis:结核性心包炎"}],
+        [{"finding": "tuberculosis_exposure"}, {"finding": "pericardial_thickening"}, {"finding": "diagnosis:肺结核"}]
+      ],
+      "diagnostic_patterns": [
+        {
+          "pattern_id": "tuberculous_pericarditis_confirmed_pattern",
+          "pattern_type": "anchor_pattern",
+          "logic": "all_of",
+          "required": [
+            {
+              "any_of": [
+                "pericardial_effusion",
+                "pericardial_thickening",
+                "pericarditic_chest_pain"
+              ]
+            },
+            {
+              "any_of": [
+                "tuberculosis_exposure",
+                "tb_exposure",
+                "tuberculosis_pattern",
+                "tb_naat_positive",
+                "afb_positive",
+                "xpert_mtb_positive",
+                "diagnosis:肺结核"
+              ]
+            }
+          ],
+          "requires_objective_source": true,
+          "effect": {"eligibility": "PrimaryEligible"}
+        },
+        {
+          "pattern_id": "tuberculous_pericarditis_no_pericardial_anchor_pattern",
+          "pattern_type": "negative_pattern",
+          "logic": "any_of",
+          "required": [
+            "normal_pericardium",
+            "tb_microbiology_negative",
+            "tb_naat_negative",
+            "afb_negative"
+          ],
+          "effect": {"eligibility": "DifferentialOnly", "reason": "missing_or_negative_specific_anchor"}
+        }
+      ],
+      "strong_verification_exams": ["体格检查", "心电图（ECG）", "超声心动图", "胸部CT扫描（Chest CT）", "红细胞沉降率（ESR）"],
+      "required_exams": ["体格检查", "超声心动图", "胸部CT扫描（Chest CT）"],
+      "common_confusions": ["肺结核", "支气管肺炎", "肺隐球菌病", "肺炎", "心律失常"],
+      "generalization_suppressions": ["肺结核", "支气管肺炎", "肺隐球菌病", "肺炎"],
+      "treatment_principles": ["抗结核治疗路径并评估心包积液风险", "有填塞或大量积液时心包穿刺/引流评估", "监测缩窄性心包炎风险"],
+      "avoid_mistakes": ["胸痛平卧加重且前倾缓解时不要只按肺炎或普通肺结核提交"]
+    },
+    {
+      "name": "肺念珠菌病",
+      "department": "呼吸内科",
+      "aliases": ["肺念珠菌感染", "念珠菌性肺炎", "pulmonary candidiasis", "Candida pneumonia"],
+      "category": "opportunistic_fungal_pneumonia",
+      "body_system": "respiratory",
+      "family": "opportunistic_fungal_pneumonia",
+      "diagnosis_type": "etiology",
+      "specificity": 0.94,
+      "parent_diagnosis": "肺炎",
+      "common_symptoms": ["咳嗽", "呼吸困难", "胸闷", "咳痰"],
+      "red_flags": ["近期ICU出院", "免疫抑制", "念珠菌检出", "真菌性肺炎"],
+      "hallmark_findings": [
+        {"finding": "candida_positive", "weight": 0.62},
+        {"finding": "fungal_pneumonia", "weight": 0.46}
+      ],
+      "discriminating_features": [
+        {"finding": "post_icu_state", "weight": 0.34},
+        {"finding": "immunocompromised", "weight": 0.28},
+        {"finding": "dyspnea", "weight": 0.12}
+      ],
+      "required_groups": [
+        [{"finding": "candida_positive"}, {"finding": "diagnosis:肺念珠菌病"}],
+        [{"finding": "post_icu_state"}, {"finding": "immunocompromised"}, {"finding": "fungal_pneumonia"}]
+      ],
+      "strong_verification_exams": ["体格检查", "胸部CT扫描（Chest CT）", "支气管镜检查", "痰培养", "全血细胞计数（CBC）"],
+      "required_exams": ["胸部CT扫描（Chest CT）", "支气管镜检查", "痰培养"],
+      "common_confusions": ["支气管肺炎", "肺隐球菌病", "支原体肺炎", "肺炎", "肺不张"],
+      "generalization_suppressions": ["支气管肺炎", "支原体肺炎", "肺炎"],
+      "treatment_principles": ["确认侵袭性真菌感染证据后抗真菌治疗", "评估免疫状态和近期ICU/广谱抗菌药暴露", "避免无证据广谱抗菌药叠加"],
+      "avoid_mistakes": ["ICU后呼吸恶化且真菌线索明显时不要只提交支气管肺炎"]
+    },
+    {
+      "name": "三房心",
+      "department": "儿科心脏",
+      "aliases": ["左心房隔膜", "左房隔膜", "cor triatriatum"],
+      "category": "congenital_structural_heart",
+      "body_system": "cardiovascular",
+      "family": "congenital_structural_heart",
+      "diagnosis_type": "structural",
+      "specificity": 0.96,
+      "parent_diagnosis": "先天性心脏病",
+      "common_symptoms": ["呼吸急促", "喂养困难", "多汗", "发绀", "少尿"],
+      "red_flags": ["左心房隔膜", "限制性开窗", "肺静脉回流受阻", "肺动脉高压"],
+      "hallmark_findings": [
+        {"finding": "cor_triatriatum", "weight": 0.68},
+        {"finding": "pulmonary_venous_obstruction", "weight": 0.38}
+      ],
+      "discriminating_features": [
+        {"finding": "cyanosis", "weight": 0.18},
+        {"finding": "dyspnea", "weight": 0.16},
+        {"finding": "feeding_diaphoresis", "weight": 0.16}
+      ],
+      "required_groups": [
+        [{"finding": "cor_triatriatum"}, {"finding": "diagnosis:三房心"}],
+        [{"finding": "cyanosis"}, {"finding": "dyspnea"}, {"finding": "feeding_diaphoresis"}]
+      ],
+      "strong_verification_exams": ["体格检查", "超声心动图", "心电图（ECG）", "胸部X线检查（CXR）"],
+      "required_exams": ["体格检查", "超声心动图", "心电图（ECG）"],
+      "common_confusions": ["二度房室传导阻滞", "支气管哮喘", "慢性阻塞性肺疾病", "肺不张", "肺炎"],
+      "generalization_suppressions": ["二度房室传导阻滞", "支气管哮喘", "慢性阻塞性肺疾病", "肺炎"],
+      "related_complications": ["心内膜垫缺损", "心力衰竭", "肺动脉高压"],
+      "treatment_principles": ["儿科心脏/心外评估左房隔膜切除", "处理肺静脉回流受阻和心衰表现", "监测氧合、尿量和喂养耐受"],
+      "avoid_mistakes": ["先心病结构证据明确时不要提交为传导阻滞或呼吸系统疾病"]
+    },
+    {
+      "name": "心内膜垫缺损",
+      "department": "儿科心脏",
+      "aliases": ["房室间隔缺损", "完全性房室间隔缺损", "共同房室瓣", "atrioventricular septal defect", "AVSD"],
+      "category": "congenital_structural_heart",
+      "body_system": "cardiovascular",
+      "family": "congenital_structural_heart",
+      "diagnosis_type": "structural",
+      "specificity": 0.96,
+      "parent_diagnosis": "先天性心脏病",
+      "common_symptoms": ["喂养困难", "多汗", "呼吸急促", "发绀", "体重增长迟缓"],
+      "red_flags": ["完全性房室间隔缺损", "共同房室瓣", "房室瓣反流", "肺动脉高压"],
+      "hallmark_findings": [
+        {"finding": "atrioventricular_septal_defect", "weight": 0.68},
+        {"finding": "congenital_heart_defect", "weight": 0.30}
+      ],
+      "discriminating_features": [
+        {"finding": "cardiac_murmur", "weight": 0.22},
+        {"finding": "feeding_diaphoresis", "weight": 0.18},
+        {"finding": "pulmonary_hypertension", "weight": 0.18}
+      ],
+      "required_groups": [
+        [{"finding": "atrioventricular_septal_defect"}, {"finding": "diagnosis:心内膜垫缺损"}],
+        [{"finding": "congenital_heart_defect"}, {"finding": "feeding_diaphoresis"}, {"finding": "pulmonary_hypertension"}]
+      ],
+      "strong_verification_exams": ["体格检查", "超声心动图", "心电图（ECG）", "胸部X线检查（CXR）"],
+      "required_exams": ["体格检查", "超声心动图", "心电图（ECG）"],
+      "common_confusions": ["二度房室传导阻滞", "支气管哮喘", "慢性阻塞性肺疾病", "肺炎"],
+      "generalization_suppressions": ["二度房室传导阻滞", "支气管哮喘", "肺炎"],
+      "related_complications": ["三房心", "心力衰竭", "肺动脉高压"],
+      "treatment_principles": ["儿科心脏团队评估房室间隔修补", "控制心衰和肺血增多", "营养支持并监测肺动脉压力"],
+      "avoid_mistakes": ["超声提示房室间隔缺损时不要提交为单纯心力衰竭或肺炎"]
+    },
+    {
+      "name": "泪腺炎",
+      "department": "眼科",
+      "aliases": ["泪腺炎症", "急性泪腺炎", "慢性泪腺炎", "dacryoadenitis"],
+      "category": "lacrimal_gland_inflammation",
+      "body_system": "ophthalmology",
+      "family": "lacrimal_gland_inflammation",
+      "diagnosis_type": "disease",
+      "specificity": 0.9,
+      "common_symptoms": ["眼睑肿胀", "流泪", "眼部压迫感", "眼痛"],
+      "red_flags": ["泪腺区肿胀", "眼眶外上方疼痛", "泪腺肿大"],
+      "hallmark_findings": [
+        {"finding": "lacrimal_gland_swelling", "weight": 0.58},
+        {"finding": "lacrimal_gland_pain", "weight": 0.38}
+      ],
+      "discriminating_features": [
+        {"finding": "eyelid_edema", "weight": 0.22},
+        {"finding": "tearing", "weight": 0.20}
+      ],
+      "required_groups": [
+        [{"finding": "lacrimal_gland_swelling"}, {"finding": "diagnosis:泪腺炎"}],
+        [{"finding": "lacrimal_gland_pain"}, {"finding": "eyelid_edema"}, {"finding": "tearing"}]
+      ],
+      "strong_verification_exams": ["体格检查", "裂隙灯检查", "眼部超声", "全血细胞计数（CBC）"],
+      "required_exams": ["体格检查", "裂隙灯检查"],
+      "common_confusions": ["骨折", "青光眼", "白内障", "上呼吸道感染"],
+      "generalization_suppressions": ["骨折", "青光眼", "白内障"],
+      "treatment_principles": ["眼科评估感染性或免疫相关泪腺炎", "根据细菌感染证据使用抗菌治疗，疼痛明显时镇痛", "慢性/复发时评估IgG4相关病"],
+      "avoid_mistakes": ["眼眶外上方肿痛流泪不要被外伤词误拉到骨折"]
+    },
+    {
+      "name": "食管溃疡",
+      "department": "消化内科",
+      "aliases": ["食道溃疡", "esophageal ulcer"],
+      "category": "esophageal_mucosal_injury",
+      "body_system": "gastrointestinal",
+      "family": "esophageal_mucosal_injury",
+      "diagnosis_type": "disease",
+      "specificity": 0.9,
+      "parent_diagnosis": "胃溃疡",
+      "common_symptoms": ["吞咽痛", "烧心", "胸骨后烧灼样疼痛", "上腹烧灼样疼痛"],
+      "red_flags": ["食管黏膜溃疡", "上消化道内镜异常", "长期反流后加重"],
+      "hallmark_findings": [
+        {"finding": "esophageal_ulcer", "weight": 0.62},
+        {"finding": "odynophagia", "weight": 0.36}
+      ],
+      "discriminating_features": [
+        {"finding": "heartburn", "weight": 0.24},
+        {"finding": "retrosternal_burning", "weight": 0.28},
+        {"finding": "chronic_course", "weight": 0.10}
+      ],
+      "required_groups": [
+        [{"finding": "esophageal_ulcer"}, {"finding": "diagnosis:食管溃疡"}],
+        [{"finding": "odynophagia"}, {"finding": "heartburn"}, {"finding": "retrosternal_burning"}]
+      ],
+      "strong_verification_exams": ["胃镜", "组织病理学检查", "全血细胞计数（CBC）"],
+      "required_exams": ["胃镜"],
+      "common_confusions": ["胃炎", "胃溃疡", "慢性鼻咽炎", "骨折", "上呼吸道感染"],
+      "generalization_suppressions": ["胃炎", "胃溃疡", "慢性鼻咽炎", "骨折"],
+      "treatment_principles": ["质子泵抑制剂和去除刺激因素", "有吞咽困难、出血或体重下降时内镜随访和活检", "避免把胸骨后烧灼痛误作骨折或上呼吸道感染"],
+      "avoid_mistakes": ["吞咽痛加烧心反流应优先走食管内镜路径"]
+    },
+    {
+      "name": "先兆流产",
+      "department": "妇产科",
+      "aliases": ["先兆性流产", "threatened abortion", "threatened miscarriage"],
+      "category": "early_pregnancy_bleeding",
+      "body_system": "obstetrics_gynecology",
+      "family": "early_pregnancy_bleeding",
+      "diagnosis_type": "state",
+      "specificity": 0.92,
+      "common_symptoms": ["阴道出血", "下腹痛", "停经"],
+      "red_flags": ["妊娠早期阴道流血", "β-hCG阳性", "孕酮降低"],
+      "hallmark_findings": [
+        {"finding": "vaginal_bleeding", "weight": 0.56},
+        {"finding": "early_pregnancy", "weight": 0.42},
+        {"finding": "hcg_positive", "weight": 0.34}
+      ],
+      "discriminating_features": [
+        {"finding": "progesterone_low", "weight": 0.22},
+        {"finding": "pelvic_pain", "weight": 0.16}
+      ],
+      "required_groups": [
+        [{"finding": "vaginal_bleeding"}, {"finding": "diagnosis:先兆流产"}],
+        [{"finding": "early_pregnancy"}, {"finding": "hcg_positive"}, {"finding": "progesterone_low"}]
+      ],
+      "strong_verification_exams": ["血清β-hCG", "孕酮测定", "盆腔超声", "体格检查"],
+      "required_exams": ["血清β-hCG", "盆腔超声"],
+      "common_confusions": ["卵巢过度刺激综合征", "肠系膜淋巴结炎", "胆囊炎", "胃炎"],
+      "generalization_suppressions": ["卵巢过度刺激综合征", "肠系膜淋巴结炎", "胆囊炎", "胃炎"],
+      "related_complications": ["多囊卵巢综合征"],
+      "treatment_principles": ["妇产科评估宫内妊娠、出血量和流产风险", "根据孕酮和超声结果决定保胎与随访", "排除异位妊娠和大量出血"],
+      "avoid_mistakes": ["妊娠早期阴道出血不要被下腹痛牵到消化/腹部感染路径"]
+    },
+    {
+      "name": "多囊卵巢综合征",
+      "department": "妇科/内分泌",
+      "aliases": ["PCOS", "多囊卵巢综合症", "polycystic ovary syndrome"],
+      "category": "hyperandrogenic_anovulation",
+      "body_system": "endocrine_gynecology",
+      "family": "hyperandrogenic_anovulation",
+      "diagnosis_type": "metabolic",
+      "specificity": 0.9,
+      "common_symptoms": ["月经稀发", "闭经", "痤疮", "多毛", "不孕"],
+      "red_flags": ["高雄激素", "多囊样卵巢", "排卵障碍"],
+      "hallmark_findings": [
+        {"finding": "polycystic_ovaries", "weight": 0.54},
+        {"finding": "oligomenorrhea", "weight": 0.38},
+        {"finding": "hyperandrogenism", "weight": 0.38}
+      ],
+      "required_groups": [
+        [{"finding": "oligomenorrhea"}, {"finding": "diagnosis:多囊卵巢综合征"}],
+        [{"finding": "hyperandrogenism"}, {"finding": "polycystic_ovaries"}]
+      ],
+      "strong_verification_exams": ["盆腔超声", "性激素六项", "血糖", "血脂"],
+      "required_exams": ["盆腔超声", "性激素六项"],
+      "common_confusions": ["卵巢过度刺激综合征", "胃炎", "胆囊炎"],
+      "generalization_suppressions": ["卵巢过度刺激综合征"],
+      "related_complications": ["先兆流产", "不孕"],
+      "treatment_principles": ["管理月经、代谢风险和高雄激素表现", "有妊娠相关问题时同时处理早孕出血风险", "避免把PCOS当作OHSS替代诊断"],
+      "avoid_mistakes": ["PCOS是基础内分泌病，不应被急性OHSS完全覆盖"]
+    },
+    {
+      "name": "雅司病",
+      "department": "感染科/皮肤科",
+      "aliases": ["热带莓疮", "yaws", "Treponema pallidum pertenue感染"],
+      "category": "treponemal_skin_bone_infection",
+      "body_system": "dermatology_infectious",
+      "family": "treponemal_skin_bone_infection",
+      "diagnosis_type": "etiology",
+      "specificity": 0.94,
+      "common_symptoms": ["皮肤丘疹", "皮肤溃疡", "瘙痒", "关节痛"],
+      "red_flags": ["树莓样皮损", "雅司/莓疮线索", "螺旋体血清学阳性"],
+      "hallmark_findings": [
+        {"finding": "treponemal_skin_lesion", "weight": 0.58},
+        {"finding": "treponema_positive", "weight": 0.56}
+      ],
+      "discriminating_features": [
+        {"finding": "maculopapular_rash", "weight": 0.16},
+        {"finding": "arthralgia", "weight": 0.12}
+      ],
+      "required_groups": [
+        [{"finding": "treponemal_skin_lesion"}, {"finding": "diagnosis:雅司病"}],
+        [{"finding": "treponema_positive"}, {"finding": "maculopapular_rash"}]
+      ],
+      "strong_verification_exams": ["体格检查", "血清学抗体检测", "组织病理学检查"],
+      "required_exams": ["体格检查", "血清学抗体检测"],
+      "common_confusions": ["湿疹", "荨麻疹", "骨折"],
+      "generalization_suppressions": ["湿疹", "荨麻疹", "骨折"],
+      "treatment_principles": ["按非性病性螺旋体感染路径治疗并追踪接触者", "皮肤科/感染科确认血清学和流行病学线索", "避免误作普通湿疹长期外用药"],
+      "avoid_mistakes": ["特殊皮损和螺旋体线索出现时不要提交为湿疹"]
+    },
+    {
+      "name": "虹膜缺损",
+      "department": "眼科",
+      "aliases": ["虹膜缺损畸形", "虹膜裂隙", "iris coloboma", "coloboma"],
+      "category": "congenital_eye_malformation",
+      "body_system": "ophthalmology",
+      "family": "congenital_eye_malformation",
+      "diagnosis_type": "structural",
+      "specificity": 0.94,
+      "common_symptoms": ["视物模糊", "畏光", "夜视力下降"],
+      "red_flags": ["虹膜裂隙", "钥匙孔样瞳孔", "裂隙灯提示虹膜缺损"],
+      "hallmark_findings": [
+        {"finding": "iris_coloboma", "weight": 0.68}
+      ],
+      "discriminating_features": [
+        {"finding": "photophobia", "weight": 0.18},
+        {"finding": "night_vision_decline", "weight": 0.18}
+      ],
+      "required_groups": [
+        [{"finding": "iris_coloboma"}, {"finding": "diagnosis:虹膜缺损"}],
+        [{"finding": "photophobia"}, {"finding": "night_vision_decline"}]
+      ],
+      "strong_verification_exams": ["裂隙灯检查", "眼底摄影", "眼部超声"],
+      "required_exams": ["裂隙灯检查"],
+      "common_confusions": ["前列腺增生", "青光眼", "白内障", "晶状体脱位"],
+      "generalization_suppressions": ["前列腺增生", "青光眼", "白内障"],
+      "treatment_principles": ["眼科评估虹膜/脉络膜缺损范围和视功能", "防眩光、屈光矫正并随访眼底并发症", "合并综合征线索时遗传评估"],
+      "avoid_mistakes": ["视物模糊伴虹膜结构异常不应被泌尿系统候选覆盖"]
+    },
+    {
+      "name": "X三体综合征（47,XXX）",
+      "department": "遗传医学科",
+      "aliases": ["X三体综合征", "47,XXX综合征", "Triple X syndrome", "超雌综合征"],
+      "category": "sex_chromosome_aneuploidy",
+      "body_system": "genetic",
+      "family": "sex_chromosome_aneuploidy",
+      "diagnosis_type": "genetic",
+      "specificity": 0.96,
+      "common_symptoms": ["身材高大", "学习困难", "闭经", "骨质疏松"],
+      "red_flags": ["47,XXX核型", "X三体", "卵巢功能异常"],
+      "hallmark_findings": [
+        {"finding": "triple_x_karyotype", "weight": 0.72}
+      ],
+      "discriminating_features": [
+        {"finding": "genetic_suspicion", "weight": 0.18},
+        {"finding": "tall_stature", "weight": 0.16},
+        {"finding": "premature_ovarian_insufficiency", "weight": 0.22}
+      ],
+      "required_groups": [
+        [{"finding": "triple_x_karyotype"}, {"finding": "diagnosis:X三体综合征（47,XXX）"}],
+        [{"finding": "genetic_suspicion"}, {"finding": "tall_stature"}, {"finding": "premature_ovarian_insufficiency"}]
+      ],
+      "strong_verification_exams": ["基因检测", "骨密度检查", "性激素六项"],
+      "required_exams": ["基因检测"],
+      "common_confusions": ["骨质疏松症", "骨折", "癫痫"],
+      "generalization_suppressions": ["骨折", "癫痫"],
+      "related_complications": ["骨质疏松症", "卵巢功能异常"],
+      "treatment_principles": ["遗传咨询和多学科随访", "评估卵巢功能、骨密度和学习/心理支持需求", "骨质疏松可作为并发但不能替代遗传主诊断"],
+      "avoid_mistakes": ["47,XXX证据出现时不要只提交骨质疏松症"]
+    },
+    {
+      "name": "肾上腺疾病",
+      "department": "内分泌科",
+      "aliases": ["肾上腺功能不全", "原发性肾上腺功能不全", "Addison病", "adrenal disease", "adrenal insufficiency"],
+      "category": "adrenal_insufficiency",
+      "body_system": "endocrine",
+      "family": "adrenal_insufficiency",
+      "diagnosis_type": "etiology",
+      "specificity": 0.86,
+      "common_symptoms": ["乏力", "全身无力", "直立性头晕", "体重下降"],
+      "red_flags": ["低皮质醇", "ACTH升高", "低钠血症", "体位性低血压", "色素沉着"],
+      "hallmark_findings": [
+        {"finding": "cortisol_low", "weight": 0.56},
+        {"finding": "adrenal_insufficiency", "weight": 0.48}
+      ],
+      "discriminating_features": [
+        {"finding": "orthostatic_hypotension", "weight": 0.34},
+        {"finding": "hyponatremia", "weight": 0.24},
+        {"finding": "hyperkalemia", "weight": 0.18},
+        {"finding": "weakness", "weight": 0.12}
+      ],
+      "required_groups": [
+        [{"finding": "cortisol_low"}, {"finding": "adrenal_insufficiency"}, {"finding": "diagnosis:肾上腺疾病"}],
+        [{"finding": "orthostatic_hypotension"}, {"finding": "hyponatremia"}, {"finding": "hyperkalemia"}]
+      ],
+      "strong_verification_exams": ["血清皮质醇（8AM）", "ACTH测定", "综合代谢面板（CMP）", "血清电解质", "全血细胞计数（CBC）"],
+      "required_exams": ["血清皮质醇（8AM）", "ACTH测定", "血清电解质"],
+      "common_confusions": ["低镁血症", "终末期肾病", "心力衰竭"],
+      "generalization_suppressions": ["低镁血症", "心力衰竭"],
+      "related_complications": ["贫血", "电解质紊乱"],
+      "treatment_principles": ["内分泌科评估糖皮质/盐皮质激素替代", "急性危象风险时优先氢化可的松和补液纠正电解质", "监测血压、钠钾和低血糖风险"],
+      "avoid_mistakes": ["慢性乏力直立性头晕加低钠/低皮质醇不要误提交为终末期肾病或低镁"]
+    },
+    {
+      "name": "肺结核",
+      "department": "呼吸内科",
+      "aliases": ["结核", "肺部结核", "pulmonary tuberculosis", "TB"],
+      "category": "pulmonary_tuberculosis",
+      "body_system": "respiratory",
+      "family": "pulmonary_tuberculosis",
+      "diagnosis_type": "etiology",
+      "specificity": 0.86,
+      "common_symptoms": ["咳嗽", "咳痰", "低热", "咯血", "胸痛", "呼吸急促"],
+      "red_flags": ["结核接触史", "持续低热", "胸部CT结核征象", "痰抗酸染色或培养阳性"],
+      "hallmark_findings": [
+        {"finding": "tuberculosis_exposure", "weight": 0.38},
+        {"finding": "diagnosis:肺结核", "weight": 0.65}
+      ],
+      "discriminating_features": [
+        {"finding": "cough", "weight": 0.18},
+        {"finding": "fever", "weight": 0.16},
+        {"finding": "hemoptysis", "weight": 0.22},
+        {"finding": "dyspnea", "weight": 0.10}
+      ],
+      "required_groups": [
+        [{"finding": "diagnosis:肺结核"}, {"finding": "tuberculosis_exposure"}],
+        [{"finding": "cough"}, {"finding": "fever"}, {"finding": "hemoptysis"}]
+      ],
+      "strong_verification_exams": ["胸部CT扫描（Chest CT）", "红细胞沉降率（ESR）", "痰培养", "全血细胞计数（CBC）"],
+      "required_exams": ["胸部CT扫描（Chest CT）", "痰培养"],
+      "common_confusions": ["支气管肺炎", "支原体肺炎", "肺炎", "支气管炎"],
+      "generalization_suppressions": ["支气管肺炎", "支原体肺炎", "肺炎", "支气管炎"],
+      "related_complications": ["结核性心包炎"],
+      "treatment_principles": ["呼吸道隔离评估并按规范抗结核治疗", "治疗前评估肝功能并监测药物不良反应", "有心包炎或胸膜炎线索时补查肺外结核证据"],
+      "avoid_mistakes": ["有结核接触和持续呼吸道症状时不要只提交支气管肺炎"]
+    },
+    {
+      "name": "上呼吸道感染",
+      "department": "呼吸内科",
+      "aliases": ["急性上呼吸道感染", "普通感冒", "URI"],
+      "category": "upper_respiratory_infection",
+      "body_system": "respiratory",
+      "family": "upper_respiratory_infection",
+      "diagnosis_type": "disease",
+      "specificity": 0.62,
+      "common_symptoms": ["流鼻涕", "鼻塞", "咳嗽", "低热", "咽痛"],
+      "red_flags": ["短病程受凉后流涕咳嗽", "无肺部实变证据"],
+      "hallmark_findings": [
+        {"finding": "rhinorrhea", "weight": 0.34},
+        {"finding": "nasal_congestion", "weight": 0.28}
+      ],
+      "discriminating_features": [
+        {"finding": "acute_course", "weight": 0.16},
+        {"finding": "cough", "weight": 0.14},
+        {"finding": "fever", "weight": 0.12},
+        {"finding": "wheeze", "weight": 0.06}
+      ],
+      "required_groups": [
+        [{"finding": "rhinorrhea"}, {"finding": "nasal_congestion"}, {"finding": "diagnosis:上呼吸道感染"}],
+        [{"finding": "acute_course"}, {"finding": "cough"}, {"finding": "fever"}]
+      ],
+      "strong_verification_exams": ["体格检查", "全血细胞计数（CBC）"],
+      "required_exams": ["体格检查"],
+      "common_confusions": ["肺不张", "肺隐球菌病", "肺结核", "支气管肺炎"],
+      "generalization_suppressions": ["肺不张", "肺隐球菌病", "肺结核", "支气管肺炎"],
+      "treatment_principles": ["支持治疗、退热和鼻部护理为主", "有喘息基础病时评估哮喘急性加重", "无细菌证据时避免常规抗生素"],
+      "avoid_mistakes": ["儿童短病程流涕咳嗽低热不要被肺部复杂病种覆盖"]
+    }
+  ]
+}

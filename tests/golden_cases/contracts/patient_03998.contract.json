@@ -1,0 +1,25 @@
+{
+  "case_id": "Patient_03998",
+  "contract_kind": "target_trace_contract",
+  "target_chain": [
+    "pavm_candidate_in_judge_pool",
+    "high_value_confirmatory_gap_created",
+    "gap_closure_exam_selected",
+    "raw_tool_result_captured",
+    "normalized_result_captured",
+    "canonical_pavm_evidence_recovered_or_failure_reason_recorded",
+    "gap_state_transition_recorded",
+    "rejudge_uses_latest_evidence",
+    "submitter_uses_latest_locked_decision"
+  ],
+  "minimum_trace_requirements": [
+    "diagnosis_decision artifact",
+    "evidence_gap artifact",
+    "exam_plan artifact",
+    "tool.called/tool.returned pair",
+    "submission.created event"
+  ],
+  "notes": [
+    "P1 contract validates traceability of the PAVM gap closure loop, not guaranteed positive backend findings."
+  ]
+}

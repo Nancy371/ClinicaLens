@@ -1,0 +1,52 @@
+{
+  "product": "ClinicaLens",
+  "schema_version": "sample-catalog.v1",
+  "default_case": "multi-organ-pattern",
+  "cases": [
+    {
+      "key": "electrolyte-signal",
+      "number": "01",
+      "eyebrow": "单一强证据收敛",
+      "title": "抽筋与心悸背后的关键异常",
+      "summary": "从常见症状中识别高信息量实验室指标，避免在泛化候选中停留。",
+      "focus": "强证据如何快速改变候选排序",
+      "tags": [
+        "电解质",
+        "证据评分",
+        "低不确定性"
+      ],
+      "offline_path": "data/electrolyte-signal.json",
+      "live_supported": true
+    },
+    {
+      "key": "multi-organ-pattern",
+      "number": "02",
+      "eyebrow": "多器官证据关联",
+      "title": "肺与肾，看似分散的同一条线索",
+      "summary": "把呼吸、肾脏和免疫学证据绑定为可验证的疾病模式。",
+      "focus": "跨器官证据如何形成统一解释",
+      "tags": [
+        "肺肾综合征",
+        "模式识别",
+        "因果解释"
+      ],
+      "offline_path": "data/multi-organ-pattern.json",
+      "live_supported": true
+    },
+    {
+      "key": "negative-evidence",
+      "number": "03",
+      "eyebrow": "反证驱动排除",
+      "title": "症状像感染，检查却在说“不”",
+      "summary": "用阴性培养和正常尿检约束模型，避免把症状相似当成感染确诊。",
+      "focus": "反证如何阻止常见误判",
+      "tags": [
+        "阴性证据",
+        "鉴别诊断",
+        "边界意识"
+      ],
+      "offline_path": "data/negative-evidence.json",
+      "live_supported": true
+    }
+  ]
+}

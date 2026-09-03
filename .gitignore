@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.tmp
+*.pyc
+.pytest_cache/
+.trace_test_tmp/
+
+# Virtual env
+.env
+.care_data/
+.venv/
+venv/
+
+# Test / smoke temp outputs
+outputs/
+outputs/traces/
+outputs/train/
+outputs/runtime_state/
+*.log
+*.pid
+test_output.txt
+_smoke_out.txt
+_smoke_stdout.txt
+_smoke_stderr.txt
+_smoke_now.py
+_p1p2_smoke.py
+_selfimp_smoke.py
+_check_server_v2.py
+_dbg.py
+_dns_test.py
+_probe_endpoints.py
+_hello.txt
+outputs/test/20*/
+outputs/test/_p1p2_policies*.json
+outputs/test/_smoke_policies*.json*
+outputs/test/_smoke_policies_retire_*.json
+outputs/test/_smoke_mem*.json
+outputs/test/_*.json
+data/memory_data/diagnostic_replay.jsonl
+data/memory_data/policies.json
+data/memory_data/*.runtime.json
+data/ref_data/pending_diagnostic_rules.local.json
+data/ref_data/*_pending.local.json
+
+# IDE / OS
+.joycode/
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

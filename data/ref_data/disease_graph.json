@@ -1,0 +1,336 @@
+{
+  "schema_version": 1,
+  "description": "Lightweight disease hierarchy for retrieval and authorization. Official catalogs remain unchanged.",
+  "nodes": [
+    {
+      "name": "创伤后骨关节炎",
+      "aliases": ["创伤性骨关节炎", "外伤后骨关节炎", "post-traumatic osteoarthritis", "PTOA"],
+      "body_system": "musculoskeletal",
+      "family": "post_traumatic_degenerative_joint",
+      "specificity": 0.92,
+      "parent_diagnosis": "骨关节炎",
+      "generic_suppressions": ["骨折", "骨关节炎", "骨质疏松症", "痛风", "类风湿关节炎"],
+      "related_complications": []
+    },
+    {
+      "name": "右位心",
+      "aliases": ["心脏右位", "右位心影", "dextrocardia"],
+      "body_system": "cardiovascular",
+      "family": "congenital_structural_heart",
+      "specificity": 0.94,
+      "parent_diagnosis": "先天性心脏病",
+      "generic_suppressions": ["慢性阻塞性肺疾病", "支气管肺炎", "肺不张", "肺炎", "支气管炎", "上呼吸道感染", "房间隔缺损"],
+      "related_complications": ["室间隔缺损（VSD）"]
+    },
+    {
+      "name": "室间隔缺损（VSD）",
+      "aliases": ["室间隔缺损", "大型室间隔缺损", "膜周部室间隔缺损", "VSD"],
+      "body_system": "cardiovascular",
+      "family": "congenital_structural_heart",
+      "specificity": 0.94,
+      "parent_diagnosis": "先天性心脏病",
+      "generic_suppressions": ["先天性心脏病", "房间隔缺损", "慢性阻塞性肺疾病", "支气管肺炎", "肺不张", "肺炎", "支气管炎", "上呼吸道感染"],
+      "related_complications": ["右位心", "肺动脉高压", "心力衰竭"]
+    },
+    {
+      "name": "压力性尿失禁",
+      "aliases": ["压力性漏尿", "腹压性尿失禁", "stress urinary incontinence", "SUI"],
+      "body_system": "genitourinary",
+      "family": "urinary_incontinence",
+      "specificity": 0.9,
+      "parent_diagnosis": "尿道综合征",
+      "generic_suppressions": ["支气管炎", "肺癌", "肺结核", "慢性阻塞性肺疾病", "泌尿系感染", "尿道综合征"],
+      "related_complications": []
+    },
+    {
+      "name": "急性鼓膜炎",
+      "aliases": ["鼓膜炎", "大疱性鼓膜炎", "acute myringitis", "bullous myringitis"],
+      "body_system": "ent",
+      "family": "acute_otologic_inflammation",
+      "specificity": 0.9,
+      "parent_diagnosis": "中耳炎",
+      "generic_suppressions": ["上呼吸道感染", "中耳炎", "小耳畸形", "急性细菌性前列腺炎"],
+      "related_complications": []
+    },
+    {
+      "name": "三尖瓣反流",
+      "aliases": ["三尖瓣返流", "TR"],
+      "body_system": "cardiovascular",
+      "family": "valvular_right_heart",
+      "specificity": 0.9,
+      "parent_diagnosis": "心力衰竭",
+      "generic_suppressions": ["心力衰竭", "慢性阻塞性肺疾病", "卵巢过度刺激综合征", "门静脉高压"],
+      "related_complications": ["心力衰竭", "右心衰竭", "肺动脉高压", "心律失常"]
+    },
+    {
+      "name": "二度房室传导阻滞",
+      "aliases": ["二度AV传导阻滞", "二度房室阻滞", "Ⅱ度房室传导阻滞", "II度房室传导阻滞", "Mobitz"],
+      "body_system": "cardiovascular",
+      "family": "cardiovascular_conduction",
+      "specificity": 0.94,
+      "parent_diagnosis": "心律失常",
+      "generic_suppressions": ["低镁血症", "心律失常"],
+      "related_complications": []
+    },
+    {
+      "name": "克里格勒-纳贾尔综合征",
+      "aliases": ["克里格勒纳贾尔综合征", "Crigler-Najjar综合征", "CN综合征"],
+      "body_system": "hepatobiliary",
+      "family": "bilirubin_genetic",
+      "specificity": 0.97,
+      "parent_diagnosis": "",
+      "generic_suppressions": ["肺炎", "败血症", "胆道感染"],
+      "related_complications": []
+    },
+    {
+      "name": "慢性鼻咽炎",
+      "aliases": ["慢性鼻咽部炎症", "慢性鼻咽喉炎", "chronic nasopharyngitis"],
+      "body_system": "ent",
+      "family": "ent_chronic",
+      "specificity": 0.88,
+      "parent_diagnosis": "上呼吸道感染",
+      "generic_suppressions": ["上呼吸道感染", "支气管炎", "肺炎"],
+      "related_complications": []
+    },
+    {
+      "name": "小耳畸形",
+      "aliases": ["先天性小耳畸形", "小耳症", "microtia"],
+      "body_system": "ent",
+      "family": "congenital_ear",
+      "specificity": 0.96,
+      "parent_diagnosis": "",
+      "generic_suppressions": ["骨折", "外伤", "急性鼓膜炎"],
+      "related_complications": []
+    },
+    {
+      "name": "急性细菌性前列腺炎",
+      "aliases": ["急性前列腺炎", "细菌性前列腺炎", "acute bacterial prostatitis"],
+      "body_system": "genitourinary",
+      "family": "acute_bacterial_prostate",
+      "specificity": 0.9,
+      "parent_diagnosis": "泌尿系感染",
+      "generic_suppressions": ["前列腺增生", "泌尿系感染"],
+      "related_complications": []
+    },
+    {
+      "name": "水痘",
+      "aliases": ["水痘-带状疱疹病毒感染", "varicella", "chickenpox", "VZV原发感染"],
+      "body_system": "dermatology_infectious",
+      "family": "vesicular_viral_exanthem",
+      "specificity": 0.9,
+      "parent_diagnosis": "感染",
+      "generic_suppressions": ["湿疹", "荨麻疹", "带状疱疹", "上呼吸道感染"],
+      "related_complications": []
+    },
+    {
+      "name": "结核性心包炎",
+      "aliases": ["结核性心包炎症", "tuberculous pericarditis", "TB pericarditis"],
+      "body_system": "cardiovascular",
+      "family": "tuberculous_pericardial_disease",
+      "specificity": 0.95,
+      "parent_diagnosis": "肺结核",
+      "generic_suppressions": ["肺结核", "支气管肺炎", "肺隐球菌病", "肺炎", "心律失常"],
+      "related_complications": ["心包积液", "缩窄性心包炎"]
+    },
+    {
+      "name": "肺念珠菌病",
+      "aliases": ["肺念珠菌感染", "念珠菌性肺炎", "pulmonary candidiasis", "Candida pneumonia"],
+      "body_system": "respiratory",
+      "family": "opportunistic_fungal_pneumonia",
+      "specificity": 0.94,
+      "parent_diagnosis": "肺炎",
+      "generic_suppressions": ["支气管肺炎", "支原体肺炎", "肺隐球菌病", "肺炎", "肺不张"],
+      "related_complications": ["呼吸衰竭"]
+    },
+    {
+      "name": "三房心",
+      "aliases": ["左心房隔膜", "左房隔膜", "cor triatriatum"],
+      "body_system": "cardiovascular",
+      "family": "congenital_structural_heart",
+      "specificity": 0.96,
+      "parent_diagnosis": "先天性心脏病",
+      "generic_suppressions": ["二度房室传导阻滞", "支气管哮喘", "慢性阻塞性肺疾病", "肺不张", "肺炎"],
+      "related_complications": ["心内膜垫缺损", "心力衰竭", "肺动脉高压"]
+    },
+    {
+      "name": "心内膜垫缺损",
+      "aliases": ["房室间隔缺损", "完全性房室间隔缺损", "共同房室瓣", "atrioventricular septal defect", "AVSD"],
+      "body_system": "cardiovascular",
+      "family": "congenital_structural_heart",
+      "specificity": 0.96,
+      "parent_diagnosis": "先天性心脏病",
+      "generic_suppressions": ["二度房室传导阻滞", "支气管哮喘", "慢性阻塞性肺疾病", "肺不张", "肺炎"],
+      "related_complications": ["三房心", "心力衰竭", "肺动脉高压"]
+    },
+    {
+      "name": "泪腺炎",
+      "aliases": ["泪腺炎症", "急性泪腺炎", "慢性泪腺炎", "dacryoadenitis"],
+      "body_system": "ophthalmology",
+      "family": "lacrimal_gland_inflammation",
+      "specificity": 0.9,
+      "parent_diagnosis": "",
+      "generic_suppressions": ["骨折", "青光眼", "白内障", "上呼吸道感染"],
+      "related_complications": []
+    },
+    {
+      "name": "食管溃疡",
+      "aliases": ["食道溃疡", "esophageal ulcer"],
+      "body_system": "gastrointestinal",
+      "family": "esophageal_mucosal_injury",
+      "specificity": 0.9,
+      "parent_diagnosis": "胃溃疡",
+      "generic_suppressions": ["胃炎", "胃溃疡", "上呼吸道感染", "骨折", "带状疱疹"],
+      "related_complications": ["反流性食管炎"]
+    },
+    {
+      "name": "先兆流产",
+      "aliases": ["先兆性流产", "threatened abortion", "threatened miscarriage"],
+      "body_system": "obstetrics_gynecology",
+      "family": "early_pregnancy_bleeding",
+      "specificity": 0.92,
+      "parent_diagnosis": "",
+      "generic_suppressions": ["卵巢过度刺激综合征", "肠系膜淋巴结炎", "胆囊炎", "胃炎"],
+      "related_complications": ["多囊卵巢综合征"]
+    },
+    {
+      "name": "多囊卵巢综合征",
+      "aliases": ["PCOS", "多囊卵巢综合症", "polycystic ovary syndrome"],
+      "body_system": "endocrine_gynecology",
+      "family": "hyperandrogenic_anovulation",
+      "specificity": 0.9,
+      "parent_diagnosis": "",
+      "generic_suppressions": ["卵巢过度刺激综合征", "胃炎", "胆囊炎"],
+      "related_complications": ["先兆流产", "不孕"]
+    },
+    {
+      "name": "雅司病",
+      "aliases": ["热带莓疮", "yaws", "Treponema pallidum pertenue感染"],
+      "body_system": "dermatology_infectious",
+      "family": "treponemal_skin_bone_infection",
+      "specificity": 0.94,
+      "parent_diagnosis": "感染",
+      "generic_suppressions": ["湿疹", "荨麻疹", "骨折", "骨髓炎"],
+      "related_complications": []
+    },
+    {
+      "name": "虹膜缺损",
+      "aliases": ["虹膜缺损畸形", "虹膜裂隙", "iris coloboma", "coloboma"],
+      "body_system": "ophthalmology",
+      "family": "congenital_eye_malformation",
+      "specificity": 0.94,
+      "parent_diagnosis": "",
+      "generic_suppressions": ["前列腺增生", "青光眼", "白内障", "晶状体脱位"],
+      "related_complications": []
+    },
+    {
+      "name": "X三体综合征（47,XXX）",
+      "aliases": ["X三体综合征", "47,XXX综合征", "Triple X syndrome", "超雌综合征"],
+      "body_system": "genetic",
+      "family": "sex_chromosome_aneuploidy",
+      "specificity": 0.96,
+      "parent_diagnosis": "",
+      "generic_suppressions": ["骨质疏松症", "骨折", "癫痫"],
+      "related_complications": ["骨质疏松症", "卵巢功能异常"]
+    },
+    {
+      "name": "肾上腺疾病",
+      "aliases": ["肾上腺功能不全", "原发性肾上腺功能不全", "Addison病", "adrenal disease", "adrenal insufficiency"],
+      "body_system": "endocrine",
+      "family": "adrenal_insufficiency",
+      "specificity": 0.86,
+      "parent_diagnosis": "",
+      "generic_suppressions": ["低镁血症", "终末期肾病", "心力衰竭"],
+      "related_complications": ["贫血", "电解质紊乱"]
+    },
+    {
+      "name": "肺结核",
+      "aliases": ["结核", "肺部结核", "pulmonary tuberculosis", "TB"],
+      "body_system": "respiratory",
+      "family": "pulmonary_tuberculosis",
+      "specificity": 0.86,
+      "parent_diagnosis": "",
+      "generic_suppressions": ["支气管肺炎", "支原体肺炎", "肺炎", "支气管炎"],
+      "related_complications": ["结核性心包炎"]
+    },
+    {
+      "name": "上呼吸道感染",
+      "aliases": ["急性上呼吸道感染", "普通感冒", "URI"],
+      "body_system": "respiratory",
+      "family": "upper_respiratory_infection",
+      "specificity": 0.62,
+      "parent_diagnosis": "",
+      "generic_suppressions": ["肺不张", "肺隐球菌病", "肺结核", "支气管肺炎"],
+      "related_complications": []
+    },
+    {
+      "name": "终末期肾病",
+      "aliases": ["尿毒症", "ESRD", "慢性肾衰竭终末期", "终末期肾功能衰竭"],
+      "body_system": "renal",
+      "family": "renal_failure",
+      "specificity": 0.92,
+      "parent_diagnosis": "",
+      "generic_suppressions": ["三尖瓣反流", "心力衰竭", "骨质疏松症"],
+      "related_complications": ["贫血", "电解质紊乱"]
+    },
+    {
+      "name": "老视",
+      "aliases": ["老花眼", "presbyopia", "年龄相关调节不足"],
+      "body_system": "ophthalmology",
+      "family": "age_related_refractive_error",
+      "specificity": 0.86,
+      "parent_diagnosis": "",
+      "generic_suppressions": ["晶状体脱位", "虹膜缺损", "青光眼", "白内障"],
+      "related_complications": []
+    },
+    {
+      "name": "卵睾性别发育异常（Ovotesticular DSD）",
+      "aliases": ["卵睾性DSD", "卵睾性别发育异常", "ovotesticular DSD"],
+      "body_system": "endocrine_genetic",
+      "family": "sex_development_disorder",
+      "specificity": 0.97,
+      "parent_diagnosis": "",
+      "generic_suppressions": ["肾结石", "尿道综合征", "泌尿系感染", "多囊卵巢综合征"],
+      "related_complications": ["性腺肿瘤风险", "不育"]
+    },
+    {
+      "name": "颞下颌关节脱位（TMJ）",
+      "aliases": ["颞下颌关节脱位", "下颌关节脱位", "TMJ dislocation", "jaw dislocation"],
+      "body_system": "musculoskeletal",
+      "family": "temporomandibular_joint_disorder",
+      "specificity": 0.92,
+      "parent_diagnosis": "",
+      "generic_suppressions": ["带状疱疹", "骨折", "骨质疏松症", "成骨不全症"],
+      "related_complications": []
+    },
+    {
+      "name": "尖锐湿疣",
+      "aliases": ["生殖器疣", "肛生殖器疣", "HPV疣", "condyloma acuminatum", "genital warts"],
+      "body_system": "dermatology_genitourinary",
+      "family": "anogenital_hpv_infection",
+      "specificity": 0.92,
+      "parent_diagnosis": "",
+      "generic_suppressions": ["湿疹", "水痘", "雅司病", "尿道综合征"],
+      "related_complications": ["滴虫性阴道炎"]
+    },
+    {
+      "name": "滴虫性阴道炎",
+      "aliases": ["阴道毛滴虫感染", "trichomoniasis", "trichomonas vaginitis"],
+      "body_system": "genitourinary",
+      "family": "vaginitis_sti",
+      "specificity": 0.9,
+      "parent_diagnosis": "",
+      "generic_suppressions": ["湿疹", "尿道综合征", "泌尿系感染"],
+      "related_complications": ["尖锐湿疣"]
+    },
+    {
+      "name": "脐尿管囊肿",
+      "aliases": ["脐尿管残余囊肿", "urachal cyst", "urachal remnant cyst"],
+      "body_system": "genitourinary",
+      "family": "urachal_remnant",
+      "specificity": 0.93,
+      "parent_diagnosis": "",
+      "generic_suppressions": ["骨折", "带状疱疹", "急性细菌性前列腺炎", "肺结核"],
+      "related_complications": ["继发感染"]
+    }
+  ]
+}

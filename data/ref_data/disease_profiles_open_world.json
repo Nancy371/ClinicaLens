@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "description": "Profiles for evaluation-confirmed controlled diagnosis extensions.",
+  "profiles": [
+    {
+      "name": "肺隐球菌病",
+      "aliases": ["肺隐球菌感染", "隐球菌性肺炎", "pulmonary cryptococcosis"],
+      "department": "呼吸内科",
+      "common_symptoms": ["咳嗽", "发热", "胸痛", "呼吸困难"],
+      "red_flags": ["隐球菌抗原阳性", "免疫功能低下", "肺部结节", "空洞性病变"],
+      "required_exams": ["隐球菌抗原检测（CrAg）", "胸部CT扫描（Chest CT）", "痰培养"],
+      "optional_exams": ["支气管镜检查", "组织病理学检查"],
+      "differential_diagnoses": ["肺炎", "肺结核", "肺癌"],
+      "treatment_principles": ["评估免疫状态和中枢神经系统受累风险", "依据严重程度选择规范抗真菌治疗", "监测肝肾功能和药物相互作用"],
+      "avoid_mistakes": ["隐球菌特异证据存在时不要只提交泛化肺炎"]
+    },
+    {
+      "name": "肠系膜淋巴结炎",
+      "aliases": ["肠系膜淋巴结肿大", "mesenteric lymphadenitis"],
+      "department": "消化内科",
+      "common_symptoms": ["腹痛", "右下腹痛", "发热", "恶心", "呕吐"],
+      "red_flags": ["肠系膜淋巴结肿大", "儿童腹痛", "阑尾未见异常"],
+      "required_exams": ["腹部超声", "全血细胞计数（CBC）", "C反应蛋白（CRP）"],
+      "optional_exams": ["腹部CT"],
+      "differential_diagnoses": ["阑尾炎", "急性胃肠炎", "肠梗阻"],
+      "treatment_principles": ["先排除需要外科处理的急腹症", "无细菌感染证据时以补液、休息和对症处理为主"],
+      "avoid_mistakes": ["右下腹痛伴肠系膜淋巴结肿大时不要机械提交阑尾炎或胃肠炎"]
+    },
+    {
+      "name": "晶状体脱位",
+      "aliases": ["晶状体半脱位", "异位晶状体", "ectopia lentis"],
+      "department": "眼科",
+      "common_symptoms": ["视力下降", "单眼复视", "屈光变化", "眼痛"],
+      "red_flags": ["晶状体偏位", "虹膜震颤", "继发青光眼", "眼外伤"],
+      "required_exams": ["裂隙灯检查", "超声生物显微镜检查（UBM）", "眼压测量"],
+      "optional_exams": ["视力检查", "眼底镜检查"],
+      "differential_diagnoses": ["白内障", "青光眼"],
+      "treatment_principles": ["评估脱位程度、眼压和视网膜情况", "明显视功能受损或并发症时转眼科手术评估"],
+      "avoid_mistakes": ["晶状体位置异常不能仅以青光眼解释"]
+    },
+    {
+      "name": "黑热病",
+      "aliases": ["内脏利什曼病", "kala-azar", "visceral leishmaniasis"],
+      "department": "感染科",
+      "common_symptoms": ["长期发热", "乏力", "消瘦", "腹胀"],
+      "red_flags": ["脾大", "全血细胞减少", "骨髓发现利什曼原虫", "流行区暴露"],
+      "required_exams": ["全血细胞计数（CBC）", "腹部超声", "骨髓穿刺和活检（BMAB）"],
+      "optional_exams": ["肝功能检查（LFTs）", "血清学检测"],
+      "differential_diagnoses": ["白血病", "肝硬化", "肺结核"],
+      "treatment_principles": ["感染专科评估并进行病原学确认", "根据患者状况选择规范抗利什曼治疗并监测血细胞和脏器功能"],
+      "avoid_mistakes": ["长期发热、巨脾和全血细胞减少不能仅按普通感染处理"]
+    },
+    {
+      "name": "骨坏死",
+      "aliases": ["骨缺血性坏死", "股骨头坏死", "osteonecrosis"],
+      "department": "骨科",
+      "common_symptoms": ["髋部疼痛", "腹股沟痛", "负重痛", "活动受限"],
+      "red_flags": ["股骨头塌陷", "长期糖皮质激素使用", "大量饮酒", "MRI骨坏死征象"],
+      "required_exams": ["磁共振成像（MRI）", "X线检查"],
+      "optional_exams": ["CT扫描（CT）", "骨密度"],
+      "differential_diagnoses": ["骨关节炎", "骨折"],
+      "treatment_principles": ["按分期减少负重并进行骨科评估", "早期考虑保髋治疗，塌陷期评估关节重建"],
+      "avoid_mistakes": ["髋痛伴MRI特异改变不能泛化为骨关节炎"]
+    },
+    {
+      "name": "骨质疏松症",
+      "aliases": ["骨质疏松", "osteoporosis"],
+      "department": "骨科",
+      "common_symptoms": ["脆性骨折", "腰背痛", "身高变矮", "驼背"],
+      "red_flags": ["低骨密度", "椎体压缩骨折", "反复低能量骨折"],
+      "required_exams": ["双能X线吸收测定法（DEXA）", "骨转换标志物（BTMs）", "维生素D检测"],
+      "optional_exams": ["定量CT（QCT）", "血清电解质"],
+      "differential_diagnoses": ["骨折", "骨坏死", "骨关节炎"],
+      "treatment_principles": ["评估继发原因和骨折风险", "补充钙和维生素D并按风险选择抗骨质疏松治疗", "实施防跌倒和负重运动计划"],
+      "avoid_mistakes": ["脆性骨折应同时评估并提交基础骨质疏松"]
+    },
+    {
+      "name": "霰粒肿",
+      "aliases": ["睑板腺囊肿", "chalazion"],
+      "department": "眼科",
+      "common_symptoms": ["眼睑肿块", "眼睑硬结", "局部异物感"],
+      "red_flags": ["无痛性眼睑结节", "睑板腺囊肿", "反复同部位复发"],
+      "required_exams": ["体格检查", "裂隙灯检查"],
+      "optional_exams": ["组织病理学检查"],
+      "differential_diagnoses": ["眼睑感染", "皮肤囊肿"],
+      "treatment_principles": ["首选温热敷和眼睑清洁", "持续不退或影响视力时进行眼科处理", "反复或非典型病灶考虑病理检查"],
+      "avoid_mistakes": ["眼睑局限性硬结必须保持眼科解剖路由"]
+    },
+    {
+      "name": "急性支气管炎",
+      "aliases": ["急性气管支气管炎", "acute bronchitis"],
+      "department": "呼吸内科",
+      "common_symptoms": ["急性咳嗽", "咳痰", "喘息", "低热"],
+      "red_flags": ["胸部影像无肺炎实变", "咳嗽病程短", "病毒感染前驱症状"],
+      "required_exams": ["体格检查", "胸部X线检查（CXR）"],
+      "optional_exams": ["全血细胞计数（CBC）", "C反应蛋白（CRP）"],
+      "differential_diagnoses": ["肺炎", "支气管炎", "支气管哮喘"],
+      "treatment_principles": ["以对症止咳、补液和观察为主", "无细菌感染证据时避免常规使用抗菌药"],
+      "avoid_mistakes": ["急性咳嗽且影像无实变时不要默认提交肺炎"]
+    },
+    {
+      "name": "颅内占位性病变",
+      "aliases": ["颅内占位", "脑占位性病变", "intracranial mass"],
+      "department": "神经内科",
+      "common_symptoms": ["进行性头痛", "呕吐", "癫痫发作", "局灶性神经功能缺损"],
+      "red_flags": ["颅内肿块", "占位效应", "中线移位", "视乳头水肿"],
+      "required_exams": ["脑MRI", "头颅CT扫描（Head CT）"],
+      "optional_exams": ["组织病理学检查"],
+      "differential_diagnoses": ["脑出血", "脑梗死", "癫痫"],
+      "treatment_principles": ["评估颅内压和神经功能恶化风险", "尽快转神经外科或肿瘤专科明确病理和治疗方案"],
+      "avoid_mistakes": ["影像占位效应不能仅按脑出血或癫痫提交"]
+    },
+    {
+      "name": "成骨不全症",
+      "aliases": ["脆骨病", "osteogenesis imperfecta"],
+      "department": "骨科",
+      "common_symptoms": ["反复骨折", "低能量骨折", "骨骼畸形", "生长迟缓"],
+      "red_flags": ["蓝巩膜", "牙本质发育不全", "家族性反复骨折", "胶原相关基因异常"],
+      "required_exams": ["X线检查", "骨密度", "基因检测"],
+      "optional_exams": ["血清电解质", "维生素D检测"],
+      "differential_diagnoses": ["骨折", "骨质疏松症"],
+      "treatment_principles": ["采用多学科骨健康管理和骨折预防", "根据分型评估药物、矫形和康复治疗"],
+      "avoid_mistakes": ["反复低能量骨折伴蓝巩膜时不要只提交单次骨折"]
+    },
+    {
+      "name": "支原体肺炎",
+      "aliases": ["肺炎支原体肺炎", "mycoplasma pneumonia"],
+      "department": "呼吸内科",
+      "common_symptoms": ["持续干咳", "发热", "乏力", "头痛"],
+      "red_flags": ["肺炎支原体核酸阳性", "肺炎支原体抗体阳性", "影像间质性浸润"],
+      "required_exams": ["核酸扩增检测（NAAT）", "肺炎支原体抗体检测", "胸部X线检查（CXR）"],
+      "optional_exams": ["全血细胞计数（CBC）", "C反应蛋白（CRP）"],
+      "differential_diagnoses": ["肺炎", "急性支气管炎", "上呼吸道感染"],
+      "treatment_principles": ["结合年龄、严重程度和病原证据选择针对非典型病原体的治疗", "监测低氧和肺外并发症"],
+      "avoid_mistakes": ["支原体特异检测阳性时不要只提交泛化肺炎"]
+    }
+  ]
+}

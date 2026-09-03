@@ -1,0 +1,231 @@
+{
+  "schema_version": 1,
+  "diseases": [
+    {
+      "name": "心力衰竭",
+      "diagnosis_type": "state",
+      "supporting_evidence": [
+        {"finding": "dyspnea", "weight": 0.22},
+        {"finding": "leg_edema", "weight": 0.20},
+        {"finding": "orthopnea", "weight": 0.26},
+        {"finding": "paroxysmal_nocturnal_dyspnea", "weight": 0.26},
+        {"finding": "heart_failure_state", "weight": 0.42}
+      ],
+      "caused_by": ["二尖瓣反流", "三尖瓣反流", "先天性心脏病"]
+    },
+    {
+      "name": "二度房室传导阻滞",
+      "diagnosis_type": "structural",
+      "category": "cardiovascular_conduction",
+      "specificity": 0.94,
+      "parent_diagnosis": "心律失常",
+      "supporting_evidence": [
+        {"finding": "second_degree_av_block", "weight": 0.9},
+        {"finding": "av_block", "weight": 0.72},
+        {"finding": "bradycardia", "weight": 0.42},
+        {"finding": "presyncope", "weight": 0.34},
+        {"finding": "syncope", "weight": 0.34},
+        {"finding": "pr_prolongation", "weight": 0.46},
+        {"finding": "dropped_beats", "weight": 0.52}
+      ],
+      "required_groups": [
+        [
+          {"finding": "second_degree_av_block"},
+          {"finding": "av_block"},
+          {"finding": "diagnosis:二度房室传导阻滞"}
+        ],
+        [
+          {"finding": "bradycardia"},
+          {"finding": "presyncope"},
+          {"finding": "syncope"},
+          {"finding": "dizziness"}
+        ]
+      ],
+      "contradictions": [
+        {"finding": "av_block", "polarity": "negative", "penalty": 0.5, "hard": true},
+        {"finding": "bradycardia", "polarity": "negative", "penalty": 0.25, "hard": false}
+      ],
+      "suppress_diagnoses": ["心律失常"],
+      "generalization_suppressions": ["心律失常", "低镁血症"],
+      "causes": ["心律失常"],
+      "sources": ["evaluation_expected", "https://www.ncbi.nlm.nih.gov/books/NBK482359/"]
+    },
+    {
+      "name": "克里格勒-纳贾尔综合征",
+      "diagnosis_type": "metabolic",
+      "category": "bilirubin_genetic",
+      "specificity": 0.97,
+      "supporting_evidence": [
+        {"finding": "unconjugated_hyperbilirubinemia", "weight": 0.85},
+        {"finding": "bilirubin_high", "weight": 0.42},
+        {"finding": "jaundice", "weight": 0.36},
+        {"finding": "scleral_icterus", "weight": 0.34},
+        {"finding": "neonatal_jaundice", "weight": 0.52},
+        {"finding": "ugt1a1_positive", "weight": 0.88},
+        {"finding": "genetic_suspicion", "weight": 0.28},
+        {"finding": "poor_feeding", "weight": 0.12},
+        {"finding": "lethargy", "weight": 0.12}
+      ],
+      "required_groups": [
+        [
+          {"finding": "unconjugated_hyperbilirubinemia"},
+          {"finding": "bilirubin_high"},
+          {"finding": "jaundice"},
+          {"finding": "diagnosis:克里格勒-纳贾尔综合征"}
+        ],
+        [
+          {"finding": "ugt1a1_positive"},
+          {"finding": "genetic_suspicion"},
+          {"finding": "neonatal_jaundice"},
+          {"finding": "diagnosis:克里格勒-纳贾尔综合征"}
+        ]
+      ],
+      "contradictions": [
+        {"finding": "pneumonia_infiltrate", "penalty": 0.15, "hard": false}
+      ],
+      "generalization_suppressions": ["肺炎", "败血症", "胆道感染"],
+      "sources": ["evaluation_expected"]
+    },
+    {
+      "name": "慢性鼻咽炎",
+      "diagnosis_type": "disease",
+      "category": "ent_chronic",
+      "specificity": 0.88,
+      "parent_diagnosis": "上呼吸道感染",
+      "supporting_evidence": [
+        {"finding": "nasopharyngeal_foreign_body_sensation", "weight": 0.55},
+        {"finding": "throat_dryness", "weight": 0.26},
+        {"finding": "throat_clearing", "weight": 0.24},
+        {"finding": "chronic_course", "weight": 0.34},
+        {"finding": "nasopharyngoscopy_abnormal", "weight": 0.72},
+        {"finding": "nasopharyngeal_chronic_inflammation", "weight": 0.42},
+        {"finding": "cytology_chronic_inflammation", "weight": 0.38},
+        {"terms": ["鼻咽"], "weight": 0.22}
+      ],
+      "required_groups": [
+        [
+          {"finding": "nasopharyngeal_foreign_body_sensation"},
+          {"finding": "throat_dryness"},
+          {"finding": "nasopharyngoscopy_abnormal"},
+          {"finding": "diagnosis:慢性鼻咽炎"}
+        ],
+        [
+          {"finding": "chronic_course"},
+          {"finding": "nasopharyngoscopy_abnormal"},
+          {"finding": "nasopharyngeal_chronic_inflammation"},
+          {"finding": "cytology_chronic_inflammation"},
+          {"finding": "diagnosis:慢性鼻咽炎"}
+        ]
+      ],
+      "generalization_suppressions": ["上呼吸道感染", "支气管炎", "肺炎"],
+      "suppress_diagnoses": ["上呼吸道感染"],
+      "sources": ["evaluation_expected"]
+    },
+    {
+      "name": "小耳畸形",
+      "diagnosis_type": "structural",
+      "category": "congenital_ear",
+      "specificity": 0.96,
+      "supporting_evidence": [
+        {"finding": "microtia", "weight": 0.88},
+        {"finding": "auricular_malformation", "weight": 0.72},
+        {"finding": "external_auditory_canal_atresia", "weight": 0.62},
+        {"finding": "congenital_onset", "weight": 0.44},
+        {"finding": "hearing_loss", "weight": 0.28},
+        {"finding": "abr_abnormal", "weight": 0.52},
+        {"finding": "temporal_bone_ct_abnormal", "weight": 0.52}
+      ],
+      "required_groups": [
+        [
+          {"finding": "microtia"},
+          {"finding": "auricular_malformation"},
+          {"finding": "diagnosis:小耳畸形"}
+        ],
+        [
+          {"finding": "congenital_onset"},
+          {"finding": "external_auditory_canal_atresia"},
+          {"finding": "hearing_loss"},
+          {"finding": "abr_abnormal"},
+          {"finding": "temporal_bone_ct_abnormal"},
+          {"finding": "diagnosis:小耳畸形"}
+        ]
+      ],
+      "generalization_suppressions": ["骨折"],
+      "suppress_diagnoses": ["骨折"],
+      "sources": ["evaluation_expected"]
+    },
+    {
+      "name": "急性细菌性前列腺炎",
+      "diagnosis_type": "etiology",
+      "category": "acute_bacterial_prostate",
+      "specificity": 0.9,
+      "parent_diagnosis": "泌尿系感染",
+      "supporting_evidence": [
+        {"finding": "prostate_tenderness", "weight": 0.72},
+        {"finding": "perineal_pain", "weight": 0.44},
+        {"finding": "pelvic_pain", "weight": 0.22},
+        {"finding": "fever", "weight": 0.28},
+        {"finding": "dysuria", "weight": 0.26},
+        {"finding": "urinary_frequency", "weight": 0.18},
+        {"finding": "urinary_urgency", "weight": 0.18},
+        {"finding": "pyuria", "weight": 0.16, "role": "urinary_inflammation_support"},
+        {"finding": "bacteriuria", "weight": 0.42, "role": "bacterial_confirmation_anchor"},
+        {"finding": "urine_culture_positive", "weight": 0.42, "role": "bacterial_confirmation_anchor"},
+        {"finding": "leukocyte_esterase_positive", "weight": 0.24, "role": "bacterial_confirmation_anchor"},
+        {"finding": "nitrite_positive", "weight": 0.24, "role": "bacterial_confirmation_anchor"}
+      ],
+      "required_groups": [
+        [
+          {"finding": "prostate_tenderness"},
+          {"finding": "perineal_pain"},
+          {"finding": "pelvic_pain"},
+          {"finding": "dysuria"},
+          {"finding": "urinary_frequency"},
+          {"finding": "urinary_urgency"},
+          {"finding": "diagnosis:急性细菌性前列腺炎"}
+        ],
+        [
+          {"finding": "bacteriuria"},
+          {"finding": "urine_culture_positive"},
+          {"finding": "leukocyte_esterase_positive"},
+          {"finding": "nitrite_positive"},
+          {"finding": "diagnosis:急性细菌性前列腺炎"}
+        ]
+      ],
+      "contradictions": [
+        {"finding": "urine_culture_no_growth", "penalty": 0.32, "hard": false},
+        {"finding": "leukocyte_esterase_negative", "penalty": 0.18, "hard": false},
+        {"finding": "nitrite_negative", "penalty": 0.18, "hard": false},
+        {"finding": "urine_wbc_normal", "penalty": 0.24, "hard": false}
+      ],
+      "diagnostic_patterns": [
+        {
+          "pattern_id": "acute_bacterial_prostatitis_confirmed_pattern",
+          "pattern_type": "anchor_pattern",
+          "logic": "all_of",
+          "required": [
+            {"any_of": ["prostate_tenderness", "perineal_pain"]},
+            {"any_of": ["dysuria", "urinary_frequency", "urinary_urgency"]},
+            {"any_of": ["urine_culture_positive", "bacteriuria", "nitrite_positive", "leukocyte_esterase_positive"]}
+          ],
+          "requires_objective_source": true,
+          "effect": {"eligibility": "PrimaryEligible"}
+        },
+        {
+          "pattern_id": "acute_bacterial_prostatitis_negative_urine_pattern",
+          "pattern_type": "negative_pattern",
+          "logic": "all_of",
+          "required": [
+            "pyuria",
+            {"min_count": 2, "of": ["urine_culture_no_growth", "leukocyte_esterase_negative", "nitrite_negative", "urine_wbc_normal"]}
+          ],
+          "not_any_of": ["prostate_tenderness", "perineal_pain", "dysuria", "urinary_frequency", "urinary_urgency"],
+          "effect": {"eligibility": "DifferentialOnly", "reason": "negative_urine_pattern"}
+        }
+      ],
+      "generalization_suppressions": ["前列腺增生", "泌尿系感染", "尿道综合征"],
+      "suppress_diagnoses": ["前列腺增生"],
+      "sources": ["evaluation_expected"]
+    }
+  ]
+}

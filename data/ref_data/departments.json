@@ -1,0 +1,29 @@
+{
+  "departments": [
+    {"id": "internal_medicine", "name": "内科"},
+    {"id": "surgery", "name": "外科"},
+    {"id": "pediatrics", "name": "儿科"},
+    {"id": "obstetrics_gynecology", "name": "妇产科"},
+    {"id": "ophthalmology", "name": "眼科"},
+    {"id": "ent", "name": "耳鼻喉科"},
+    {"id": "dermatology", "name": "皮肤科"},
+    {"id": "neurology", "name": "神经内科"},
+    {"id": "psychiatry", "name": "精神科"},
+    {"id": "orthopedics", "name": "骨科"},
+    {"id": "urology", "name": "泌尿科"},
+    {"id": "cardiology", "name": "心内科"},
+    {"id": "respiratory", "name": "呼吸内科"},
+    {"id": "gastroenterology", "name": "消化内科"},
+    {"id": "endocrinology", "name": "内分泌科"},
+    {"id": "rheumatology", "name": "风湿免疫科"},
+    {"id": "hematology", "name": "血液科"},
+    {"id": "oncology", "name": "肿瘤科"},
+    {"id": "emergency", "name": "急诊科"},
+    {"id": "icu", "name": "重症医学科"},
+    {"id": "anesthesiology", "name": "麻醉科"},
+    {"id": "radiology", "name": "放射科"},
+    {"id": "pathology", "name": "病理科"},
+    {"id": "rehabilitation", "name": "康复科"},
+    {"id": "traditional_chinese_medicine", "name": "中医科"}
+  ]
+}

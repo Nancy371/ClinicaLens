@@ -1,0 +1,252 @@
+{
+  "rules": [
+    {
+      "diagnosis": "肺动脉瓣狭窄",
+      "diagnosis_type": "structural",
+      "priority": 95,
+      "positive_evidence": [
+        {"finding": "pulmonary_valve_stenosis", "weight": 1.2},
+        {"finding": "pulmonary_valve_gradient", "weight": 1.0},
+        {"finding": "right_heart_enlargement", "weight": 0.3},
+        {"finding": "pulmonary_hypertension", "weight": 0.2}
+      ],
+      "negative_evidence": [],
+      "required_any": ["pulmonary_valve_stenosis", "pulmonary_valve_gradient"],
+      "required_all": [],
+      "score_threshold": 0.85,
+      "suppress_diagnoses": ["心力衰竭", "肺动脉高压", "上呼吸道感染"],
+      "treatment_protocol": [
+        "计划在两周内由心内科/结构性心脏病团队评估并安排经皮球囊肺动脉瓣成形术，以解除肺动脉瓣狭窄和跨瓣压差。",
+        "取得基线 BMP/肌酐/钾后开始呋塞米 40 mg 每日早晨一次，并加用螺内酯 25 mg 每日一次；如需立即治疗，可当天同步完成化验。",
+        "根据症状、每日体重、水肿和 JVP 保守调整利尿剂，开始后 3-7 天及每次调量后复查电解质、肾功能和钾。",
+        "限制饮食钠摄入至 <2 g/天，避免劳累性出行，继续温和活动；体重增加 >2 kg、新发发热或静息呼吸困难需 24 小时内联系医生。",
+        "一周后复诊安排瓣膜成形术时间；持续心悸、晕厥或突发右上腹痛应立即就医。"
+      ]
+    },
+    {
+      "diagnosis": "三尖瓣反流",
+      "diagnosis_type": "structural",
+      "priority": 90,
+      "positive_evidence": [
+        {"finding": "tricuspid_regurgitation", "weight": 1.2},
+        {"finding": "right_heart_enlargement", "weight": 0.4},
+        {"finding": "pulmonary_hypertension", "weight": 0.2},
+        {"finding": "leg_edema", "weight": 0.1}
+      ],
+      "negative_evidence": [],
+      "required_any": ["tricuspid_regurgitation"],
+      "required_all": [],
+      "score_threshold": 0.85,
+      "suppress_diagnoses": ["心力衰竭", "肺动脉高压", "上呼吸道感染"],
+      "treatment_protocol": [
+        "三尖瓣反流按结构性右心负荷问题处理，优先寻找并处理肺动脉瓣狭窄、肺动脉高压等上游病因。",
+        "容量超负荷时使用利尿剂并监测体重、尿量、电解质和肾功能，避免机械性固定加量。",
+        "若反流随肺动脉瓣狭窄解除后仍重度存在，应由心脏瓣膜团队评估进一步介入或外科处理。"
+      ]
+    },
+    {
+      "diagnosis": "尿道综合征",
+      "diagnosis_type": "syndrome",
+      "priority": 80,
+      "positive_evidence": [
+        {"finding": "detrusor_overactivity", "weight": 1.2},
+        {"finding": "urine_culture_no_growth", "weight": 0.4},
+        {"finding": "leukocyte_esterase_negative", "weight": 0.2},
+        {"finding": "nitrite_negative", "weight": 0.2},
+        {"finding": "urine_wbc_normal", "weight": 0.2},
+        {"finding": "normal_postvoid_residual", "weight": 0.2},
+        {"finding": "urinary_urgency", "weight": 0.2},
+        {"finding": "urinary_frequency", "weight": 0.15},
+        {"finding": "dysuria", "weight": 0.1}
+      ],
+      "negative_evidence": [
+        {"finding": "urine_culture_positive", "weight": 1.0},
+        {"finding": "leukocyte_esterase_positive", "weight": 0.5},
+        {"finding": "nitrite_positive", "weight": 0.5}
+      ],
+      "required_any": ["detrusor_overactivity"],
+      "required_all": [],
+      "score_threshold": 1.0,
+      "suppress_diagnoses": ["泌尿系感染", "上呼吸道感染"],
+      "treatment_protocol": [
+        "开始琥珀酸索利那新 5 mg 每日一次，以减少逼尿肌过度活动并缓解尿急/尿频。",
+        "用药前确认无窄角型青光眼史，评估基线排便习惯，宣教口干、便秘和尿潴留风险。",
+        "联合结构化膀胱训练：定时排尿，逐步将排尿间隔延长至 3-4 小时，并完成排尿日记。",
+        "进行盆底肌训练：肛门括约肌收缩 10 秒后等时放松，每次 20-30 次，每日两次。",
+        "减少咖啡因和能量饮料摄入，尤其避免夜间摄入，并改善睡眠卫生；6 周后随访评估疗效。"
+      ]
+    },
+    {
+      "diagnosis": "泌尿系感染",
+      "diagnosis_type": "infection",
+      "priority": 45,
+      "positive_evidence": [
+        {"finding": "urine_culture_positive", "weight": 1.2},
+        {"finding": "leukocyte_esterase_positive", "weight": 0.6},
+        {"finding": "nitrite_positive", "weight": 0.6},
+        {"finding": "dysuria", "weight": 0.1}
+      ],
+      "negative_evidence": [
+        {"finding": "urine_culture_no_growth", "weight": 1.0},
+        {"finding": "leukocyte_esterase_negative", "weight": 0.4},
+        {"finding": "nitrite_negative", "weight": 0.4},
+        {"finding": "urine_wbc_normal", "weight": 0.4}
+      ],
+      "required_any": ["urine_culture_positive", "leukocyte_esterase_positive", "nitrite_positive"],
+      "required_all": [],
+      "score_threshold": 0.8,
+      "suppress_diagnoses": [],
+      "treatment_protocol": []
+    },
+    {
+      "diagnosis": "三房心",
+      "diagnosis_type": "structural",
+      "priority": 92,
+      "positive_evidence": [
+        {"finding": "left_atrial_membrane", "weight": 1.1},
+        {"finding": "restrictive_fenestration", "weight": 0.6},
+        {"finding": "pulmonary_hypertension", "weight": 0.2}
+      ],
+      "negative_evidence": [],
+      "required_any": ["left_atrial_membrane", "restrictive_fenestration"],
+      "required_all": [],
+      "score_threshold": 0.85,
+      "suppress_diagnoses": ["心力衰竭", "上呼吸道感染", "肺炎"],
+      "treatment_protocol": []
+    },
+    {
+      "diagnosis": "心内膜垫缺损",
+      "diagnosis_type": "structural",
+      "priority": 91,
+      "positive_evidence": [
+        {"finding": "atrioventricular_septal_defect", "weight": 1.1},
+        {"finding": "common_atrioventricular_valve", "weight": 0.6},
+        {"finding": "pulmonary_hypertension", "weight": 0.2}
+      ],
+      "negative_evidence": [],
+      "required_any": ["atrioventricular_septal_defect", "common_atrioventricular_valve"],
+      "required_all": [],
+      "score_threshold": 0.85,
+      "suppress_diagnoses": ["心力衰竭", "上呼吸道感染", "肺炎"],
+      "treatment_protocol": []
+    },
+    {
+      "diagnosis": "肋骨骨折",
+      "diagnosis_type": "structural",
+      "priority": 72,
+      "positive_evidence": [
+        {"finding": "rib_fracture_imaging", "weight": 1.3},
+        {"finding": "chest_wall_trauma_pattern", "weight": 0.8},
+        {"finding": "chest_wall_pain", "weight": 0.3},
+        {"finding": "pleuritic_pain", "weight": 0.2}
+      ],
+      "negative_evidence": [],
+      "required_any": ["rib_fracture_imaging", "chest_wall_trauma_pattern"],
+      "required_all": [],
+      "score_threshold": 0.9,
+      "suppress_diagnoses": ["骨折", "上呼吸道感染"],
+      "treatment_protocol": [
+        "采用多模式镇痛，若无禁忌可规律使用 NSAID，并按需合用对乙酰氨基酚；疼痛严重影响通气时再短程升级镇痛。",
+        "避免环形胸部包扎，鼓励清醒时每小时深呼吸训练或激励性肺量计训练，预防肺不张和肺炎。",
+        "指导早期轻度活动、补充水分和钙/维生素D；若呼吸困难加重、发热、疼痛明显加重或无法深呼吸，立即复诊评估迟发气胸/肺挫伤。"
+      ]
+    },
+    {
+      "diagnosis": "视网膜母细胞瘤",
+      "diagnosis_type": "etiology",
+      "priority": 98,
+      "positive_evidence": [
+        {"finding": "eye_tumor_imaging", "weight": 1.4},
+        {"finding": "leukocoria", "weight": 1.0},
+        {"finding": "strabismus", "weight": 0.6},
+        {"finding": "optic_nerve_involvement", "weight": 0.5},
+        {"finding": "intraocular_calcification", "weight": 0.4}
+      ],
+      "negative_evidence": [],
+      "required_any": ["eye_tumor_imaging", "leukocoria"],
+      "required_all": [],
+      "score_threshold": 1.1,
+      "suppress_diagnoses": ["上呼吸道感染", "白内障", "青光眼"],
+      "treatment_protocol": [
+        "白瞳/内斜视伴眼内肿瘤证据时按眼科肿瘤急症处理，立即转诊眼肿瘤/儿科肿瘤团队。",
+        "若 MRI 提示视神经受累，优先安排患眼眼球摘除并完整切除视神经，标本送病理评估高危因素。",
+        "根据病理分期决定辅助化疗或放疗；避免可待因、曲马多和四环素类，必要时用对乙酰氨基酚镇痛。",
+        "向照护者提供清晰书面宣教和随访计划，强调每 6 周影像/眼科复查，出现神经症状或眶部肿胀需急诊复评。"
+      ]
+    },
+    {
+      "diagnosis": "流感嗜血杆菌感染",
+      "diagnosis_type": "infection",
+      "priority": 76,
+      "positive_evidence": [
+        {"finding": "hib_pathogen_detected", "weight": 1.4},
+        {"finding": "hib_clinical_pattern", "weight": 1.0},
+        {"finding": "prolonged_respiratory_infection", "weight": 0.35},
+        {"finding": "purulent_sputum", "weight": 0.25},
+        {"finding": "otalgia", "weight": 0.25},
+        {"finding": "wheezing", "weight": 0.2},
+        {"finding": "pneumonia_imaging", "weight": 0.25}
+      ],
+      "negative_evidence": [],
+      "required_any": ["hib_pathogen_detected", "hib_clinical_pattern"],
+      "required_all": [],
+      "score_threshold": 0.95,
+      "suppress_diagnoses": ["肺炎", "中耳炎", "支气管炎", "上呼吸道感染"],
+      "treatment_protocol": [
+        "按侵袭性或重症流感嗜血杆菌感染处理，首选静脉头孢曲松 100 mg/kg 每日一次，最大 4 g，疗程 7-10 天，并根据培养和药敏调整。",
+        "喘息时按需雾化吸入沙丁胺醇，发热时按体重使用对乙酰氨基酚，避免可待因/曲马多。",
+        "保证口服补液和少量柔软食物，严密观察呼吸状态、嗜睡、摄入减少等恶化信号。",
+        "7 天内儿科和耳鼻喉科复诊，评估听力、中耳炎恢复及 Hib 疫苗接种完成情况。"
+      ]
+    },
+    {
+      "diagnosis": "费尔蒂综合征",
+      "diagnosis_type": "syndrome",
+      "priority": 86,
+      "positive_evidence": [
+        {"finding": "rheumatoid_history", "weight": 0.8},
+        {"finding": "neutropenia", "weight": 1.0},
+        {"finding": "splenomegaly", "weight": 0.9},
+        {"finding": "immunosuppression", "weight": 0.35},
+        {"finding": "pneumonia_imaging", "weight": 0.2}
+      ],
+      "negative_evidence": [],
+      "required_any": ["neutropenia", "splenomegaly", "rheumatoid_history"],
+      "required_all": [],
+      "score_threshold": 1.35,
+      "suppress_diagnoses": ["上呼吸道感染"],
+      "treatment_protocol": [
+        "在肺炎诊断之外保留费尔蒂综合征，立即住院处理低氧/重症感染并给予补充氧疗。",
+        "结合青霉素过敏史和药敏结果选择合适抗感染方案；如需避免 β-内酰胺类，应明确呼吸氟喹诺酮或替代方案理由。",
+        "重度中性粒细胞减少时启动粒细胞集落刺激因子并动态监测血常规。",
+        "急性感染期暂停或严格减量免疫抑制治疗，感染稳定后由风湿科重新评估 DMARD/免疫调节策略。",
+        "安排风湿免疫科和感染科联合随访，监测脾大、贫血、粒细胞计数和复发感染。"
+      ]
+    },
+    {
+      "diagnosis": "房间隔缺损",
+      "diagnosis_type": "structural",
+      "priority": 94,
+      "positive_evidence": [
+        {"finding": "atrial_septal_defect", "weight": 1.3},
+        {"finding": "left_to_right_shunt", "weight": 0.6},
+        {"finding": "qpqs_elevated", "weight": 0.6},
+        {"finding": "right_heart_enlargement", "weight": 0.4},
+        {"finding": "congenital_shunt_pattern", "weight": 0.35},
+        {"finding": "recurrent_pneumonia", "weight": 0.2},
+        {"finding": "exertional_dyspnea", "weight": 0.2}
+      ],
+      "negative_evidence": [],
+      "required_any": ["atrial_septal_defect", "left_to_right_shunt"],
+      "required_all": [],
+      "score_threshold": 0.9,
+      "suppress_diagnoses": ["心力衰竭", "肺炎", "上呼吸道感染", "支气管哮喘"],
+      "treatment_protocol": [
+        "有症状继发孔型房间隔缺损伴右心扩大或 Qp:Qs 升高时，转儿童心脏中心安排经皮房间隔缺损封堵或外科修补。",
+        "术前完善血常规、凝血功能并复查超声确认边缘条件；术后低剂量阿司匹林 6 个月预防器械血栓。",
+        "术后 24-72 小时或约 1 周检查穿刺部位，1、3、6 个月复查超声评估封堵器位置和右心重构。",
+        "家长监测发热、下肢肿胀、突发乏力或活动耐量下降；反复呼吸道感染时同步进行疫苗和感染预防管理。"
+      ]
+    }
+  ]
+}

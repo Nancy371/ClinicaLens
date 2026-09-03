@@ -1,0 +1,216 @@
+{
+  "schema_version": 2,
+  "description": "Profile V2 fields for graph-aware retrieval, anti-generalization, and exam authorization.",
+  "profiles": [
+    {
+      "name": "创伤后骨关节炎",
+      "department": "骨科",
+      "aliases": ["创伤性骨关节炎", "外伤后骨关节炎", "post-traumatic osteoarthritis", "PTOA"],
+      "category": "post_traumatic_osteoarthritis",
+      "body_system": "musculoskeletal",
+      "family": "post_traumatic_degenerative_joint",
+      "diagnosis_type": "structural",
+      "specificity": 0.92,
+      "parent_diagnosis": "骨关节炎",
+      "common_symptoms": ["关节痛", "膝关节疼痛", "关节僵硬", "活动后疼痛", "负重后疼痛"],
+      "red_flags": ["既往外伤", "机械负荷触发", "创伤后关节痛", "关节间隙变窄", "骨赘", "软骨下硬化"],
+      "hallmark_findings": [
+        {"finding": "trauma_history", "weight": 0.42},
+        {"finding": "mechanical_overload_trigger", "weight": 0.36},
+        {"finding": "post_traumatic_joint_pain", "weight": 0.46},
+        {"finding": "joint_space_narrowing", "weight": 0.46},
+        {"finding": "osteophyte", "weight": 0.42}
+      ],
+      "discriminating_features": [
+        {"finding": "activity_related_joint_pain", "weight": 0.28},
+        {"finding": "joint_stiffness", "weight": 0.22},
+        {"finding": "arthralgia", "weight": 0.18}
+      ],
+      "required_groups": [
+        [{"finding": "trauma_history"}, {"finding": "mechanical_overload_trigger"}, {"finding": "post_traumatic_joint_pain"}, {"finding": "diagnosis:创伤后骨关节炎"}],
+        [{"finding": "joint_space_narrowing"}, {"finding": "osteophyte"}, {"finding": "activity_related_joint_pain"}, {"finding": "arthralgia"}]
+      ],
+      "strong_verification_exams": ["体格检查", "X线检查", "磁共振成像（MRI）"],
+      "required_exams": ["体格检查", "X线检查"],
+      "common_confusions": ["骨折", "骨关节炎", "骨质疏松症", "痛风", "类风湿关节炎"],
+      "generalization_suppressions": ["骨折", "骨关节炎", "骨质疏松症"],
+      "treatment_principles": ["骨科评估创伤后退变程度", "优先非药物康复、减重和功能训练", "疼痛明显时短期镇痛并评估关节保护方案"],
+      "avoid_mistakes": ["慢性或亚急性外伤后关节痛伴关节间隙变窄/骨赘时，不要提交为单纯骨折"]
+    },
+    {
+      "name": "右位心",
+      "department": "心血管内科",
+      "aliases": ["心脏右位", "右位心影", "dextrocardia"],
+      "category": "congenital_structural_heart",
+      "body_system": "cardiovascular",
+      "family": "congenital_structural_heart",
+      "diagnosis_type": "structural",
+      "specificity": 0.94,
+      "parent_diagnosis": "先天性心脏病",
+      "common_symptoms": ["活动后气促", "生长迟缓", "喂养困难", "多汗"],
+      "red_flags": ["心尖搏动右移", "右位心影", "镜像心电图", "胸部X线提示心脏右位"],
+      "hallmark_findings": [
+        {"finding": "dextrocardia", "weight": 0.58},
+        {"finding": "right_apex_beat", "weight": 0.48},
+        {"finding": "mirror_image_ecg", "weight": 0.42}
+      ],
+      "discriminating_features": [
+        {"finding": "congenital_onset", "weight": 0.18},
+        {"finding": "congenital_heart_defect", "weight": 0.18}
+      ],
+      "required_groups": [
+        [{"finding": "dextrocardia"}, {"finding": "right_apex_beat"}, {"finding": "mirror_image_ecg"}, {"finding": "diagnosis:右位心"}]
+      ],
+      "strong_verification_exams": ["体格检查", "胸部X线检查（CXR）", "心电图（ECG）", "超声心动图"],
+      "required_exams": ["体格检查", "胸部X线检查（CXR）", "心电图（ECG）"],
+      "common_confusions": ["慢性阻塞性肺疾病", "肺炎", "支气管肺炎", "支气管炎"],
+      "generalization_suppressions": ["慢性阻塞性肺疾病", "肺炎", "支气管肺炎", "支气管炎", "上呼吸道感染", "房间隔缺损"],
+      "causes": [],
+      "related_complications": ["室间隔缺损（VSD）"],
+      "treatment_principles": ["确认是否伴随先天性结构心脏病", "若合并分流或肺血增多，转儿科心脏/心外团队评估"],
+      "avoid_mistakes": ["右位心是结构定位诊断，不应被反复咳嗽气促锚定为 COPD 或肺炎"]
+    },
+    {
+      "name": "室间隔缺损（VSD）",
+      "department": "心血管内科",
+      "aliases": ["室间隔缺损", "大型室间隔缺损", "膜周部室间隔缺损", "VSD"],
+      "category": "congenital_structural_heart",
+      "body_system": "cardiovascular",
+      "family": "congenital_structural_heart",
+      "diagnosis_type": "structural",
+      "specificity": 0.94,
+      "parent_diagnosis": "先天性心脏病",
+      "common_symptoms": ["活动后气促", "喂养困难", "多汗", "生长迟缓", "反复呼吸道症状"],
+      "red_flags": ["室间隔缺损", "左向右分流", "心脏杂音", "肺血增多", "肺动脉高压"],
+      "hallmark_findings": [
+        {"finding": "ventricular_septal_defect", "weight": 0.58},
+        {"finding": "left_to_right_shunt", "weight": 0.50},
+        {"finding": "cardiac_murmur", "weight": 0.26}
+      ],
+      "discriminating_features": [
+        {"finding": "congenital_heart_defect", "weight": 0.28},
+        {"finding": "pulmonary_hypertension", "weight": 0.24},
+        {"finding": "dyspnea", "weight": 0.12},
+        {"finding": "feeding_diaphoresis", "weight": 0.12}
+      ],
+      "required_groups": [
+        [{"finding": "ventricular_septal_defect"}, {"finding": "diagnosis:室间隔缺损（VSD）"}],
+        [{"finding": "left_to_right_shunt"}, {"finding": "cardiac_murmur"}, {"finding": "pulmonary_hypertension"}, {"finding": "congenital_heart_defect"}]
+      ],
+      "strong_verification_exams": ["超声心动图", "心电图（ECG）", "胸部X线检查（CXR）"],
+      "required_exams": ["超声心动图", "心电图（ECG）", "胸部X线检查（CXR）"],
+      "common_confusions": ["先天性心脏病", "房间隔缺损", "慢性阻塞性肺疾病", "支气管肺炎", "肺不张", "肺炎"],
+      "generalization_suppressions": ["先天性心脏病", "房间隔缺损", "慢性阻塞性肺疾病", "支气管肺炎", "肺不张", "肺炎"],
+      "causes": ["心力衰竭"],
+      "related_complications": ["右位心", "肺动脉高压", "心力衰竭"],
+      "treatment_principles": ["根据缺损大小、分流量和肺动脉压力评估封堵或手术修补", "管理肺血增多和心功能负荷", "营养支持并预防呼吸道感染"],
+      "avoid_mistakes": ["超声已明确 VSD 时，不要只提交泛化先天性心脏病或呼吸系统疾病"]
+    },
+    {
+      "name": "压力性尿失禁",
+      "department": "泌尿外科",
+      "aliases": ["压力性漏尿", "腹压性尿失禁", "stress urinary incontinence", "SUI"],
+      "category": "urinary_incontinence",
+      "body_system": "genitourinary",
+      "family": "urinary_incontinence",
+      "diagnosis_type": "structural",
+      "specificity": 0.9,
+      "parent_diagnosis": "尿道综合征",
+      "common_symptoms": ["咳嗽漏尿", "运动漏尿", "大笑漏尿", "尿失禁", "漏尿"],
+      "red_flags": ["腹压增加时漏尿", "尿检阴性", "残余尿正常", "无尿路感染证据"],
+      "hallmark_findings": [
+        {"finding": "stress_urinary_incontinence", "weight": 0.52},
+        {"finding": "urine_leak_with_pressure", "weight": 0.52},
+        {"finding": "urinary_incontinence", "weight": 0.30}
+      ],
+      "discriminating_features": [
+        {"finding": "urine_culture_no_growth", "weight": 0.16},
+        {"finding": "leukocyte_esterase_negative", "weight": 0.12},
+        {"finding": "nitrite_negative", "weight": 0.12},
+        {"finding": "normal_postvoid_residual", "weight": 0.18}
+      ],
+      "required_groups": [
+        [{"finding": "stress_urinary_incontinence"}, {"finding": "urine_leak_with_pressure"}, {"finding": "diagnosis:压力性尿失禁"}],
+        [{"finding": "urinary_incontinence"}, {"finding": "urine_culture_no_growth"}, {"finding": "leukocyte_esterase_negative"}, {"finding": "nitrite_negative"}, {"finding": "normal_postvoid_residual"}]
+      ],
+      "strong_verification_exams": ["体格检查", "尿液分析（UA）", "尿动力学检查（UDS）", "泌尿道超声"],
+      "required_exams": ["体格检查", "尿液分析（UA）", "尿动力学检查（UDS）"],
+      "common_confusions": ["支气管炎", "肺癌", "肺结核", "泌尿系感染", "尿道综合征"],
+      "generalization_suppressions": ["支气管炎", "肺癌", "肺结核", "泌尿系感染", "尿道综合征"],
+      "treatment_principles": ["盆底肌训练和生活方式干预优先", "症状重或保守治疗无效时泌尿/盆底专科评估", "排除感染后避免把漏尿误作呼吸系统诊断"],
+      "avoid_mistakes": ["咳嗽只是诱发腹压的动作，不应把咳嗽漏尿提交为支气管炎"]
+    },
+    {
+      "name": "急性鼓膜炎",
+      "department": "耳鼻喉科",
+      "aliases": ["鼓膜炎", "大疱性鼓膜炎", "acute myringitis", "bullous myringitis"],
+      "category": "acute_otologic_inflammation",
+      "body_system": "ent",
+      "family": "acute_otologic_inflammation",
+      "diagnosis_type": "disease",
+      "specificity": 0.9,
+      "parent_diagnosis": "中耳炎",
+      "common_symptoms": ["急性耳痛", "耳痛", "耳闷", "耳鸣", "听力下降"],
+      "red_flags": ["鼓膜充血", "鼓膜疱疹", "鼓膜炎症", "急性鼓膜炎"],
+      "hallmark_findings": [
+        {"finding": "acute_tympanitis", "weight": 0.54},
+        {"finding": "tympanic_membrane_inflammation", "weight": 0.50},
+        {"finding": "tympanic_bulla", "weight": 0.50},
+        {"finding": "ear_canal_irritation_trigger", "weight": 0.26}
+      ],
+      "discriminating_features": [
+        {"finding": "ear_pain", "weight": 0.26},
+        {"finding": "ear_fullness", "weight": 0.18},
+        {"finding": "tinnitus", "weight": 0.16},
+        {"finding": "hearing_loss", "weight": 0.16}
+      ],
+      "required_groups": [
+        [{"finding": "acute_tympanitis"}, {"finding": "tympanic_membrane_inflammation"}, {"finding": "tympanic_bulla"}, {"finding": "ear_canal_irritation_trigger"}, {"finding": "diagnosis:急性鼓膜炎"}],
+        [{"finding": "ear_pain"}, {"finding": "ear_fullness"}, {"finding": "hearing_loss"}, {"finding": "tinnitus"}]
+      ],
+      "strong_verification_exams": ["体格检查", "耳镜检查", "全血细胞计数（CBC）"],
+      "required_exams": ["体格检查", "耳镜检查", "全血细胞计数（CBC）"],
+      "optional_exams": ["全血细胞计数（CBC）", "C反应蛋白（CRP）"],
+      "common_confusions": ["上呼吸道感染", "中耳炎", "小耳畸形", "急性细菌性前列腺炎"],
+      "generalization_suppressions": ["上呼吸道感染", "中耳炎", "小耳畸形", "急性细菌性前列腺炎"],
+      "treatment_principles": ["耳鼻喉科检查鼓膜局部炎症和疱疹", "镇痛并根据细菌感染证据选择局部或全身抗感染", "避免不必要的遗传/颞骨结构畸形套餐"],
+      "avoid_mistakes": ["急性耳痛和鼓膜局部改变不要泛化为上呼吸道感染或小耳畸形"]
+    },
+    {
+      "name": "三尖瓣反流",
+      "department": "心血管内科",
+      "aliases": ["重度三尖瓣反流", "中重度三尖瓣反流", "三尖瓣关闭不全", "三尖瓣返流", "TR"],
+      "category": "valvular_right_heart",
+      "body_system": "cardiovascular",
+      "family": "valvular_right_heart",
+      "diagnosis_type": "structural",
+      "specificity": 0.9,
+      "parent_diagnosis": "心力衰竭",
+      "common_symptoms": ["双下肢水肿", "腹胀", "活动后气短", "呼吸困难", "乏力"],
+      "red_flags": ["三尖瓣反流", "右心房增大", "右心室扩大", "肺动脉高压", "颈静脉怒张"],
+      "hallmark_findings": [
+        {"finding": "tricuspid_regurgitation", "weight": 0.56},
+        {"finding": "right_heart_enlargement", "weight": 0.34}
+      ],
+      "discriminating_features": [
+        {"finding": "leg_edema", "weight": 0.20},
+        {"finding": "dyspnea", "weight": 0.18},
+        {"finding": "abdominal_distension", "weight": 0.14},
+        {"finding": "ascites", "weight": 0.14},
+        {"finding": "pulmonary_hypertension", "weight": 0.18}
+      ],
+      "required_groups": [
+        [{"finding": "tricuspid_regurgitation"}, {"finding": "diagnosis:三尖瓣反流"}],
+        [{"finding": "right_heart_enlargement"}, {"finding": "leg_edema"}, {"finding": "dyspnea"}, {"finding": "abdominal_distension"}]
+      ],
+      "strong_verification_exams": ["体格检查", "超声心动图", "心电图（ECG）", "胸部X线检查（CXR）"],
+      "required_exams": ["体格检查", "超声心动图", "心电图（ECG）"],
+      "common_confusions": ["心力衰竭", "慢性阻塞性肺疾病", "卵巢过度刺激综合征", "门静脉高压"],
+      "generalization_suppressions": ["心力衰竭", "慢性阻塞性肺疾病", "卵巢过度刺激综合征", "门静脉高压"],
+      "causes": ["心力衰竭"],
+      "related_complications": ["心力衰竭", "右心衰竭", "肺动脉高压", "心律失常"],
+      "treatment_principles": ["三尖瓣反流按结构性右心负荷问题处理", "优先寻找并处理肺动脉高压、肺动脉瓣狭窄等上游病因", "容量超负荷时使用利尿剂并监测体重、尿量、电解质和肾功能"],
+      "avoid_mistakes": ["不要让腹胀/腹水把已授权的三尖瓣反流跨系统补查到 OHSS"]
+    }
+  ]
+}

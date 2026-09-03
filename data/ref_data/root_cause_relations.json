@@ -1,0 +1,73 @@
+{
+  "schema_version": "2026-07-28.v1",
+  "description": "Reviewed seed relations for generic root-cause arbitration. Runtime case memory must not be written here without human review.",
+  "relations": [
+    {
+      "relation_id": "mineral_bone_metabolism_explains_magnesium_state",
+      "mechanism_id": "mineral_bone_metabolism",
+      "relation_weight": 0.34,
+      "target_role": "secondary",
+      "secondary_policy": "audit_only",
+      "authorize_required_gap": true,
+      "audit_source": "human_reviewed_seed_2026_07_28",
+      "upstream_selector": {
+        "diagnosis_names": ["\u7ef4\u751f\u7d20D\u7f3a\u4e4f\u6027\u4f5d\u507b\u75c5"],
+        "diagnosis_types": ["metabolic"],
+        "allow_actionable_gap": true,
+        "authorize_required_gap": true,
+        "required_any_findings": [
+          "vitamin_d_low",
+          "bone_deformity",
+          "waddling_gait",
+          "alp_elevated",
+          "hypocalcemia"
+        ],
+        "min_core_coverage": 0.35,
+        "min_diagnostic_evidence_score": 0.3,
+        "min_matched_findings": 2
+      },
+      "downstream_selector": {
+        "diagnosis_names": ["\u4f4e\u9541\u8840\u75c7"],
+        "required_any_findings": [
+          "low_magnesium",
+          "low_urine_magnesium",
+          "magnesium_depletion",
+          "magnesium_load_retention_high"
+        ],
+        "min_diagnostic_evidence_score": 0.3
+      }
+    },
+    {
+      "relation_id": "cardiovascular_structural_cause_explains_heart_failure_state",
+      "mechanism_id": "cardiovascular_structural_hemodynamic_load",
+      "relation_weight": 0.28,
+      "target_role": "secondary",
+      "secondary_policy": "submit_if_objective",
+      "audit_source": "human_reviewed_seed_2026_07_28",
+      "upstream_selector": {
+        "diagnosis_types": ["structural"],
+        "required_any_findings": [
+          "ventricular_septal_defect",
+          "pulmonary_valve_stenosis",
+          "mitral_regurgitation",
+          "tricuspid_regurgitation",
+          "pulmonary_valve_gradient",
+          "left_to_right_shunt",
+          "valve_gradient_high",
+          "severe_regurgitation"
+        ],
+        "min_core_coverage": 0.5
+      },
+      "downstream_selector": {
+        "diagnosis_names": ["\u5fc3\u529b\u8870\u7aed"],
+        "required_any_findings": [
+          "heart_failure_state",
+          "fluid_retention_pattern",
+          "leg_edema",
+          "orthopnea",
+          "paroxysmal_nocturnal_dyspnea"
+        ]
+      }
+    }
+  ]
+}
